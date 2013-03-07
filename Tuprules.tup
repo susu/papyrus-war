@@ -24,7 +24,7 @@ ifeq (@(COV_ENABLE),y)
 endif
 
 ifeq (@(DEBUG_SYM),y)
-  CXXFLAGS+= -g
+  CXXFLAGS+= -g -DCW_DEBUG
 endif
 
 OPENGL_LIBS= -lglfw -lGLEW
