@@ -4,8 +4,8 @@ CXXFLAGS+= -Iigloo/
 
 : test_runner.cpp |> !cxx |> %B.o | $(GCNO_OUT) {testobj}
 
-LDFLAGS+= -l$(TARGETLIB) -L$(LD_PATH)
+LDFLAGS+= -l$(LIBCW_GRAPH) -l$(LIBCW_CORE) -L$(LD_PATH) $(OPENGL_LIBS)
 
-: {testobj} | $(LD_PATH)/$(TARGETLIB_SO) |> !o2bin |> test_runner
+: {testobj} | $(LD_PATH)/$(LIBCW_GRAPH_SO) $(LD_PATH)/$(LIBCW_CORE_SO) |> !o2bin |> test_runner
 
 : test_runner |> LD_LIBRARY_PATH=$(LD_PATH) ./test_runner |>

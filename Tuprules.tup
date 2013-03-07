@@ -12,6 +12,7 @@ LD_PATH= ../src
 
 LDFLAGS=
 
+
 ifeq (@(OPTIMIZATION),y)
   CXXFLAGS+= -O2
 endif
@@ -22,9 +23,17 @@ ifeq (@(COV_ENABLE),y)
   GCNO_OUT=%B.gcno
 endif
 
+ifeq (@(DEBUG_SYM),y)
+  CXXFLAGS+= -g
+endif
 
-TARGETLIB=cellulose-graphics
-TARGETLIB_SO=lib$(TARGETLIB).so
+OPENGL_LIBS= -lglfw -lGLEW
+
+LIBCW_GRAPH=cellulose-graphics
+LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH).so
+
+LIBCW_CORE=cellulose-core
+LIBCW_CORE_SO=lib$(LIBCW_CORE).so
 
 !cxx = |> ^c^ $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
 !o2shared = |> $(CC) $(LDFLAGS) -shared %f -o %o |>

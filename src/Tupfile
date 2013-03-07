@@ -1,7 +1,25 @@
 
 include_rules
 
-: foreach *.cpp |> !cxx |> %B.o | $(GCNO_OUT) {objs}
+GRAPH_SRC= \
+  DummyGraphics.cpp \
+  OpenGlLoop.cpp \
+  GlfwCallbackRepo.cpp \
 
-: {objs} |> !o2shared |> $(TARGETLIB_SO)
+CORE_SRC= \
+  Logger.cpp \
 
+: foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
+: {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
+
+: foreach $(GRAPH_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {graph_objs}
+: {graph_objs} |> !o2shared |> $(LIBCW_GRAPH_SO)
+
+LDFLAGS+= \
+  $(OPENGL_LIBS) \
+  -L$(LD_PATH) \
+  -l$(LIBCW_GRAPH) \
+  -l$(LIBCW_CORE) \
+
+: main.cpp |> !cxx |> main.o | $(GCNO_OUT)
+: main.o | $(LIBCW_GRAPH_SO) $(LIBCW_CORE_SO) |> !o2bin |> cw
