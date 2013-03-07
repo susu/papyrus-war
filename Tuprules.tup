@@ -23,7 +23,7 @@ ifeq (@(COV_ENABLE),y)
 endif
 
 
-TARGETLIB=calculator
+TARGETLIB=cellulose-graphics
 TARGETLIB_SO=lib$(TARGETLIB).so
 
 !cxx = |> ^c^ $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
