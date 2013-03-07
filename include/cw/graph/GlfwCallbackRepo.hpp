@@ -1,0 +1,52 @@
+#ifndef CW_GRAPH_GLFW_CALLBACK_REPO_HPP_INC
+#define CW_GRAPH_GLFW_CALLBACK_REPO_HPP_INC
+
+#include <vector>
+#include <array>
+#include <functional>
+
+namespace cw
+{
+  namespace graph
+  {
+    class GlfwCallbackRepo
+    {
+      public:
+        enum EventType
+        {
+          MOUSE_BUTTON,
+          MOUSE_WHEEL,
+
+          MAX
+        };
+        typedef std::function< void(int,int) > CallbackFunctionType;
+        // Singleton related functions
+        static void initialize();
+        static void terminate();
+        static void registerCallback( EventType e, CallbackFunctionType cb )
+        { instance().registerCb(e, cb); }
+
+        static GlfwCallbackRepo& instance()
+        { return *m_instance; }
+
+        // actual glfw callbacks
+        static void GLFWCALL mouseButton( int button, int action );
+
+        void notify( EventType event, int arg1, int arg2 ) const;
+      private:
+        GlfwCallbackRepo();
+        GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
+        void operator=(GlfwCallbackRepo&) = delete;
+        void registerCb( EventType e, CallbackFunctionType cb );
+
+        static GlfwCallbackRepo * m_instance;
+
+        typedef std::vector< CallbackFunctionType > Callbacks;
+        typedef std::vector< Callbacks > CallbackTypes;
+
+        CallbackTypes m_registeredCallbacks;
+    };
+  }
+}
+
+#endif
