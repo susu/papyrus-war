@@ -1,6 +1,6 @@
 #include "igloo/igloo.h"
 
-#include "TestCalculator.hpp"
+#include "TestDummyGraphics.hpp"
 
 int main()
 {
