@@ -16,6 +16,8 @@ namespace cw
         {
           MOUSE_BUTTON,
           MOUSE_WHEEL,
+          MOUSE_POS,
+          KEY_CALLBACK,
 
           MAX
         };
@@ -31,13 +33,18 @@ namespace cw
 
         // actual glfw callbacks
         static void GLFWCALL mouseButton( int button, int action );
+        static void GLFWCALL keyCallback( int key, int action );
+        static void GLFWCALL mousePosCallback( int x, int y );
+        static void GLFWCALL mouseWheelCallback( int x );
 
+        // methods
         void notify( EventType event, int arg1, int arg2 ) const;
       private:
         GlfwCallbackRepo();
         GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
         void operator=(GlfwCallbackRepo&) = delete;
         void registerCb( EventType e, CallbackFunctionType cb );
+        void initGlfwCallbacks() const;
 
         static GlfwCallbackRepo * m_instance;
 
