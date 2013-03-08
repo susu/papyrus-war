@@ -51,7 +51,11 @@ void OpenGlLoop::run()
     LOG(DEBUG) << "MouseButton: btn=" << btn << " action=" << action;
   });
 
-  // TODO input handling with callback functions
+  GlfwCallbackRepo::registerCallback( GlfwCallbackRepo::MOUSE_POS,
+  [](int x, int y)
+  {
+    LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
+  });
   do
   {
     glfwSwapBuffers();
