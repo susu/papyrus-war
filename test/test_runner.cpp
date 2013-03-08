@@ -2,6 +2,7 @@
 
 #include "TestDummyGraphics.hpp"
 #include "TestTimer.hpp"
+#include "TestSuffixOperatorsForTime.hpp"
 
 int main()
 {
