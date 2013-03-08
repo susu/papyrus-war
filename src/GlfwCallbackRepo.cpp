@@ -63,7 +63,6 @@ GlfwCallbackRepo::GlfwCallbackRepo()
 
 void GlfwCallbackRepo::notify( EventType event, int arg1, int arg2 ) const
 {
-  LOG(DEBUG) << "event: " << event;
   for( auto const & cbFunction : m_registeredCallbacks[ event ] )
   {
     cbFunction(arg1, arg2);
