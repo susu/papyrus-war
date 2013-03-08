@@ -2,6 +2,8 @@
 #include <GL/glfw.h>
 
 #include <cw/core/Logger.hpp>
+#include <cw/core/Timer.hpp>
+
 #include <cw/graph/GlException.hpp>
 #include <cw/graph/GlfwCallbackRepo.hpp>
 #include <cw/graph/OpenGlLoop.hpp>
@@ -56,10 +58,19 @@ void OpenGlLoop::run()
   {
     LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
   });
+
+  core::Timer timer( glfwGetTime() );
+
+  timer.setUpTimer( 1_sec, []()
+  {
+    LOG(DEBUG) << "Timer expired!";
+  });
+
   do
   {
     glfwSwapBuffers();
-    glfwWaitEvents();
+    // glfwWaitEvents();
+    timer.updateCurrentTime( glfwGetTime() );
   }
   while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS
       && glfwGetWindowParam( GLFW_OPENED ) );
