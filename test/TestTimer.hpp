@@ -17,6 +17,13 @@ Describe(the_Timer)
     cw::core::Timer timer{START_TIME};
     AssertThat( timer.getElapsed(), EqualsWithDelta( 0_sec, DELTA ) );
   }
+
+  It(can_be_updated)
+  {
+    cw::core::Timer timer{START_TIME};
+    timer.updateCurrentTime( START_TIME + 10_millisec );
+    AssertThat( timer.getElapsed(), EqualsWithDelta( 10_millisec, DELTA ) );
+  }
 };
 
 Describe(suffix_operators)

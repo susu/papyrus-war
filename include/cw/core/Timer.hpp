@@ -31,11 +31,16 @@ namespace cw
     class Timer
     {
       public:
+        // TODO shouldn't be an own type instead of double?
         typedef double TimeType;
         explicit Timer(TimeType start);
         ~Timer();
 
         TimeType getElapsed() const;
+        void updateCurrentTime(TimeType newTime);
+      private:
+        TimeType m_startTime;
+        TimeType m_currentTime;
     };
   }
 }
