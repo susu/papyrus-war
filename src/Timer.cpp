@@ -22,6 +22,24 @@ void Timer::updateCurrentTime(TimeType newTime)
 {
   // TODO ENFORCE( newTime >= m_currentTime, "Invalid time update request!" );
   m_currentTime = newTime;
+  shotTimers();
+}
+
+void Timer::shotTimers()
+{
+  for( auto & shot : m_timerShots )
+  {
+    if ( shot.lastShot + shot.length < getElapsed() )
+    {
+      shot.simpleCallback();
+      shot.lastShot = getElapsed();
+    }
+  }
+}
+
+void Timer::setUpTimer(TimeType length, SimpleCallback cb)
+{
+  m_timerShots.push_back( TimerShot(length, getElapsed(), cb) );
 }
 
   }
