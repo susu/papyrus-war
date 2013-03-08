@@ -1,26 +1,47 @@
-cpp-starter-kit
-===============
+Cellulose War
+=============
 
-Check the [blog post](http://susu.github.com/blog/2012/12/09/c-plus-plus-starter-kit/) about it!
+Get the source
+--------------
 
-Features
---------
+``git clone --recursive <repo>``
 
-  * integrates [igloo](http://igloo-testing.org/) (on [github](https://github.com/joakimkarlsson/igloo)) as BDD-style unit test framework
-  * will integrate some mocking framework
-  * build system: [tup](http://gittup.org/tup/) (on [github](https://github.com/gittup/tup)) 
+Build
+-----
 
+``tup init`` (only first time)
 
-igloo integrated as *git submodules*
+``tup upd`` (builds both release and debug)
 
-You can clone submodules also with one shot:
+**NOTE:** debug compilation needs suid on ``/usr/bin/tup`` (``sudo chmod u+s /usr/bin/tup``)
+**NOTE:** debug compilation needs ``user_allow_other`` in ``/etc/fuse.conf``
 
-```
-git clone --recursive git://github.com/susu/cpp-starter-kit.git
-```
+If you want build release only:
+``tup upd build-release``
 
 Dependencies
 ------------
 
   * [tup](http://gittup.org/tup/)
+  * [GLEW - OpenGL Extension Wrangler Library](glew.sourceforge.net)
+  * [GLFW - OpenGL FrameWork (or Good Luck Finding Willy)](www.glfw.org)
 
+### Installing dependencies on ArchLinux
+
+You'll need the following packages:
+
+  * aur/tup-git
+  * extra/glew
+  * community/glfw
+
+``pacman -S glew glfw``
+
+If you have packer:
+
+``packer -S tup-git``
+
+### Installing dependencies on Ubuntu/Debian
+
+### Installing dependencies on Windows
+
+### Installing dependencies on OSX
