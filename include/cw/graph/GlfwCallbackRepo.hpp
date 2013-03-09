@@ -29,26 +29,26 @@ namespace cw
         static GlfwCallbackRepo& instance()
         { return *m_instance; }
 
-        // actual glfw callbacks
+        // methods
+        GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
+        void operator=(GlfwCallbackRepo&) = delete;
+
+        void registerCallback( EventType e, CallbackFunctionType cb );
+      private:
+        typedef std::vector< CallbackFunctionType > Callbacks;
+        typedef std::vector< Callbacks > CallbackTypes;
+
+        GlfwCallbackRepo();
+
         static void GLFWCALL mouseButton( int button, int action );
         static void GLFWCALL keyCallback( int key, int action );
         static void GLFWCALL mousePosCallback( int x, int y );
         static void GLFWCALL mouseWheelCallback( int x );
 
-        // methods
-        void notify( EventType event, int arg1, int arg2 ) const;
-        void registerCallback( EventType e, CallbackFunctionType cb );
-      private:
-        GlfwCallbackRepo();
-        GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
-        void operator=(GlfwCallbackRepo&) = delete;
         void initGlfwCallbacks() const;
+        void notify( EventType event, int arg1, int arg2 ) const;
 
         static GlfwCallbackRepo * m_instance;
-
-        typedef std::vector< CallbackFunctionType > Callbacks;
-        typedef std::vector< Callbacks > CallbackTypes;
-
         CallbackTypes m_registeredCallbacks;
     };
   }
