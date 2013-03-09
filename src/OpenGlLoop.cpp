@@ -46,7 +46,7 @@ void OpenGlLoop::run()
   glfwEnable( GLFW_STICKY_KEYS );
 
   GlfwCallbackRepo::initialize();
-  GlfwCallbackRepo & cbRepo = GlfwCallbackRepo::instance();
+  CallbackRepo & cbRepo = GlfwCallbackRepo::instance();
 
   core::Timer timer( glfwGetTime() );
 

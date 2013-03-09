@@ -5,23 +5,15 @@
 #include <array>
 #include <functional>
 
+#include <cw/graph/CallbackRepo.hpp>
+
 namespace cw
 {
   namespace graph
   {
-    class GlfwCallbackRepo
+    class GlfwCallbackRepo : public CallbackRepo
     {
       public:
-        enum EventType
-        {
-          MOUSE_BUTTON,
-          MOUSE_WHEEL,
-          MOUSE_POS,
-          KEY_CALLBACK,
-
-          MAX
-        };
-        typedef std::function< void(int,int) > CallbackFunctionType;
         // Singleton related functions
         static void initialize();
         static void terminate();
@@ -33,7 +25,7 @@ namespace cw
         GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
         void operator=(GlfwCallbackRepo&) = delete;
 
-        void registerCallback( EventType e, CallbackFunctionType cb );
+        virtual void registerCallback( EventType e, CallbackFunctionType cb );
       private:
         typedef std::vector< CallbackFunctionType > Callbacks;
         typedef std::vector< Callbacks > CallbackTypes;
