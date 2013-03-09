@@ -25,8 +25,6 @@ namespace cw
         // Singleton related functions
         static void initialize();
         static void terminate();
-        static void registerCallback( EventType e, CallbackFunctionType cb )
-        { instance().registerCb(e, cb); }
 
         static GlfwCallbackRepo& instance()
         { return *m_instance; }
@@ -39,11 +37,11 @@ namespace cw
 
         // methods
         void notify( EventType event, int arg1, int arg2 ) const;
+        void registerCallback( EventType e, CallbackFunctionType cb );
       private:
         GlfwCallbackRepo();
         GlfwCallbackRepo(GlfwCallbackRepo&) = delete;
         void operator=(GlfwCallbackRepo&) = delete;
-        void registerCb( EventType e, CallbackFunctionType cb );
         void initGlfwCallbacks() const;
 
         static GlfwCallbackRepo * m_instance;

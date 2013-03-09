@@ -69,7 +69,7 @@ void GlfwCallbackRepo::notify( EventType event, int arg1, int arg2 ) const
   }
 }
 
-void GlfwCallbackRepo::registerCb( EventType e, CallbackFunctionType cb )
+void GlfwCallbackRepo::registerCallback( EventType e, CallbackFunctionType cb )
 {
   m_registeredCallbacks[ e ].push_back( cb );
 }

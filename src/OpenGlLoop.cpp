@@ -46,20 +46,21 @@ void OpenGlLoop::run()
   glfwEnable( GLFW_STICKY_KEYS );
 
   GlfwCallbackRepo::initialize();
+  GlfwCallbackRepo & cbRepo = GlfwCallbackRepo::instance();
 
-  GlfwCallbackRepo::registerCallback( GlfwCallbackRepo::MOUSE_BUTTON,
+  core::Timer timer( glfwGetTime() );
+
+  cbRepo.registerCallback( GlfwCallbackRepo::MOUSE_BUTTON,
   [](int btn, int action)
   {
     LOG(DEBUG) << "MouseButton: btn=" << btn << " action=" << action;
   });
 
-  GlfwCallbackRepo::registerCallback( GlfwCallbackRepo::MOUSE_POS,
+  cbRepo.registerCallback( GlfwCallbackRepo::MOUSE_POS,
   [](int x, int y)
   {
     LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
   });
-
-  core::Timer timer( glfwGetTime() );
 
   timer.setUpTimer( 1_sec, []()
   {
