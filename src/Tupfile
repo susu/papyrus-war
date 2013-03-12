@@ -5,6 +5,7 @@ GRAPH_SRC= \
   DummyGraphics.cpp \
   OpenGlLoop.cpp \
   GlfwCallbackRepo.cpp \
+  GlfwInputTranslator.cpp \
 
 CORE_SRC= \
   Logger.cpp \

@@ -3,6 +3,7 @@
 #include "TestDummyGraphics.hpp"
 #include "TestTimer.hpp"
 #include "TestSuffixOperatorsForTime.hpp"
+#include "TestGlfwInputTranslator.hpp"
 
 int main()
 {
