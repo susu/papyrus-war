@@ -50,13 +50,13 @@ void OpenGlLoop::run()
 
   core::Timer timer( glfwGetTime() );
 
-  cbRepo.registerCallback( GlfwCallbackRepo::MOUSE_BUTTON,
+  cbRepo.registerCallback( CallbackRepo::MOUSE_BUTTON,
   [](int btn, int action)
   {
     LOG(DEBUG) << "MouseButton: btn=" << btn << " action=" << action;
   });
 
-  cbRepo.registerCallback( GlfwCallbackRepo::MOUSE_POS,
+  cbRepo.registerCallback( CallbackRepo::MOUSE_POS,
   [](int x, int y)
   {
     LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
