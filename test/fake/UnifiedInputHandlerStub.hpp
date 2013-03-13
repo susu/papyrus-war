@@ -11,7 +11,9 @@ namespace fake
       UnifiedInputHandlerStub()
       {}
       virtual void clickedAt(int x, int y)
-      {}
+      {
+        m_clicks.push_back( Click{x,y} );
+      }
 
       virtual void zoom(ZoomDir direction)
       {}
@@ -21,6 +23,27 @@ namespace fake
 
       virtual void stopScroll()
       {}
+
+      bool hasClickAt(int x, int y) const
+      {
+        return m_clicks.end() != std::find_if(m_clicks.begin(), m_clicks.end(),
+        [x,y](const Click & c)
+        {
+          return c.x == x && c.y == y;
+        });
+      }
+
+      int getNumberOfClicks() const
+      {
+        return m_clicks.size();
+      }
+    private:
+      struct Click
+      {
+        int x, y;
+      };
+
+      std::vector<Click> m_clicks;
   };
 }
 
