@@ -62,6 +62,12 @@ void OpenGlLoop::run()
     LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
   });
 
+  cbRepo.registerCallback( CallbackRepo::MOUSE_WHEEL,
+  [](int pos, int)
+  {
+  LOG(DEBUG) << "MouseWheel: pos=" << pos;
+  });
+
   timer.setUpTimer( 1_sec, []()
   {
     LOG(DEBUG) << "Timer expired!";
