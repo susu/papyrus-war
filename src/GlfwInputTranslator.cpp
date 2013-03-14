@@ -10,6 +10,7 @@ namespace cw
 
 GlfwInputTranslator::GlfwInputTranslator(cw::core::UnifiedInputHandler & inputHandler)
   : m_inputHandler(inputHandler)
+  , m_mouseWheelPos(0)
 {}
 
 GlfwInputTranslator::~GlfwInputTranslator()
@@ -39,6 +40,19 @@ void GlfwInputTranslator::mouseButtonEvent(int btn, int action)
       //m_mouseState.pressed = false;
     }
   }
+}
+
+void GlfwInputTranslator::mouseWheelEvent(int pos)
+{
+  if ( pos > m_mouseWheelPos )
+  {
+    m_inputHandler.zoom( core::UnifiedInputHandler::ZoomDir::IN );
+  }
+  else if ( pos < m_mouseWheelPos )
+  {
+    m_inputHandler.zoom( core::UnifiedInputHandler::ZoomDir::OUT );
+  }
+  m_mouseWheelPos = pos;
 }
 
   }

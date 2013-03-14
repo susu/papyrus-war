@@ -9,6 +9,8 @@ namespace fake
   {
     public:
       UnifiedInputHandlerStub()
+        : m_zoomIn(0)
+        , m_zoomOut(0)
       {}
       virtual void clickedAt(int x, int y)
       {
@@ -16,7 +18,11 @@ namespace fake
       }
 
       virtual void zoom(ZoomDir direction)
-      {}
+      {
+        AssertThat( ZoomDir::IN == direction || ZoomDir::OUT == direction, Equals(true) );
+        if ( direction == ZoomDir::IN ) ++m_zoomIn;
+        else ++m_zoomOut;
+      }
 
       virtual void startScroll(ScrollDir direction)
       {}
@@ -33,6 +39,16 @@ namespace fake
         });
       }
 
+      int getNumberOfZoomIn() const
+      {
+        return m_zoomIn;
+      }
+
+      int getNumberOfZoomOut() const
+      {
+        return m_zoomOut;
+      }
+
       int getNumberOfClicks() const
       {
         return m_clicks.size();
@@ -44,6 +60,8 @@ namespace fake
       };
 
       std::vector<Click> m_clicks;
+      int m_zoomIn;
+      int m_zoomOut;
   };
 }
 

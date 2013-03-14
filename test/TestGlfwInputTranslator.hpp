@@ -13,6 +13,11 @@
 Describe(the_glfwInputTranslator)
 {
   fake::UnifiedInputHandlerStub unifiedInputHandler;
+  cw::graph::GlfwInputTranslator translator;
+
+  the_glfwInputTranslator()
+    : translator(unifiedInputHandler)
+  {}
 
   It(can_be_instantiated)
   {
@@ -22,7 +27,6 @@ Describe(the_glfwInputTranslator)
 
   It(should_forward_mouse_press_and_release_as_click)
   {
-    cw::graph::GlfwInputTranslator translator(unifiedInputHandler);
     int x = 940;
     int y = 303;
     translator.mouseMoveEvent(x,y);
@@ -38,7 +42,6 @@ Describe(the_glfwInputTranslator)
 
   It(should_handle_multiple_clicks)
   {
-    cw::graph::GlfwInputTranslator translator(unifiedInputHandler);
     int x = 268;
     int y = 511;
     translator.mouseMoveEvent(x,y);
@@ -60,12 +63,37 @@ Describe(the_glfwInputTranslator)
 
   It(should_interpret_mousewheel_up_as_zoom_in)
   {
-    std::cout << "\n!!! PENDING: It_" << __FUNCTION__ << " !!!" << std::endl;
+    translator.mouseWheelEvent(1);
+
+    AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
+  }
+
+  It(should_handle_same_mousewheel_pos_multiple_time_UP)
+  {
+    AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(0) );
+
+    translator.mouseWheelEvent(1);
+    AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
+
+    translator.mouseWheelEvent(1);
+    AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
   }
 
   It(should_interpret_mousewheel_down_as_zoom_out)
   {
-    std::cout << "\n!!! PENDING: It_" << __FUNCTION__ << " !!!" << std::endl;
+    translator.mouseWheelEvent( -1 );
+    AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
+  }
+
+  It(should_handle_same_mousewheel_pos_multiple_time_DOWN)
+  {
+    AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(0) );
+
+    translator.mouseWheelEvent(-1);
+    AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
+
+    translator.mouseWheelEvent(-1);
+    AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
   }
 
   It(should_interpret_press_key_arrows_as_start_of_scrolling)

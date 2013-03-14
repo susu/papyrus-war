@@ -17,6 +17,7 @@ namespace cw
 
         void mouseMoveEvent(int x, int y);
         void mouseButtonEvent(int btn, int action);
+        void mouseWheelEvent(int pos);
       private:
         struct MouseState
         {
@@ -31,6 +32,7 @@ namespace cw
         };
         cw::core::UnifiedInputHandler & m_inputHandler;
         MouseState m_mouseState;
+        int m_mouseWheelPos;
     };
   }
 }
