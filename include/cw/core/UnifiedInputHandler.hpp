@@ -8,12 +8,12 @@ namespace cw
     class UnifiedInputHandler
     {
       public:
-        enum class ZoomDir
+        enum class ZoomDir : int
         {
           IN,
           OUT
         };
-        enum class ScrollDir
+        enum class ScrollDir : int
         {
           RIGHT,
           DOWN,
