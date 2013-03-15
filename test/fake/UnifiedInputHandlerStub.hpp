@@ -32,7 +32,9 @@ namespace fake
       }
 
       virtual void stopScroll()
-      {}
+      {
+        m_hasScrollDir = false;
+      }
 
       bool hasClickAt(int x, int y) const
       {

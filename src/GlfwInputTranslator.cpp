@@ -1,4 +1,6 @@
 #include <stdexcept>
+#include <vector>
+#include <algorithm>
 
 #include <GL/glfw.h>
 
@@ -9,6 +11,13 @@
 namespace
 {
   cw::core::Logger logger("graph");
+  const std::vector<int> VALID_SCROLL_KEYS =
+  {
+    GLFW_KEY_LEFT,
+    GLFW_KEY_RIGHT,
+    GLFW_KEY_UP,
+    GLFW_KEY_DOWN
+  };
 }
 
 namespace cw
@@ -63,12 +72,18 @@ void GlfwInputTranslator::mouseWheelEvent(int pos)
   m_mouseWheelPos = pos;
 }
 
+bool isScrollKey(int k)
+{
+  return std::end(VALID_SCROLL_KEYS) !=
+         std::find( std::begin(VALID_SCROLL_KEYS), std::end(VALID_SCROLL_KEYS), k );
+}
+
 void GlfwInputTranslator::keyEvent(int key, int action)
 {
-  // if ( !isScrollKey(m_pressedKey) )
-  // {
-  //   return;
-  // }
+  if ( !isScrollKey(key) )
+  {
+    return;
+  }
   if ( GLFW_PRESS == action )
   {
     LOG(DEBUG) << "PRESSED: " << key;

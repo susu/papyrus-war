@@ -96,7 +96,7 @@ Describe(the_glfwInputTranslator)
     AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
   }
 
-  It(should_interpret_press_key_arrows_as_start_of_scrolling)
+  It(should_interpret_key_arrows_as_scrolling)
   {
     typedef cw::core::UnifiedInputHandler::ScrollDir ScrollDir;
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
@@ -104,11 +104,15 @@ Describe(the_glfwInputTranslator)
     translator.keyEvent(GLFW_KEY_LEFT, GLFW_PRESS);
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(true) );
     AssertThat( unifiedInputHandler.getLastScrollDir(), Equals(ScrollDir::LEFT) );
+
+    translator.keyEvent(GLFW_KEY_LEFT, GLFW_RELEASE);
+    AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
   }
 
-  It(should_interpret_release_key_as_stopScroll)
+  It(should_handle_other_key_inputs_also)
   {
-    std::cout << "\n!!! PENDING: It_" << __FUNCTION__ << " !!!" << std::endl;
+    translator.keyEvent('t', GLFW_PRESS);
+    AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
   }
 
 };
