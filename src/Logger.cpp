@@ -39,8 +39,8 @@ void Logger::startLog( LogLevel loglevel, const char * file, int line,
 {
   getOutputStream() << getFormattedDate() << ' ' <<
                        logLevelToStr(loglevel) << " (" <<
-                       file << ':' << line << ") ";
-  // TODO pretty
+                       file << ':' << line << ") [" <<
+                       pretty << "] ";
 }
 
 void Logger::endLog()
