@@ -10,6 +10,7 @@ GRAPH_SRC= \
 CORE_SRC= \
   Logger.cpp \
   Timer.cpp \
+  InputDistributor.cpp \
 
 : foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
