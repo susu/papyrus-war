@@ -1,12 +1,10 @@
 #ifndef CW_GRAPH_GLFW_INPUT_TRANSLATOR_HPP_INC
 #define CW_GRAPH_GLFW_INPUT_TRANSLATOR_HPP_INC
 
+#include <cw/core/UnifiedInputHandler.hpp>
+
 namespace cw
 {
-  namespace core
-  {
-    class UnifiedInputHandler;
-  }
   namespace graph
   {
     class GlfwInputTranslator
@@ -18,6 +16,7 @@ namespace cw
         void mouseMoveEvent(int x, int y);
         void mouseButtonEvent(int btn, int action);
         void mouseWheelEvent(int pos);
+        void keyEvent(int key, int action);
       private:
         struct MouseState
         {
@@ -30,6 +29,10 @@ namespace cw
             , pressed(false)
           {}
         };
+        typedef core::UnifiedInputHandler::ScrollDir ScrollDir;
+
+        ScrollDir keyToScrollDir(int key) const;
+
         cw::core::UnifiedInputHandler & m_inputHandler;
         MouseState m_mouseState;
         int m_mouseWheelPos;

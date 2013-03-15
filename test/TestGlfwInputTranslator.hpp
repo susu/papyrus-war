@@ -98,7 +98,12 @@ Describe(the_glfwInputTranslator)
 
   It(should_interpret_press_key_arrows_as_start_of_scrolling)
   {
-    std::cout << "\n!!! PENDING: It_" << __FUNCTION__ << " !!!" << std::endl;
+    typedef cw::core::UnifiedInputHandler::ScrollDir ScrollDir;
+    AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
+
+    translator.keyEvent(GLFW_KEY_LEFT, GLFW_PRESS);
+    AssertThat( unifiedInputHandler.hasScrollDir(), Equals(true) );
+    AssertThat( unifiedInputHandler.getLastScrollDir(), Equals(ScrollDir::LEFT) );
   }
 
   It(should_interpret_release_key_as_stopScroll)

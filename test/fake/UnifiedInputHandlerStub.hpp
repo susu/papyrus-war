@@ -11,6 +11,7 @@ namespace fake
       UnifiedInputHandlerStub()
         : m_zoomIn(0)
         , m_zoomOut(0)
+        , m_hasScrollDir(false)
       {}
       virtual void clickedAt(int x, int y)
       {
@@ -25,7 +26,10 @@ namespace fake
       }
 
       virtual void startScroll(ScrollDir direction)
-      {}
+      {
+        m_hasScrollDir = true;
+        m_scrollDir = direction;
+      }
 
       virtual void stopScroll()
       {}
@@ -53,6 +57,16 @@ namespace fake
       {
         return m_clicks.size();
       }
+
+      bool hasScrollDir() const
+      {
+        return m_hasScrollDir;
+      }
+
+      ScrollDir getLastScrollDir() const
+      {
+        return m_scrollDir;
+      }
     private:
       struct Click
       {
@@ -62,6 +76,9 @@ namespace fake
       std::vector<Click> m_clicks;
       int m_zoomIn;
       int m_zoomOut;
+
+      bool m_hasScrollDir;
+      ScrollDir m_scrollDir;
   };
 }
 
