@@ -22,8 +22,7 @@ namespace cw
         virtual void startScroll(ScrollDir dir) override;
         virtual void stopScroll() override;
       private:
-        typedef std::set<UnitRef> UnitContainer;
-        UnitContainer m_units;
+        std::set<UnitRef> m_units;
     };
   }
 }
