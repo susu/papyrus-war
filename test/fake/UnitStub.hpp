@@ -50,6 +50,9 @@ namespace fake
         m_moveTarget = {x,y};
       }
 
+      virtual void tick() override
+      {}
+
     private:
       struct Coord
       {
