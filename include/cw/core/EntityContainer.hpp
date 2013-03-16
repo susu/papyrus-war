@@ -13,6 +13,13 @@ namespace cw
     class EntityContainer
     {
       public:
+        EntityContainer() = default;
+        ~EntityContainer() = default;
+
+        EntityContainer(EntityContainer<T,Method>&) = delete;
+        EntityContainer(EntityContainer<T,Method>&&) = delete;
+        void operator=(EntityContainer<T,Method>) = delete;
+
         typedef std::shared_ptr<T> TRef;
         void add( TRef x )
         {
