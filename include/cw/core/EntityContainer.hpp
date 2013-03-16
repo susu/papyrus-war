@@ -2,6 +2,7 @@
 #define CW_CORE_ENTITY_CONTAINER_HPP_INC
 
 #include <memory>
+#include <vector>
 
 #define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))
 
