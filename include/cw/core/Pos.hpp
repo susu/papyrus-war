@@ -14,7 +14,7 @@ namespace cw
       double x,y;
     };
 
-    const int PRECISION = 1e-5;
+    const double PRECISION = 1e-5;
 
     bool equals(double one, double two)
     {
