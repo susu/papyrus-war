@@ -11,6 +11,7 @@ namespace
 #include "TestSuffixOperatorsForTime.hpp"
 #include "TestGlfwInputTranslator.hpp"
 #include "TestInputDistributor.hpp"
+#include "TestEntityContainer.hpp"
 
 int main()
 {
