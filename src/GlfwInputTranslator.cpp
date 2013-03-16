@@ -5,6 +5,7 @@
 #include <GL/glfw.h>
 
 #include <cw/graph/GlfwInputTranslator.hpp>
+
 #include <cw/core/UnifiedInputHandler.hpp>
 #include <cw/core/Logger.hpp>
 
@@ -32,6 +33,27 @@ GlfwInputTranslator::GlfwInputTranslator(cw::core::UnifiedInputHandler & inputHa
 
 GlfwInputTranslator::~GlfwInputTranslator()
 {}
+
+template<typename MemPtr>
+void GlfwInputTranslator::regCb( CallbackRepo & repo, CallbackRepo::EventType a,
+                                 MemPtr method )
+{
+  using namespace std::placeholders;
+  repo.registerCallback( a, std::bind( method, *this, _1, _2 ) );
+}
+
+void GlfwInputTranslator::registerCallbacks( CallbackRepo & repo )
+{
+  regCb(repo, CallbackRepo::MOUSE_BUTTON, &GlfwInputTranslator::mouseButtonEvent );
+  regCb(repo, CallbackRepo::MOUSE_POS,    &GlfwInputTranslator::mouseMoveEvent );
+  regCb(repo, CallbackRepo::KEY_CALLBACK, &GlfwInputTranslator::keyEvent );
+
+  repo.registerCallback( CallbackRepo::MOUSE_WHEEL,
+  [this](int wheelPos, int)
+  {
+    mouseWheelEvent(wheelPos);
+  });
+}
 
 void GlfwInputTranslator::mouseMoveEvent(int x, int y)
 {
