@@ -1,6 +1,8 @@
 #ifndef CW_CORE_POS_HPP_INC
 #define CW_CORE_POS_HPP_INC
 
+#include <ostream>
+
 namespace cw
 {
   namespace core
@@ -16,17 +18,17 @@ namespace cw
 
     const double PRECISION = 1e-5;
 
-    bool equals(double one, double two)
+    inline bool equals(double one, double two)
     {
       return abs(one-two) < PRECISION;
     }
 
-    bool operator==(Pos const & l, Pos const & r)
+    inline bool operator==(Pos const & l, Pos const & r)
     {
       return equals(l.x, r.x) && equals(l.y,r.y);
     }
 
-    std::ostream& operator<<(std::ostream & o, Pos const & pos)
+    inline std::ostream& operator<<(std::ostream & o, Pos const & pos)
     {
       o << "Pos(" << pos.x << "," << pos.y << ")";
       return o;
