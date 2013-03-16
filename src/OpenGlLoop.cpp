@@ -3,16 +3,20 @@
 
 #include <cw/core/Logger.hpp>
 #include <cw/core/Timer.hpp>
+#include <cw/core/Unit.hpp>
+#include <cw/core/InputDistributor.hpp>
 
 #include <cw/graph/GlException.hpp>
 #include <cw/graph/GlfwCallbackRepo.hpp>
 #include <cw/graph/OpenGlLoop.hpp>
+#include <cw/graph/View.hpp>
+#include <cw/graph/GlfwInputTranslator.hpp>
 
 namespace
 {
   cw::core::Logger logger("opengl");
-  const int SCREEN_X = 1024;
-  const int SCREEN_Y = 768;
+  const int SCREEN_X = 640;
+  const int SCREEN_Y = 480;
 }
 
 namespace cw
@@ -50,31 +54,22 @@ void OpenGlLoop::run()
 
   core::Timer timer( glfwGetTime() );
 
-  cbRepo.registerCallback( CallbackRepo::MOUSE_BUTTON,
-  [](int btn, int action)
-  {
-    LOG(DEBUG) << "MouseButton: btn=" << btn << " action=" << action;
-  });
+  core::UnitContainer units;
+  graph::ViewContainer views;
 
-  cbRepo.registerCallback( CallbackRepo::MOUSE_POS,
-  [](int x, int y)
-  {
-    LOG(DEBUG) << "MouseMove: x=" << x << " y=" << y;
-  });
+  core::InputDistributor inputDistributor; // forwards input to units
+  graph::GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
+  inputTranslator.registerCallbacks( cbRepo );
 
-  cbRepo.registerCallback( CallbackRepo::MOUSE_WHEEL,
-  [](int pos, int)
-  {
-  LOG(DEBUG) << "MouseWheel: pos=" << pos;
-  });
+  // auto boat = core::PaperBoat::create(10,10);
+  // units.add( boat );
 
-  timer.setUpTimer( 1_sec, []()
-  {
-    LOG(DEBUG) << "Timer expired!";
-  });
+  // views.add( boat );
 
   do
   {
+    units.doIt();
+    views.doIt();
     glfwSwapBuffers();
     // glfwWaitEvents();
     timer.updateCurrentTime( glfwGetTime() );
