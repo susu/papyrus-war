@@ -9,6 +9,9 @@ namespace cw
   {
     class Unit;
     typedef std::shared_ptr<Unit> UnitRef;
+
+    class PaperBoat;
+    typedef std::shared_ptr<PaperBoat> PaperBoatRef;
   }
 }
 

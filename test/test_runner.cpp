@@ -12,6 +12,7 @@ namespace
 #include "TestGlfwInputTranslator.hpp"
 #include "TestInputDistributor.hpp"
 #include "TestEntityContainer.hpp"
+#include "TestPaperBoat.hpp"
 #include "TestRectangleUnit.hpp"
 
 int main()

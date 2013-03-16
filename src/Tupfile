@@ -12,6 +12,7 @@ CORE_SRC= \
   Timer.cpp \
   InputDistributor.cpp \
   RectangleUnit.cpp \
+  PaperBoat.cpp \
 
 : foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
