@@ -29,12 +29,16 @@ void InputDistributor::clickedAt(int x, int y)
 {
   for ( const UnitRef & unit : m_units )
   {
-    if ( unit->isOver(x,y) )
+    if ( !unit->hasFocus() )
     {
-      if ( !unit->hasFocus() )
+      if ( unit->isOver(x,y) )
       {
         unit->setFocus(true);
       }
+    }
+    else
+    {
+      unit->moveTo(x,y);
     }
   }
 }

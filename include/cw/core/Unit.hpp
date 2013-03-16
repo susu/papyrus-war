@@ -11,6 +11,7 @@ namespace cw
         virtual bool hasFocus() const = 0;
         virtual void setFocus(bool focus) = 0;
         virtual bool isOver(double x, double y) const = 0;
+        virtual void moveTo(double x, double y) = 0;
     };
   }
 }

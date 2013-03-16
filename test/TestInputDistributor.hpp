@@ -33,10 +33,10 @@ Describe(the_InputDistributor)
   It(should_call_moveTo_if_unit_has_focus)
   {
     std::cout << "PENDING" << std::endl;
-    // using cw::core::Pos;
-    // unit->setFocus(true);
-    // dist.clickedAt( 50, 50 );
-    // AssertThat( unit->getMoveTarget(), Equals( Pos{50.0, 50.0} ));
+    using cw::core::Pos;
+    unit->setFocus(true);
+    dist.clickedAt( 50, 50 );
+    AssertThat( unit->getMoveTarget(), Equals( Pos{50.0, 50.0} ));
   }
 
   It(should_remove_focus_if_clicked_on_another_unit)

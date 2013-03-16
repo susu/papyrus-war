@@ -45,6 +45,11 @@ namespace fake
                ( m_pos.y < y && y < m_pos.y + m_size.y );
       }
 
+      virtual void moveTo(double x, double y) override
+      {
+        m_moveTarget = {x,y};
+      }
+
     private:
       struct Coord
       {
