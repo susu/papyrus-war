@@ -35,7 +35,7 @@ LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH).so
 LIBCW_CORE=cellulose-core
 LIBCW_CORE_SO=lib$(LIBCW_CORE).so
 
-!cxx = |> ^c^ $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
+!cxx = |> $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
 !o2shared = |> $(CC) $(LDFLAGS) -shared %f -o %o |>
 
 !o2bin = |> $(CC) %f $(LDFLAGS) -o %o |>
