@@ -6,6 +6,7 @@ GRAPH_SRC= \
   OpenGlLoop.cpp \
   GlfwCallbackRepo.cpp \
   GlfwInputTranslator.cpp \
+  Shader.cpp \
 
 CORE_SRC= \
   Logger.cpp \
