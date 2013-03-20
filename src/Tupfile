@@ -17,11 +17,13 @@ CORE_SRC= \
 : foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
 
+LDFLAGS=\
+  $(OPENGL_LIBS)
+
 : foreach $(GRAPH_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {graph_objs}
 : {graph_objs} |> !o2shared |> $(LIBCW_GRAPH_SO)
 
-LDFLAGS+= \
-  $(OPENGL_LIBS) \
+LDFLAGS= \
   -L$(LD_PATH) \
   -l$(LIBCW_GRAPH) \
   -l$(LIBCW_CORE) \

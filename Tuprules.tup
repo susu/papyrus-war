@@ -10,8 +10,7 @@ BUILD= ../build
 
 LD_PATH= ../src
 
-LDFLAGS=
-
+BASE_LDFLAGS=
 
 ifeq (@(OPTIMIZATION),y)
   CXXFLAGS+= -O2
@@ -19,7 +18,7 @@ endif
 
 ifeq (@(COV_ENABLE),y)
   CXXFLAGS+= --coverage
-  LDFLAGS+= --coverage
+  BASE_LDFLAGS+= --coverage
   GCNO_OUT=%B.gcno
 endif
 
@@ -36,9 +35,9 @@ LIBCW_CORE=cellulose-core
 LIBCW_CORE_SO=lib$(LIBCW_CORE).so
 
 !cxx = |> $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
-!o2shared = |> $(CC) $(LDFLAGS) -shared %f -o %o |>
+!o2shared = |> $(CC) $(BASE_LDFLAGS) $(LDFLAGS) -shared %f -o %o |>
 
-!o2bin = |> $(CC) %f $(LDFLAGS) -o %o |>
+!o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
 
 !gcov =|> $(GCOV) %f |>
 
