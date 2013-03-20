@@ -5,11 +5,13 @@
 #include <cw/core/Timer.hpp>
 #include <cw/core/Unit.hpp>
 #include <cw/core/InputDistributor.hpp>
+#include <cw/core/PaperBoat.hpp>
 
 #include <cw/graph/GlException.hpp>
 #include <cw/graph/GlfwCallbackRepo.hpp>
 #include <cw/graph/OpenGlLoop.hpp>
 #include <cw/graph/View.hpp>
+#include <cw/graph/PaperBoatView.hpp>
 #include <cw/graph/GlfwInputTranslator.hpp>
 
 namespace
@@ -47,6 +49,10 @@ void OpenGlLoop::run()
     return;
   }
 
+  GLuint VertexArrayID;
+  glGenVertexArrays(1, &VertexArrayID);
+  glBindVertexArray(VertexArrayID);
+
   glfwEnable( GLFW_STICKY_KEYS );
 
   GlfwCallbackRepo::initialize();
@@ -61,13 +67,22 @@ void OpenGlLoop::run()
   graph::GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
-  // auto boat = core::PaperBoat::create(10,10);
-  // units.add( boat );
-
-  // views.add( boat );
+  try
+  {
+    auto boat = core::PaperBoat::create(10,10);
+    auto boatView = graph::PaperBoatView::create( boat );
+    units.add( boat );
+    views.add( boatView );
+  }
+  catch( GlException const & ex )
+  {
+    LOG_EXCEPTION( ex );
+    return;
+  }
 
   do
   {
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     units.doIt();
     views.doIt();
     glfwSwapBuffers();
