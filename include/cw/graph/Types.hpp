@@ -3,15 +3,18 @@
 
 #include <memory>
 
+template<class T>
+using Ref = std::shared_ptr<T>;
+
 namespace cw
 {
   namespace graph
   {
     class View;
-    typedef std::shared_ptr<View> ViewRef;
+    typedef Ref<View> ViewRef;
 
     class PaperBoatView;
-    typedef std::shared_ptr<PaperBoatView> PaperBoatViewRef;
+    typedef Ref<PaperBoatView> PaperBoatViewRef;
   }
 }
 
