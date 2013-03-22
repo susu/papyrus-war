@@ -14,6 +14,7 @@ namespace
 #include "TestEntityContainer.hpp"
 #include "TestPaperBoat.hpp"
 #include "TestRectangleUnit.hpp"
+#include "TestUnitFactory.hpp"
 
 int main()
 {
