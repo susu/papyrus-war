@@ -10,4 +10,4 @@ LDFLAGS+= -l$(LIBCW_GRAPH) -l$(LIBCW_CORE) -L$(LD_PATH) $(OPENGL_LIBS)
 
 VALGRIND=valgrind
 
-: test_runner |> LD_LIBRARY_PATH=$(LD_PATH) $(VALGRIND) ./test_runner |>
+: test_runner |> LD_LIBRARY_PATH=$(LD_PATH) $(VALGRIND) ./test_runner --verbose|>
