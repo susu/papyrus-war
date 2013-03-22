@@ -7,6 +7,9 @@ namespace cw
 {
   namespace graph
   {
+    class View;
+    typedef std::shared_ptr<View> ViewRef;
+
     class PaperBoatView;
     typedef std::shared_ptr<PaperBoatView> PaperBoatViewRef;
   }
