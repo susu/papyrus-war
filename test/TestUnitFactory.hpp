@@ -2,28 +2,50 @@
 #define TEST_UNIT_FACTORY_HPP_INC
 
 #include <cw/graph/UnitFactory.hpp>
+#include <cw/graph/ViewFactory.hpp>
+
+#include "fake/ViewStub.hpp"
+#include "fake/UnitStub.hpp"
 
 using namespace igloo;
 
 template<class T>
-struct XCreatedCallback
+struct FakeMapping;
+
+VIEW_MAPPING(FakeMapping, fake::UnitStub, fake::ViewStub);
+
+struct FakePolicy
 {
-  void operator()( T x )
-  {
-    lastElement = x;
-  }
-  T lastElement;
+  template<class T>
+  using Mapping = FakeMapping<T>;
 };
 
 Describe(the_UnitFactory)
 {
-  XCreatedCallback< cw::core::UnitRef > unitCallbacks;
-  XCreatedCallback< Ref<cw::graph::View> > viewCallbacks;
+  cw::core::UnitRef createdUnit;
+  Ref< cw::graph::View > createdView;
+  cw::graph::UnitFactory<FakePolicy> factory;
+
+  the_UnitFactory() : factory(
+        [this]( cw::core::UnitRef u ) { createdUnit = u; },
+        [this]( Ref<cw::graph::View> v ) { createdView = v; } )
+  {}
 
   It(can_be_instantiated)
   {
-    cw::graph::UnitFactory factory( unitCallbacks, viewCallbacks );
     LOG(DEBUG) << &factory;
+  }
+
+  It(should_call_callbacks_with_the_created_elements)
+  {
+    factory.createUnit<fake::UnitStub>();
+
+    auto viewStub = std::dynamic_pointer_cast<fake::ViewStub>(createdView);
+
+    AssertThat( createdUnit, Is().Not().EqualTo( cw::core::UnitRef() ) );
+    AssertThat( createdView, Is().Not().EqualTo( Ref<cw::graph::View>() ) );
+
+    AssertThat( createdUnit, Equals( viewStub->getUnit() ) );
   }
 };
 
