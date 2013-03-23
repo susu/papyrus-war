@@ -15,6 +15,7 @@ namespace
 #include "TestPaperBoat.hpp"
 #include "TestRectangleUnit.hpp"
 #include "TestUnitFactory.hpp"
+#include "TestViewFactory.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
