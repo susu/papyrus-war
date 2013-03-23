@@ -10,7 +10,7 @@ Describe(a_PaperBoat)
 {
   It(can_be_instantiated)
   {
-    auto boat = cw::core::PaperBoat::create(10, 10);
+    auto boat = cw::core::PaperBoat(10,10);
   }
 };
 

@@ -11,9 +11,7 @@ namespace cw
     class PaperBoat : public RectangleUnit
     {
       public:
-        static PaperBoatRef create(double x, double y);
-
-        PaperBoat();
+        PaperBoat(double x, double y);
         virtual ~PaperBoat();
 
         virtual void moveTo(double x, double y) override;

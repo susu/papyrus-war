@@ -5,13 +5,8 @@ namespace cw
   namespace core
   {
 
-PaperBoatRef PaperBoat::create(double x, double y)
-{
-  return PaperBoatRef( new PaperBoat );
-}
-
-PaperBoat::PaperBoat()
-  : RectangleUnit(Pos{0,0}, Pos{0,0})
+PaperBoat::PaperBoat(double x, double y)
+  : RectangleUnit(Pos{x,y}, Pos{10,10})
 {}
 
 PaperBoat::~PaperBoat()
