@@ -13,6 +13,8 @@
 #include <cw/graph/View.hpp>
 #include <cw/graph/PaperBoatView.hpp>
 #include <cw/graph/GlfwInputTranslator.hpp>
+#include <cw/graph/OpenGlViewMapping.hpp>
+#include <cw/graph/UnitFactory.hpp>
 
 namespace
 {
@@ -67,12 +69,21 @@ void OpenGlLoop::run()
   graph::GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
+  graph::UnitFactory< graph::OpenGlViewPolicy > unitFactory
+  (
+    [&units]( core::UnitRef unit )
+    {
+      units.add(unit);
+    },
+    [&views]( graph::ViewRef view )
+    {
+      views.add(view);
+    }
+  );
+
   try
   {
-    auto boat = core::PaperBoat::create(10,10);
-    auto boatView = graph::PaperBoatView::create( boat );
-    units.add( boat );
-    views.add( boatView );
+    unitFactory.createUnit< core::PaperBoat >(10,10);
   }
   catch( GlException const & ex )
   {
