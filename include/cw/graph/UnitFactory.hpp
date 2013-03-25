@@ -1,12 +1,3 @@
-//
-// TODO - UnitFactory
-//  - create the unit
-//  - store in UnitContainer (call unitcreated callback)
-//  - register at InputDistributor
-//  - create the xView (TODO needs an AbstractFactory)
-//  - store in ViewContainer (call viewcreated callback)
-//
-
 #ifndef CW_GRAPH_UNIT_FACTORY_HPP_INC
 #define CW_GRAPH_UNIT_FACTORY_HPP_INC
 
@@ -19,6 +10,7 @@ namespace cw
 {
   namespace graph
   {
+    //  UnitFactory - TODO register at InputDistributor
     template<class ViewPolicy>
     class UnitFactory
     {
