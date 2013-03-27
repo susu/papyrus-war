@@ -1,6 +1,6 @@
 #include <GL/glfw.h>
 
-#include <cw/graph/GlfwCallbackRepo.hpp>
+#include <cw/opengl/GlfwCallbackRepo.hpp>
 #include <cw/core/Logger.hpp>
 
 namespace
@@ -10,7 +10,7 @@ namespace
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
 GlfwCallbackRepo* GlfwCallbackRepo::m_instance = nullptr;
 

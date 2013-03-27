@@ -1,11 +1,11 @@
-#ifndef CW_GRAPH_GL_EXCEPTION_HPP_INC
-#define CW_GRAPH_GL_EXCEPTION_HPP_INC
+#ifndef CW_OPENGL_GL_EXCEPTION_HPP_INC
+#define CW_OPENGL_GL_EXCEPTION_HPP_INC
 
 #include <stdexcept>
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
     struct GlException : public std::logic_error
     {

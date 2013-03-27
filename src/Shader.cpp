@@ -1,11 +1,11 @@
-#include <cw/graph/Shader.hpp>
+#include <cw/opengl/Shader.hpp>
 
 #include <fstream>
 #include <sstream>
 #include <vector>
 
 #include <cw/core/Logger.hpp>
-#include <cw/graph/GlException.hpp>
+#include <cw/opengl/GlException.hpp>
 
 namespace
 {
@@ -14,7 +14,7 @@ namespace
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
 
 Shader::Shader( const std::string & filename, GLenum shaderType )

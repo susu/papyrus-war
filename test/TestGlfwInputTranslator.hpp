@@ -6,14 +6,14 @@
 
 #include <GL/glfw.h>
 
-#include <cw/graph/GlfwInputTranslator.hpp>
+#include <cw/opengl/GlfwInputTranslator.hpp>
 
 #include "fake/UnifiedInputHandlerStub.hpp"
 
 Describe(the_glfwInputTranslator)
 {
   fake::UnifiedInputHandlerStub unifiedInputHandler;
-  cw::graph::GlfwInputTranslator translator;
+  cw::opengl::GlfwInputTranslator translator;
 
   the_glfwInputTranslator()
     : translator(unifiedInputHandler)
@@ -22,7 +22,7 @@ Describe(the_glfwInputTranslator)
   It(can_be_instantiated)
   {
     // TODO translator should accept also KeyConfig which contains the needed keymappings
-    cw::graph::GlfwInputTranslator translator(unifiedInputHandler);
+    cw::opengl::GlfwInputTranslator translator(unifiedInputHandler);
   }
 
   It(should_forward_mouse_press_and_release_as_click)

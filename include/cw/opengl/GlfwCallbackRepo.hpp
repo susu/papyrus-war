@@ -1,5 +1,5 @@
-#ifndef CW_GRAPH_GLFW_CALLBACK_REPO_HPP_INC
-#define CW_GRAPH_GLFW_CALLBACK_REPO_HPP_INC
+#ifndef CW_OPENGL_GLFW_CALLBACK_REPO_HPP_INC
+#define CW_OPENGL_GLFW_CALLBACK_REPO_HPP_INC
 
 #include <vector>
 #include <array>
@@ -9,9 +9,9 @@
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
-    class GlfwCallbackRepo : public CallbackRepo
+    class GlfwCallbackRepo : public graph::CallbackRepo
     {
       public:
         // Singleton related functions

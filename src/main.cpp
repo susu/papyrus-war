@@ -1,10 +1,10 @@
 
 #include <iostream>
-#include <cw/graph/OpenGlLoop.hpp>
+#include <cw/opengl/OpenGlLoop.hpp>
 
 int main()
 {
-  cw::graph::OpenGlLoop mainloop;
+  cw::opengl::OpenGlLoop mainloop;
 
   mainloop.run();
 }

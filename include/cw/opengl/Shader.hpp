@@ -1,5 +1,5 @@
-#ifndef CW_GRAPH_SHADER_HPP_INC
-#define CW_GRAPH_SHADER_HPP_INC
+#ifndef CW_OPENGL_SHADER_HPP_INC
+#define CW_OPENGL_SHADER_HPP_INC
 
 #include <GL/glew.h>
 
@@ -7,7 +7,7 @@
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
     class Shader
     {

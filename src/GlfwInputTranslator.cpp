@@ -4,14 +4,14 @@
 
 #include <GL/glfw.h>
 
-#include <cw/graph/GlfwInputTranslator.hpp>
+#include <cw/opengl/GlfwInputTranslator.hpp>
 
 #include <cw/core/UnifiedInputHandler.hpp>
 #include <cw/core/Logger.hpp>
 
 namespace
 {
-  cw::core::Logger logger("graph");
+  cw::core::Logger logger("opengl");
   const std::vector<int> VALID_SCROLL_KEYS =
   {
     GLFW_KEY_LEFT,
@@ -23,7 +23,7 @@ namespace
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
 
 GlfwInputTranslator::GlfwInputTranslator(cw::core::UnifiedInputHandler & inputHandler)
@@ -35,15 +35,17 @@ GlfwInputTranslator::~GlfwInputTranslator()
 {}
 
 template<typename MemPtr>
-void GlfwInputTranslator::regCb( CallbackRepo & repo, CallbackRepo::EventType a,
+void GlfwInputTranslator::regCb( graph::CallbackRepo & repo,
+                                 graph::CallbackRepo::EventType a,
                                  MemPtr method )
 {
   using namespace std::placeholders;
   repo.registerCallback( a, std::bind( method, *this, _1, _2 ) );
 }
 
-void GlfwInputTranslator::registerCallbacks( CallbackRepo & repo )
+void GlfwInputTranslator::registerCallbacks( graph::CallbackRepo & repo )
 {
+  using graph::CallbackRepo;
   regCb(repo, CallbackRepo::MOUSE_BUTTON, &GlfwInputTranslator::mouseButtonEvent );
   regCb(repo, CallbackRepo::MOUSE_POS,    &GlfwInputTranslator::mouseMoveEvent );
   regCb(repo, CallbackRepo::KEY_CALLBACK, &GlfwInputTranslator::keyEvent );

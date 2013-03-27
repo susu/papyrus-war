@@ -12,7 +12,9 @@ namespace cw
   {
     class View;
     typedef Ref<View> ViewRef;
-
+  }
+  namespace opengl
+  {
     class PaperBoatView;
     typedef Ref<PaperBoatView> PaperBoatViewRef;
   }

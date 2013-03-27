@@ -1,5 +1,5 @@
-#ifndef CW_GRAPH_PAPER_BOAT_VIEW_HPP_INC
-#define CW_GRAPH_PAPER_BOAT_VIEW_HPP_INC
+#ifndef CW_OPENGL_PAPER_BOAT_VIEW_HPP_INC
+#define CW_OPENGL_PAPER_BOAT_VIEW_HPP_INC
 
 #include <vector>
 
@@ -12,9 +12,9 @@
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
-    class PaperBoatView : public View
+    class PaperBoatView : public graph::View
     {
       public:
         static PaperBoatViewRef create( core::PaperBoatRef model );

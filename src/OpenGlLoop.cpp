@@ -7,14 +7,15 @@
 #include <cw/core/InputDistributor.hpp>
 #include <cw/core/PaperBoat.hpp>
 
-#include <cw/graph/GlException.hpp>
-#include <cw/graph/GlfwCallbackRepo.hpp>
-#include <cw/graph/OpenGlLoop.hpp>
-#include <cw/graph/View.hpp>
-#include <cw/graph/PaperBoatView.hpp>
-#include <cw/graph/GlfwInputTranslator.hpp>
-#include <cw/graph/OpenGlViewMapping.hpp>
 #include <cw/graph/UnitFactory.hpp>
+#include <cw/graph/View.hpp>
+
+#include <cw/opengl/GlException.hpp>
+#include <cw/opengl/GlfwCallbackRepo.hpp>
+#include <cw/opengl/OpenGlLoop.hpp>
+#include <cw/opengl/PaperBoatView.hpp>
+#include <cw/opengl/GlfwInputTranslator.hpp>
+#include <cw/opengl/OpenGlViewMapping.hpp>
 
 namespace
 {
@@ -25,7 +26,7 @@ namespace
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
 
 void startGlFw();
@@ -58,7 +59,7 @@ void OpenGlLoop::run()
   glfwEnable( GLFW_STICKY_KEYS );
 
   GlfwCallbackRepo::initialize();
-  CallbackRepo & cbRepo = GlfwCallbackRepo::instance();
+  graph::CallbackRepo & cbRepo = GlfwCallbackRepo::instance();
 
   core::Timer timer( glfwGetTime() );
 
@@ -66,10 +67,10 @@ void OpenGlLoop::run()
   graph::ViewContainer views;
 
   core::InputDistributor inputDistributor; // forwards input to units
-  graph::GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
+  GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
-  graph::UnitFactory< OpenGlViewFactory > unitFactory
+  graph::UnitFactory< opengl::OpenGlViewFactory > unitFactory
   (
     [&units]( core::UnitRef unit )
     {

@@ -1,12 +1,12 @@
-#ifndef CW_GRAPH_GLFW_INPUT_TRANSLATOR_HPP_INC
-#define CW_GRAPH_GLFW_INPUT_TRANSLATOR_HPP_INC
+#ifndef CW_OPENGL_GLFW_INPUT_TRANSLATOR_HPP_INC
+#define CW_OPENGL_GLFW_INPUT_TRANSLATOR_HPP_INC
 
 #include <cw/core/UnifiedInputHandler.hpp>
 #include <cw/graph/CallbackRepo.hpp>
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
     class GlfwInputTranslator
     {
@@ -19,7 +19,7 @@ namespace cw
         void mouseWheelEvent(int pos);
         void keyEvent(int key, int action);
 
-        void registerCallbacks( CallbackRepo & repo );
+        void registerCallbacks( graph::CallbackRepo & repo );
       private:
         struct MouseState
         {
@@ -35,8 +35,9 @@ namespace cw
         typedef core::UnifiedInputHandler::ScrollDir ScrollDir;
 
         ScrollDir keyToScrollDir(int key) const;
+
         template<typename MemPtr>
-        void regCb( CallbackRepo & repo, CallbackRepo::EventType a, MemPtr method );
+        void regCb( graph::CallbackRepo & repo, graph::CallbackRepo::EventType a, MemPtr method );
 
         cw::core::UnifiedInputHandler & m_inputHandler;
         MouseState m_mouseState;

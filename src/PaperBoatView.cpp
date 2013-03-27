@@ -1,7 +1,7 @@
-#include <cw/graph/PaperBoatView.hpp>
+#include <cw/opengl/PaperBoatView.hpp>
 
 #include <cw/core/Logger.hpp>
-#include <cw/graph/Shader.hpp>
+#include <cw/opengl/Shader.hpp>
 
 namespace
 {
@@ -10,7 +10,7 @@ namespace
 
 namespace cw
 {
-  namespace graph
+  namespace opengl
   {
 
 PaperBoatViewRef PaperBoatView::create( core::PaperBoatRef model )
