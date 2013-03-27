@@ -18,6 +18,7 @@ void PaperBoat::moveTo(double x, double y)
 
 void PaperBoat::tick()
 {
+  m_pos.y += 0.01;
 }
 
   }
