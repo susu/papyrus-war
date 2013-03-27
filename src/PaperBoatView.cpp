@@ -20,8 +20,8 @@ PaperBoatViewRef PaperBoatView::create( core::PaperBoatRef model )
 
 PaperBoatView::PaperBoatView( core::PaperBoatRef m )
 {
-  m_shaderProgramId = loadShaders( "shaders/PaperBoat/vertex.glsl",
-                                   "shaders/PaperBoat/fragment.glsl" );
+  m_shaderProgramId = loadShaders( "shaders/vertex.glsl",
+                                   "shaders/fragment.glsl" );
   m_model.assign(
   {
     -1.0,  1.0, 0.0,
