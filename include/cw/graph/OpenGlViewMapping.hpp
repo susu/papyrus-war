@@ -19,6 +19,7 @@ namespace cw
         using Mapping = OpenGlViewMapping<T>;
     };
     VIEW_MAPPING(OpenGlViewMapping, cw::core::PaperBoat, cw::graph::PaperBoatView);
+    typedef ViewFactory< OpenGlViewPolicy > OpenGlViewFactory;
   }
 }
 

@@ -11,7 +11,7 @@ namespace cw
   namespace graph
   {
     //  UnitFactory - TODO register at InputDistributor
-    template<class ViewPolicy>
+    template<class Factory>
     class UnitFactory
     {
       public:
@@ -35,7 +35,7 @@ namespace cw
       private:
         UnitCreatedCallback m_unitCallback;
         ViewCreatedCallback m_viewCallback;
-        ViewFactory<ViewPolicy> m_viewFactory;
+        Factory m_viewFactory;
     };
   }
 }

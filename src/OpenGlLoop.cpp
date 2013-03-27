@@ -69,7 +69,7 @@ void OpenGlLoop::run()
   graph::GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
-  graph::UnitFactory< graph::OpenGlViewPolicy > unitFactory
+  graph::UnitFactory< OpenGlViewFactory > unitFactory
   (
     [&units]( core::UnitRef unit )
     {

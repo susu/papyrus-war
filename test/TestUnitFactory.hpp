@@ -20,11 +20,13 @@ struct FakePolicy
   using Mapping = FakeMapping<T>;
 };
 
+typedef cw::graph::ViewFactory<FakePolicy> FakeViewFactory;
+
 Describe(the_UnitFactory)
 {
   cw::core::UnitRef createdUnit;
   Ref< cw::graph::View > createdView;
-  cw::graph::UnitFactory<FakePolicy> factory;
+  cw::graph::UnitFactory<FakeViewFactory> factory;
 
   the_UnitFactory() : factory(
         [this]( cw::core::UnitRef u ) { createdUnit = u; },
