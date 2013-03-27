@@ -1,6 +1,7 @@
 #include <cw/graph/Shader.hpp>
 
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 #include <cw/core/Logger.hpp>
@@ -19,7 +20,9 @@ namespace cw
 Shader::Shader( const std::string & filename, GLenum shaderType )
   : m_filename(filename)
   , m_shaderId( glCreateShader(shaderType) )
-{}
+{
+  glGetShaderiv(m_shaderId, GL_SHADER_TYPE, &m_shaderType);
+}
 
 Shader::~Shader()
 {
@@ -44,10 +47,30 @@ void Shader::read()
 
 void Shader::compile()
 {
-  LOG(DEBUG) << "Compiling shader: " << m_filename;
+  LOG(DEBUG) << getLogMessageHeader() << "compiling: " << m_filename;
   char const * shaderSrcPtr = m_filecontent.c_str();
   glShaderSource( m_shaderId, 1, &shaderSrcPtr, NULL );
   glCompileShader( m_shaderId );
+}
+
+std::string shaderTypeToStr( GLint shaderType )
+{
+  switch(shaderType)
+  {
+    case GL_VERTEX_SHADER:   return "VERTEX_SHADER";
+    case GL_FRAGMENT_SHADER: return "FRAGMENT_SHADER";
+    case GL_GEOMETRY_SHADER: return "GEOMETRY_SHADER";
+    default: return "INVALID SHADER TYPE!";
+  }
+}
+
+std::string Shader::getLogMessageHeader() const
+{
+  std::stringstream ss;
+  ss << "Shader (id=" << m_shaderId <<
+    ", type=" << shaderTypeToStr(m_shaderType) <<
+    ") ";
+  return ss.str();
 }
 
 void Shader::check()
@@ -60,7 +83,7 @@ void Shader::check()
   glGetShaderInfoLog( m_shaderId, logLength, NULL, &shaderErrMsg[0] );
   if (!result)
   {
-    throw GlException( std::string("Shader compilation error: ") + &shaderErrMsg[0] );
+    throw GlException( getLogMessageHeader() + " compile error: " + &shaderErrMsg[0] );
   }
 }
 
@@ -79,7 +102,7 @@ void checkProgram(GLuint progId)
   glGetProgramInfoLog(progId, loglen, NULL, &progErrMsg[0]);
   if (!result)
   {
-    throw GlException( &progErrMsg[0] );
+    throw GlException( std::string("Error with program: ") + &progErrMsg[0] );
   }
 }
 
@@ -104,6 +127,7 @@ GLuint loadShaders(const std::string & vertex_path, const std::string & fragment
   glLinkProgram(programId);
 
   checkProgram(programId);
+  LOG(DEBUG) << "Program created successfully: " << programId;
   return programId;
 }
 

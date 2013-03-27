@@ -24,9 +24,12 @@ namespace cw
         void attachProgram( GLuint programId ) const;
 
       private:
+        std::string getLogMessageHeader() const;
+
         const std::string m_filename;
         std::string       m_filecontent;
         GLuint            m_shaderId;
+        GLint             m_shaderType;
     };
     GLuint loadShaders(const std::string & vertex, const std::string & fragment );
   }
