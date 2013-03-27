@@ -17,9 +17,14 @@ namespace cw
       public:
         typedef std::function< void(core::UnitRef) > UnitCreatedCallback;
         typedef std::function< void( Ref<View> ) > ViewCreatedCallback;
-        UnitFactory( UnitCreatedCallback unitCallback, ViewCreatedCallback viewCallback )
+
+        template<typename... FactoryCtorArgs>
+        UnitFactory( UnitCreatedCallback unitCallback,
+                     ViewCreatedCallback viewCallback,
+                     FactoryCtorArgs&&... args )
           : m_unitCallback( unitCallback )
           , m_viewCallback( viewCallback )
+          , m_viewFactory( std::forward<FactoryCtorArgs>(args)... )
         {
         }
 
