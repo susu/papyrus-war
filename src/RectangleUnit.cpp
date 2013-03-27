@@ -6,8 +6,8 @@ namespace cw
   {
 
 RectangleUnit::RectangleUnit(Pos pos, Pos size)
-  : m_focus(false)
-  , m_pos(pos)
+  : m_pos(pos)
+  , m_focus(false)
   , m_size(size)
 {}
 

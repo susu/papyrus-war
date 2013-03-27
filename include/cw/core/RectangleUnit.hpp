@@ -18,9 +18,10 @@ namespace cw
         virtual bool isOver(double x, double y) const override;
 
         Pos getPos() const;
+      protected:
+        Pos m_pos;
       private:
         bool m_focus;
-        Pos m_pos;
         Pos m_size;
     };
   }
