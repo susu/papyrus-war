@@ -23,6 +23,8 @@ namespace cw
         void check();
         void attachProgram( GLuint programId ) const;
 
+        GLuint getShaderId() const;
+
       private:
         std::string getLogMessageHeader() const;
 

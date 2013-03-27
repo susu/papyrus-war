@@ -29,6 +29,11 @@ Shader::~Shader()
   glDeleteShader( m_shaderId );
 }
 
+GLuint Shader::getShaderId() const
+{
+  return m_shaderId;
+}
+
 void Shader::read()
 {
   m_filecontent = "";

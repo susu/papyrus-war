@@ -8,6 +8,7 @@ GRAPH_SRC= \
   GlfwInputTranslator.cpp \
   Shader.cpp \
   PaperBoatView.cpp \
+  Program.cpp \
 
 CORE_SRC= \
   Logger.cpp \
