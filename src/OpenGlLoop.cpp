@@ -16,6 +16,7 @@
 #include <cw/opengl/PaperBoatView.hpp>
 #include <cw/opengl/GlfwInputTranslator.hpp>
 #include <cw/opengl/OpenGlViewMapping.hpp>
+#include <cw/opengl/Program.hpp>
 
 namespace
 {
@@ -70,6 +71,8 @@ void OpenGlLoop::run()
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
+  Program shaderProgram;
+
   graph::UnitFactory< opengl::OpenGlViewFactory > unitFactory
   (
     [&units]( core::UnitRef unit )
@@ -84,6 +87,9 @@ void OpenGlLoop::run()
 
   try
   {
+    shaderProgram.attachShaderFromFile( "shaders/vertex.glsl", GL_VERTEX_SHADER );
+    shaderProgram.attachShaderFromFile( "shaders/fragment.glsl", GL_FRAGMENT_SHADER );
+    shaderProgram.link();
     unitFactory.createUnit< core::PaperBoat >(0,0);
   }
   catch( GlException const & ex )
