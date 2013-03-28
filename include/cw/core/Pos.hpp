@@ -9,6 +9,7 @@ namespace cw
   {
     struct Pos
     {
+      Pos() : x(0.0), y(0.0) {}
       Pos(double x_, double y_)
         : x(x_), y(y_)
       {}
