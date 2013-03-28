@@ -14,6 +14,7 @@ Logger::~Logger()
 
 std::string getFormattedDate()
 {
+  // TODO std::chrono
   time_t rawtime;
   struct tm * timeinfo;
   static char buffer[255];
