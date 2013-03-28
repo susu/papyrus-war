@@ -9,6 +9,7 @@ GRAPH_SRC= \
   Shader.cpp \
   PaperBoatView.cpp \
   Program.cpp \
+  ProjectionView.cpp \
 
 CORE_SRC= \
   Logger.cpp \

@@ -18,6 +18,9 @@ namespace cw
         void link();
         void check() const;
 
+        GLuint getId() const
+        { return m_programId; }
+
       private:
         GLuint m_programId;
     };
