@@ -2,8 +2,15 @@
 
 #include <vector>
 
+#include <cw/core/Logger.hpp>
+
 #include <cw/opengl/GlException.hpp>
 #include <cw/opengl/Shader.hpp>
+
+namespace
+{
+  cw::core::Logger logger("opengl");
+}
 
 namespace cw
 {
@@ -13,6 +20,7 @@ namespace cw
 Program::Program()
   : m_programId( glCreateProgram() )
 {
+  LOG(DEBUG) << "Program created: id=" << m_programId;
 }
 
 Program::~Program()
@@ -32,6 +40,7 @@ void Program::link()
 {
   glLinkProgram(m_programId);
   check();
+  LOG(DEBUG) << "Program linked successfully: id=" << m_programId;
 }
 
 void Program::check() const
