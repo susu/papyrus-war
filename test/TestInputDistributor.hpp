@@ -1,48 +1,88 @@
 #ifndef TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
 #define TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
 
-#include <igloo/igloo.h>
-#include <igloo/igloo_alt.h>
-
 #include <cw/core/InputDistributor.hpp>
-
-#include "fake/ModelStub.hpp"
 
 using namespace igloo;
 
 Describe(the_InputDistributor)
 {
-  cw::core::InputDistributor dist;
-  Ref<fake::ModelStub> model;
+  typedef cw::core::InputDistributor::CallbackId CallbackId;
 
+  cw::core::InputDistributor dist;
+  bool eventOccured;
+  cw::core::ClickEvent lastEvent;
+
+  int actualNumberOfCalls;
+  int expectedNumberOfCalls;
+
+  // It(should_be_registerable)
   void SetUp()
   {
-    model.reset( new fake::ModelStub );
-    AssertThat( model->hasFocus(), Equals(false) );
-    model->setPos( 100.0, 100.0 );
-    model->setSize( 10.0, 10.0 );
-    dist.registerModel( model );
+    eventOccured = false;
+    dist.registerClickedOn( [this](cw::core::ClickEvent ev)
+    {
+      lastEvent = ev;
+      eventOccured = true;
+    });
+    actualNumberOfCalls = 0;
+    expectedNumberOfCalls = 0;
   }
 
-  It(should_set_focus_on_clicked_model)
+  CallbackId registerSelfCheckerCallback( cw::core::Pos expectedPos )
   {
-    dist.clickedAt( 105, 105 );
-    AssertThat( model->hasFocus(), Equals(true) );
+    CallbackId id = dist.registerClickedOn( [this,expectedPos](cw::core::ClickEvent ev)
+    {
+      ++actualNumberOfCalls;
+      AssertThat( ev.pos, Equals( expectedPos ) );
+    });
+    ++expectedNumberOfCalls;
+    return id;
   }
 
-  It(should_call_moveTo_if_model)
+  It(should_register_and_call_multiple_callbacks)
   {
-    std::cout << "PENDING" << std::endl;
-    using cw::core::Pos;
-    model->setFocus(true);
-    dist.clickedAt( 50, 50 );
-    AssertThat( model->getMoveTarget(), Equals( Pos{50.0, 50.0} ));
+    cw::core::Pos expectedPos( 100.0, 100.0 );
+    registerSelfCheckerCallback( expectedPos );
+    registerSelfCheckerCallback( expectedPos );
+    registerSelfCheckerCallback( expectedPos );
+    registerSelfCheckerCallback( expectedPos );
+
+    dist.clickedAt( 100, 100 );
+    AssertThat( actualNumberOfCalls, Equals( expectedNumberOfCalls ) );
   }
 
-  It(should_remove_focus_if_clicked_on_another_model)
+  It(should_call_the_callback_if_clickedAt_happened)
   {
-    std::cout << "PENDING" << std::endl;
+    dist.clickedAt( 100, 100 );
+    AssertThat( eventOccured, Equals(true) );
+    AssertThat( lastEvent.pos, Equals( cw::core::Pos( 100.0, 100.0 ) ) );
   }
+
+  It(should_return_its_callbackId)
+  {
+    CallbackId id;
+    id = dist.registerClickedOn([](cw::core::ClickEvent){});
+    if(id){}
+  }
+
+  It(should_deregister_callbacks)
+  {
+    cw::core::Pos expectedPos( 100.0, 100.0 );
+    CallbackId id1, id2;
+    id1 = registerSelfCheckerCallback( expectedPos );
+    id2 = registerSelfCheckerCallback( expectedPos );
+
+    dist.unregisterClickedOn( id2 );
+    --expectedNumberOfCalls;
+    dist.clickedAt( 100, 100 );
+
+    AssertThat( actualNumberOfCalls, Equals( expectedNumberOfCalls ) );
+    dist.unregisterClickedOn( id1 );
+    dist.unregisterClickedOn( id2 );
+  }
+
+  // TODO mapping pixel coordinates into WorldCoordinates with ProjectionView...
 };
 
 #endif

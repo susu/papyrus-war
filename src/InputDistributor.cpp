@@ -20,26 +20,40 @@ InputDistributor::InputDistributor()
 InputDistributor::~InputDistributor()
 {}
 
-void InputDistributor::registerModel(Ref<Model> model)
+InputDistributor::CallbackId InputDistributor::registerClickedOn(
+    std::function< void(ClickEvent) > callback )
 {
-  m_models.insert(model);
+  CallbackId max = getNextKey();
+  m_clickedOnCallbacks[ max ] = callback;
+  return max;
+}
+
+void InputDistributor::unregisterClickedOn( CallbackId id )
+{
+  auto toBeDeleted = m_clickedOnCallbacks.find(id);
+  if ( m_clickedOnCallbacks.end() != toBeDeleted )
+  {
+    m_clickedOnCallbacks.erase(toBeDeleted);
+  }
+}
+
+InputDistributor::CallbackId InputDistributor::getNextKey() const
+{
+  if (m_clickedOnCallbacks.empty())
+  {
+    return 0;
+  }
+  return m_clickedOnCallbacks.rbegin()->first + 1;
 }
 
 void InputDistributor::clickedAt(int x, int y)
 {
-  for ( const Ref<Model> & model : m_models )
+  ClickEvent event;
+  event.pos.x = x;
+  event.pos.y = y;
+  for( auto callback : m_clickedOnCallbacks )
   {
-    if ( !model->hasFocus() )
-    {
-      if ( model->isOver(x,y) )
-      {
-        model->setFocus(true);
-      }
-    }
-    else
-    {
-      model->moveTo(x,y);
-    }
+    callback.second( event );
   }
 }
 
