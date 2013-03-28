@@ -10,19 +10,20 @@ namespace cw
 {
   namespace core
   {
+    class Model;
     class InputDistributor : public UnifiedInputHandler
     {
       public:
         InputDistributor();
         virtual ~InputDistributor();
-        void registerUnit( UnitRef unit );
+        void registerModel( Ref<Model> model );
 
         virtual void clickedAt(int x, int y) override;
         virtual void zoom(ZoomDir dir) override;
         virtual void startScroll(ScrollDir dir) override;
         virtual void stopScroll() override;
       private:
-        std::set<UnitRef> m_units;
+        std::set<Ref<Model>> m_models;
     };
   }
 }

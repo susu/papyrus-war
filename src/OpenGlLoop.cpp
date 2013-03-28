@@ -3,11 +3,11 @@
 
 #include <cw/core/Logger.hpp>
 #include <cw/core/Timer.hpp>
-#include <cw/core/Unit.hpp>
+#include <cw/core/Model.hpp>
 #include <cw/core/InputDistributor.hpp>
 #include <cw/core/PaperBoat.hpp>
 
-#include <cw/graph/UnitFactory.hpp>
+#include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/View.hpp>
 
 #include <cw/opengl/GlException.hpp>
@@ -66,10 +66,10 @@ void OpenGlLoop::run()
 
   core::Timer timer( glfwGetTime() );
 
-  core::UnitContainer units;
+  core::ModelContainer models;
   graph::ViewContainer views;
 
-  core::InputDistributor inputDistributor; // forwards input to units
+  core::InputDistributor inputDistributor; // forwards input to models
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
@@ -93,11 +93,11 @@ void OpenGlLoop::run()
   cam.lookAt( 0, 0, 0 );
   cam.orientation( Camera::HEADS_UP );
 
-  graph::UnitFactory< opengl::OpenGlViewFactory > unitFactory
+  graph::ModelFactory< opengl::OpenGlViewFactory > modelFactory
   (
-    [&units]( core::UnitRef unit )
+    [&models]( Ref<core::Model> model )
     {
-      units.add(unit);
+      models.add(model);
     },
     [&views]( graph::ViewRef view )
     {
@@ -106,14 +106,14 @@ void OpenGlLoop::run()
     projectionView
   );
 
-  unitFactory.createUnit< core::PaperBoat >(0,0);
+  modelFactory.create< core::PaperBoat >(0,0);
 
   glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
 
   do
   {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    units.doIt();
+    models.doIt();
     views.doIt();
     glfwSwapBuffers();
     // glfwWaitEvents();

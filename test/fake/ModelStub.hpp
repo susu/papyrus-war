@@ -1,15 +1,15 @@
-#ifndef FAKE_UNIT_STUB_HPP_INC
-#define FAKE_UNIT_STUB_HPP_INC
+#ifndef FAKE_MODEL_STUB_HPP_INC
+#define FAKE_MODEL_STUB_HPP_INC
 
-#include <cw/core/Unit.hpp>
+#include <cw/core/Model.hpp>
 #include <cw/core/Pos.hpp>
 
 namespace fake
 {
-  class UnitStub : public cw::core::Unit
+  class ModelStub : public cw::core::Model
   {
     public:
-      UnitStub()
+      ModelStub()
         : m_focused(false)
         , m_moveTarget(-1,-1)
       {}
@@ -63,7 +63,6 @@ namespace fake
       bool m_focused;
       cw::core::Pos m_moveTarget;
   };
-  typedef std::shared_ptr<UnitStub> UnitStubRef;
 }
 
 #endif

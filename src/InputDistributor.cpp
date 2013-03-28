@@ -2,7 +2,7 @@
 
 #include <cw/core/Logger.hpp>
 #include <cw/core/InputDistributor.hpp>
-#include <cw/core/Unit.hpp>
+#include <cw/core/Model.hpp>
 
 namespace
 {
@@ -20,25 +20,25 @@ InputDistributor::InputDistributor()
 InputDistributor::~InputDistributor()
 {}
 
-void InputDistributor::registerUnit(UnitRef unit)
+void InputDistributor::registerModel(Ref<Model> model)
 {
-  m_units.insert(unit);
+  m_models.insert(model);
 }
 
 void InputDistributor::clickedAt(int x, int y)
 {
-  for ( const UnitRef & unit : m_units )
+  for ( const Ref<Model> & model : m_models )
   {
-    if ( !unit->hasFocus() )
+    if ( !model->hasFocus() )
     {
-      if ( unit->isOver(x,y) )
+      if ( model->isOver(x,y) )
       {
-        unit->setFocus(true);
+        model->setFocus(true);
       }
     }
     else
     {
-      unit->moveTo(x,y);
+      model->moveTo(x,y);
     }
   }
 }

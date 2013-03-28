@@ -27,10 +27,10 @@ namespace cw
         OpenGlViewFactory( ProjectionView & projView )
           : m_projView(projView)
         {}
-        template<typename T, typename Unit>
-        Ref<graph::View> createViewFor(Unit unit)
+        template<typename T, typename Model>
+        Ref<graph::View> createViewFor(Model model)
         {
-          return m_viewFactory.template createViewFor<T>(unit, m_projView);
+          return m_viewFactory.template createViewFor<T>(model, m_projView);
         }
       private:
         ProjectionView & m_projView;

@@ -8,17 +8,17 @@ namespace fake
   class ViewStub : public cw::graph::View
   {
     public:
-      ViewStub( UnitStubRef unit )
-        : m_unit(unit)
+      ViewStub( Ref<ModelStub> model )
+        : m_model(model)
       {}
 
-      UnitStubRef getUnit()
+      Ref<ModelStub> getModel()
       {
-        return m_unit;
+        return m_model;
       }
       virtual void show() override {}
 
-      UnitStubRef m_unit;
+      Ref<ModelStub> m_model;
   };
 }
 

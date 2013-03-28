@@ -1,14 +1,14 @@
 #ifndef CW_CORE_RECTANGLE_UNIT_HPP_INC
 #define CW_CORE_RECTANGLE_UNIT_HPP_INC
 
-#include <cw/core/Unit.hpp>
+#include <cw/core/Model.hpp>
 #include <cw/core/Pos.hpp>
 
 namespace cw
 {
   namespace core
   {
-    class RectangleUnit : public Unit
+    class RectangleUnit : public Model
     {
       public:
         RectangleUnit( Pos pos, Pos size );

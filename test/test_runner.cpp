@@ -14,7 +14,7 @@ namespace
 #include "TestEntityContainer.hpp"
 #include "TestPaperBoat.hpp"
 #include "TestRectangleUnit.hpp"
-#include "TestUnitFactory.hpp"
+#include "TestModelFactory.hpp"
 #include "TestViewFactory.hpp"
 #include "TestEnforce.hpp"
 

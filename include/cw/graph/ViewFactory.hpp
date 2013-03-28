@@ -18,13 +18,13 @@ namespace cw
     class ViewFactory
     {
       public:
-        template<class Unit, typename... CtorArgs>
-        Ref< typename Policy::template Mapping<Unit>::view_type >
+        template<class Model, typename... CtorArgs>
+        Ref< typename Policy::template Mapping<Model>::view_type >
         createViewFor(CtorArgs&&... args)
         {
           return
-            Ref< typename Policy::template Mapping<Unit>::view_type>
-            ( new typename Policy::template Mapping<Unit>::view_type
+            Ref< typename Policy::template Mapping<Model>::view_type>
+            ( new typename Policy::template Mapping<Model>::view_type
               ( std::forward<CtorArgs>(args)... ) );
         }
     };

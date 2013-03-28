@@ -1,5 +1,5 @@
-#ifndef CW_CORE_UNIT_HPP_INC
-#define CW_CORE_UNIT_HPP_INC
+#ifndef CW_CORE_MODEL_HPP_INC
+#define CW_CORE_MODEL_HPP_INC
 
 #include <cw/core/EntityContainer.hpp>
 
@@ -7,7 +7,7 @@ namespace cw
 {
   namespace core
   {
-    class Unit
+    class Model
     {
       public:
         virtual bool hasFocus() const = 0;
@@ -17,7 +17,7 @@ namespace cw
 
         virtual void tick() = 0;
     };
-    typedef EntityContainer<Unit, &Unit::tick> UnitContainer;
+    typedef EntityContainer<Model, &Model::tick> ModelContainer;
   }
 }
 

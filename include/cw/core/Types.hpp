@@ -10,9 +10,6 @@ namespace cw
 {
   namespace core
   {
-    class Unit;
-    typedef Ref<Unit> UnitRef;
-
     class PaperBoat;
     typedef Ref<PaperBoat> PaperBoatRef;
   }
