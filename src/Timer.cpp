@@ -1,5 +1,7 @@
 #include <cw/core/Timer.hpp>
 
+#include <cw/Enforce.hpp>
+
 namespace cw
 {
   namespace core
@@ -20,7 +22,7 @@ Timer::TimeType Timer::getElapsed() const
 
 void Timer::updateCurrentTime(TimeType newTime)
 {
-  // TODO ENFORCE( newTime >= m_currentTime, "Invalid time update request!" );
+  ENFORCE( newTime >= m_currentTime, "Invalid time update request!" );
   m_currentTime = newTime;
   shotTimers();
 }

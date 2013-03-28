@@ -4,6 +4,7 @@
 
 #include <GL/glfw.h>
 
+#include <cw/Enforce.hpp>
 #include <cw/opengl/GlfwInputTranslator.hpp>
 
 #include <cw/core/UnifiedInputHandler.hpp>
@@ -128,8 +129,8 @@ GlfwInputTranslator::ScrollDir GlfwInputTranslator::keyToScrollDir(int key) cons
     case GLFW_KEY_UP:    return ScrollDir::UP;
     case GLFW_KEY_DOWN:  return ScrollDir::DOWN;
   }
-  // TODO ENFORCE();
-  throw std::logic_error("Cannot interpret key");
+  ENFORCE(false, "Cannot interpret key!");
+  throw "unreachable";
 }
 
   }

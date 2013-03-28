@@ -19,7 +19,7 @@ TODO list
 
 Always a good idea to ``ack --cpp TODO`` or ``grep -nrs TODO``
 
- * ENFORCE idiom
+ * [DONE] ENFORCE idiom
  * [DONE] include __PRETTY_FUNCTION__ to logs
  * Wrapper class for GLFW (at least some RAII wrapper for init-terminate)
  * UnitFactory
