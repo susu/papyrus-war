@@ -3,6 +3,8 @@
 
 #include <cw/graph/View.hpp>
 
+#include "ModelStub.hpp"
+
 namespace fake
 {
   class ViewStub : public cw::graph::View
