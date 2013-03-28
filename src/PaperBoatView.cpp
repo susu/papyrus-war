@@ -1,7 +1,17 @@
 #include <cw/opengl/PaperBoatView.hpp>
 
+#include <sstream>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <cw/core/Logger.hpp>
+#include <cw/core/Pos.hpp>
+#include <cw/core/PaperBoat.hpp>
+
+#include <cw/opengl/GlException.hpp>
 #include <cw/opengl/Shader.hpp>
+#include <cw/opengl/ProjectionView.hpp>
 
 namespace
 {
@@ -13,20 +23,15 @@ namespace cw
   namespace opengl
   {
 
-PaperBoatViewRef PaperBoatView::create( core::PaperBoatRef model )
+PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
+  : m_paperBoatModel(m)
+  , m_projView(projView)
 {
-  return PaperBoatViewRef( new PaperBoatView(model) );
-}
-
-PaperBoatView::PaperBoatView( core::PaperBoatRef m )
-{
-  m_shaderProgramId = loadShaders( "shaders/vertex.glsl",
-                                   "shaders/fragment.glsl" );
   m_model.assign(
   {
-    -1.0,  1.0, 0.0,
-     1.0,  1.0, 0.0,
-    -1.0, -1.0, 0.0,
+    -1.0f, -1.0f, 0.0f,
+     1.0f, -1.0f, 0.0f,
+     0.0f,  1.0f, 0.0f,
   });
   glGenBuffers(1, &m_vertexBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -34,16 +39,23 @@ PaperBoatView::PaperBoatView( core::PaperBoatRef m )
                m_model.size() * sizeof(m_model[0]),
                &m_model[0],
                GL_STATIC_DRAW );
-  LOG(DEBUG) << "GL buffers set up.";
+
+  int attrLoc = glGetAttribLocation(m_projView.getProgramId(), "vertexPos_modelspace");
+  if (attrLoc == -1) throw GlException( "vertexPos_modelspace is not a valid attrib!" );
+  m_vertexPositionModelSpaceId = attrLoc;
 }
 
 void PaperBoatView::show()
 {
-  glUseProgram( m_shaderProgramId );
+  core::Pos modelPos = m_paperBoatModel->getPos();
+  double x = modelPos.x;
+  double y = modelPos.y;
+  glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, 0.0f ) );
+  m_projView.sendMVP( modelMatrix );
 
   glEnableVertexAttribArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,nullptr);
+  glVertexAttribPointer(m_vertexPositionModelSpaceId,3,GL_FLOAT,GL_FALSE,0,nullptr);
 
   glDrawArrays(GL_TRIANGLES, 0, 3);
   glDisableVertexAttribArray(0);
