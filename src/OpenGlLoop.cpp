@@ -84,13 +84,14 @@ void OpenGlLoop::run()
 
   try
   {
-    unitFactory.createUnit< core::PaperBoat >(10,10);
+    unitFactory.createUnit< core::PaperBoat >(0,0);
   }
   catch( GlException const & ex )
   {
     LOG_EXCEPTION( ex );
     return;
   }
+  glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
 
   do
   {
