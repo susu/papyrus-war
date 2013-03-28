@@ -3,8 +3,7 @@
 
 #include <memory>
 
-template<class T>
-using Ref = std::shared_ptr<T>;
+#include <cw/core/Types.hpp>
 
 namespace cw
 {

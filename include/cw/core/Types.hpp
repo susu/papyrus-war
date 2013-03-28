@@ -3,15 +3,18 @@
 
 #include <memory>
 
+template<class T>
+using Ref = std::shared_ptr<T>;
+
 namespace cw
 {
   namespace core
   {
     class Unit;
-    typedef std::shared_ptr<Unit> UnitRef;
+    typedef Ref<Unit> UnitRef;
 
     class PaperBoat;
-    typedef std::shared_ptr<PaperBoat> PaperBoatRef;
+    typedef Ref<PaperBoat> PaperBoatRef;
   }
 }
 
