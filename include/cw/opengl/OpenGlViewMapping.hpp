@@ -4,7 +4,9 @@
 #include <cw/core/PaperBoat.hpp>
 #include <cw/graph/ViewFactory.hpp>
 
+#include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/PaperBoatView.hpp>
+
 namespace cw
 {
   namespace opengl
@@ -18,7 +20,22 @@ namespace cw
         using Mapping = OpenGlViewMapping<T>;
     };
     VIEW_MAPPING(OpenGlViewMapping, cw::core::PaperBoat, cw::opengl::PaperBoatView);
-    typedef graph::ViewFactory< OpenGlViewPolicy > OpenGlViewFactory;
+
+    class OpenGlViewFactory
+    {
+      public:
+        OpenGlViewFactory( ProjectionView & projView )
+          : m_projView(projView)
+        {}
+        template<typename T, typename Unit>
+        Ref<graph::View> createViewFor(Unit unit)
+        {
+          return m_viewFactory.template createViewFor<T>(unit, m_projView);
+        }
+      private:
+        ProjectionView & m_projView;
+        graph::ViewFactory< OpenGlViewPolicy > m_viewFactory;
+    };
   }
 }
 

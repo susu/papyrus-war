@@ -17,6 +17,7 @@
 #include <cw/opengl/GlfwInputTranslator.hpp>
 #include <cw/opengl/OpenGlViewMapping.hpp>
 #include <cw/opengl/Program.hpp>
+#include <cw/opengl/ProjectionView.hpp>
 
 namespace
 {
@@ -73,6 +74,19 @@ void OpenGlLoop::run()
 
   Program shaderProgram;
 
+  try
+  {
+    shaderProgram.attachShaderFromFile( "shaders/vertex.glsl", GL_VERTEX_SHADER );
+    shaderProgram.attachShaderFromFile( "shaders/fragment.glsl", GL_FRAGMENT_SHADER );
+    shaderProgram.link();
+  }
+  catch( GlException const & ex )
+  {
+    LOG_EXCEPTION( ex );
+    return;
+  }
+
+  ProjectionView projectionView(shaderProgram);
   graph::UnitFactory< opengl::OpenGlViewFactory > unitFactory
   (
     [&units]( core::UnitRef unit )
@@ -82,21 +96,12 @@ void OpenGlLoop::run()
     [&views]( graph::ViewRef view )
     {
       views.add(view);
-    }
+    },
+    projectionView
   );
 
-  try
-  {
-    shaderProgram.attachShaderFromFile( "shaders/vertex.glsl", GL_VERTEX_SHADER );
-    shaderProgram.attachShaderFromFile( "shaders/fragment.glsl", GL_FRAGMENT_SHADER );
-    shaderProgram.link();
-    unitFactory.createUnit< core::PaperBoat >(0,0);
-  }
-  catch( GlException const & ex )
-  {
-    LOG_EXCEPTION( ex );
-    return;
-  }
+  unitFactory.createUnit< core::PaperBoat >(0,0);
+
   glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
 
   do
