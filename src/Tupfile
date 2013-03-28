@@ -10,6 +10,7 @@ GRAPH_SRC= \
   PaperBoatView.cpp \
   Program.cpp \
   ProjectionView.cpp \
+  Camera.cpp \
 
 CORE_SRC= \
   Logger.cpp \

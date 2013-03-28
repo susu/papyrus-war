@@ -18,6 +18,7 @@
 #include <cw/opengl/OpenGlViewMapping.hpp>
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
+#include <cw/opengl/Camera.hpp>
 
 namespace
 {
@@ -87,6 +88,11 @@ void OpenGlLoop::run()
   }
 
   ProjectionView projectionView(shaderProgram);
+  Camera cam( projectionView );
+  cam.setPos( 0, 0, -13 );
+  cam.lookAt( 0, 0, 0 );
+  cam.orientation( Camera::HEADS_UP );
+
   graph::UnitFactory< opengl::OpenGlViewFactory > unitFactory
   (
     [&units]( core::UnitRef unit )
