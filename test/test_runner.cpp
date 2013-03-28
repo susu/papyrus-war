@@ -16,6 +16,7 @@ namespace
 #include "TestRectangleUnit.hpp"
 #include "TestUnitFactory.hpp"
 #include "TestViewFactory.hpp"
+#include "TestEnforce.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
