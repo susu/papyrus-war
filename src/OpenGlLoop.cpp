@@ -93,18 +93,17 @@ void OpenGlLoop::run()
   cam.lookAt( 0, 0, 0 );
   cam.orientation( Camera::HEADS_UP );
 
-  graph::ModelFactory< opengl::OpenGlViewFactory > modelFactory
-  (
-    [&models]( Ref<core::Model> model )
-    {
-      models.add(model);
-    },
-    [&views]( graph::ViewRef view )
-    {
-      views.add(view);
-    },
-    projectionView
-  );
+  auto modelCallback = [&models]( Ref<core::Model> model )
+  {
+    models.add(model);
+  };
+  auto viewCallback = [&views]( graph::ViewRef view )
+  {
+    views.add(view);
+  };
+
+  graph::ModelFactory< opengl::OpenGlViewFactory > modelFactory(
+    modelCallback, viewCallback, projectionView);
 
   modelFactory.create< core::PaperBoat >(0,0);
 
