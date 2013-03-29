@@ -1,5 +1,8 @@
 #include "igloo/igloo.h"
 
+// should be included before GL/gl.h
+#include <GL/glew.h>
+
 #include <cw/core/Logger.hpp>
 namespace
 {
@@ -17,6 +20,7 @@ namespace
 #include "TestModelFactory.hpp"
 #include "TestViewFactory.hpp"
 #include "TestEnforce.hpp"
+#include "TestProgram.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
