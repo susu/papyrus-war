@@ -15,7 +15,6 @@ namespace cw
     {
       Pos pos;
     };
-    class Model;
     class InputDistributor : public UnifiedInputHandler
     {
       public:
