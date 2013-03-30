@@ -33,7 +33,6 @@ namespace cw
         GLuint            m_shaderId;
         GLint             m_shaderType;
     };
-    GLuint loadShaders(const std::string & vertex, const std::string & fragment );
   }
 }
 

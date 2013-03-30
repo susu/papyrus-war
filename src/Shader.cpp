@@ -110,31 +110,5 @@ void checkProgram(GLuint progId)
     throw GlException( std::string("Error with program: ") + &progErrMsg[0] );
   }
 }
-
-GLuint loadShaders(const std::string & vertex_path, const std::string & fragment_path )
-{
-  Shader vertex( vertex_path, GL_VERTEX_SHADER );
-  Shader fragment( fragment_path, GL_FRAGMENT_SHADER );
-
-  vertex.read();
-  fragment.read();
-
-  vertex.compile();
-  fragment.compile();
-
-  vertex.check();
-  fragment.check();
-
-  GLuint programId = glCreateProgram();
-
-  vertex.attachProgram( programId );
-  fragment.attachProgram( programId );
-  glLinkProgram(programId);
-
-  checkProgram(programId);
-  LOG(DEBUG) << "Program created successfully: " << programId;
-  return programId;
-}
-
   }
 }
