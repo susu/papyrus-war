@@ -23,6 +23,36 @@ class ShadersRepo
       m_shaders.insert( std::make_pair( newIndex, state ) );
       return newIndex;
     }
+
+    GLint getShaderiv(GLuint index, GLenum infoType) const
+    {
+      auto it = m_shaders.find(index);
+      assert( it != m_shaders.end() );
+      return it->second.type;
+    }
+
+    void compileShader(GLuint index)
+    {
+      auto it = m_shaders.find(index);
+      assert( it != m_shaders.end() );
+      it->second.compiled = true;
+    }
+
+    std::vector<ShaderState> shaders() const
+    {
+      std::vector<ShaderState> ret;
+      ret.reserve( m_shaders.size() );
+      for ( auto const & i : m_shaders )
+      {
+        ret.push_back( i.second );
+      }
+      return ret;
+    }
+
+    void clear()
+    {
+      m_shaders.clear();
+    }
   private:
     GLuint getNewIndex() const
     {
@@ -41,7 +71,7 @@ extern "C"
 {
   GLuint stub_CreateProgram()
   {
-    std::cout << "SEAM WORK!" << std::endl;
+    LOG(DEBUG);
     return 0;
   }
 
@@ -51,10 +81,10 @@ extern "C"
     return shaderRepo.createShader(type);
   }
 
-  void stub_GetShaderiv(GLuint,GLenum,GLint* out)
+  void stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
   {
     LOG(DEBUG);
-    *out = GL_VERTEX_SHADER;
+    *out = shaderRepo.getShaderiv(index, infoType);
   }
 
   void stub_DeleteShader(GLuint)
@@ -70,6 +100,7 @@ extern "C"
   void stub_CompileShader(GLuint id)
   {
     LOG(DEBUG);
+    shaderRepo.compileShader(id);
   }
 
   GLenum glewInit()
