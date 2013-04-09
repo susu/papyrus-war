@@ -96,19 +96,5 @@ void Shader::attachProgram( GLuint programId ) const
 {
   glAttachShader(programId, m_shaderId);
 }
-
-void checkProgram(GLuint progId)
-{
-  GLint result = GL_FALSE;
-  int loglen = 0;
-  glGetProgramiv(progId, GL_LINK_STATUS, &result );
-  glGetProgramiv(progId, GL_INFO_LOG_LENGTH, &loglen);
-  std::vector<char> progErrMsg( std::max(loglen, int(1)) );
-  glGetProgramInfoLog(progId, loglen, NULL, &progErrMsg[0]);
-  if (!result)
-  {
-    throw GlException( std::string("Error with program: ") + &progErrMsg[0] );
-  }
-}
   }
 }
