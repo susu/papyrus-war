@@ -2,7 +2,7 @@
 #define TEST_OPENGL_PROGRAM_HPP_INC
 
 #include <cw/opengl/Program.hpp>
-#include "openglstub/program.h"
+#include "openglstub/stubs.h"
 
 Describe(the_Program)
 {
