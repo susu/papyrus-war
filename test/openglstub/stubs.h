@@ -50,6 +50,11 @@ extern "C"
   void stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
   {}
 
+  GLint stub_GetUniformLocation(GLuint, const GLchar*)
+  {
+    return 1;
+  }
+
   GLenum glewInit()
   {
     __glewCreateProgram = &stub_CreateProgram;
@@ -59,6 +64,7 @@ extern "C"
     __glewShaderSource = &stub_ShaderSource;
     __glewCompileShader = &stub_CompileShader;
     __glewGetShaderInfoLog = &stub_GetShaderInfoLog;
+    __glewGetUniformLocation = &stub_GetUniformLocation;
     return 0;
   }
 }

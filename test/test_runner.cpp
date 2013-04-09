@@ -22,6 +22,7 @@ namespace
 #include "TestEnforce.hpp"
 #include "TestProgram.hpp"
 #include "TestShader.hpp"
+#include "TestProjectionView.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
