@@ -24,10 +24,15 @@ class ShadersRepo
       return newIndex;
     }
 
-    GLint getShaderiv(GLuint index, GLenum infoType) const
+    GLint getShaderiv(GLuint index, GLenum infoType)
     {
       auto it = m_shaders.find(index);
       assert( it != m_shaders.end() );
+      if (GL_COMPILE_STATUS == infoType)
+      {
+        it->second.checked = true;
+        return it->second.compiled;
+      }
       return it->second.type;
     }
 
@@ -103,6 +108,9 @@ extern "C"
     shaderRepo.compileShader(id);
   }
 
+  void stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
+  {}
+
   GLenum glewInit()
   {
     __glewCreateProgram = &stub_CreateProgram;
@@ -111,6 +119,7 @@ extern "C"
     __glewDeleteShader = &stub_DeleteShader;
     __glewShaderSource = &stub_ShaderSource;
     __glewCompileShader = &stub_CompileShader;
+    __glewGetShaderInfoLog = &stub_GetShaderInfoLog;
     return 0;
   }
 }

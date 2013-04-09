@@ -22,6 +22,15 @@ Describe(the_Shader)
     shader.compile();
     AssertThat( shaderRepo.shaders().back().compiled, Equals(true) );
   }
+
+  It(can_check_the_shader_state)
+  {
+    cw::opengl::Shader shader( "", GL_VERTEX_SHADER );
+    shader.compile();
+    shader.check();
+
+    AssertThat( shaderRepo.shaders().back().checked, Equals(true) );
+  }
 };
 
 #endif
