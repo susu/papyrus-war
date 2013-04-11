@@ -26,7 +26,7 @@ ifeq (@(DEBUG_SYM),y)
   CXXFLAGS+= -g -DCW_DEBUG
 endif
 
-OPENGL_LIBS= -lglfw -lGLEW
+OPENGL_LIBS= -lglfw -lGLEW -lGL
 
 LIBCW_GRAPH=cellulose-graphics
 LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH).so
