@@ -11,6 +11,7 @@ namespace cw
 {
   namespace core
   {
+    class PickingInterface;
     struct ClickEvent
     {
       Pos pos;
@@ -20,7 +21,7 @@ namespace cw
       public:
         typedef unsigned long long CallbackId;
         typedef std::function< void(ClickEvent) > ClickedOnCallback;
-        InputDistributor();
+        InputDistributor( const PickingInterface & );
         virtual ~InputDistributor();
 
         CallbackId registerClickedOn( ClickedOnCallback );
@@ -33,6 +34,7 @@ namespace cw
       private:
         CallbackId getNextKey() const;
         std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
+        const PickingInterface & m_picking;
     };
   }
 }

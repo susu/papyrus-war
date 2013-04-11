@@ -1,20 +1,27 @@
 #ifndef TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
 #define TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
 
+#include "fake/PickingStub.hpp"
+
 #include <cw/core/InputDistributor.hpp>
 
 using namespace igloo;
 
-Describe(the_InputDistributor)
+Describe(AInputDistributor)
 {
   typedef cw::core::InputDistributor::CallbackId CallbackId;
 
+  fake::PickingStub pickingStub;
   cw::core::InputDistributor dist;
   bool eventOccured;
   cw::core::ClickEvent lastEvent;
 
   int actualNumberOfCalls;
   int expectedNumberOfCalls;
+
+  AInputDistributor()
+    : dist( pickingStub )
+  {}
 
   // It(should_be_registerable)
   void SetUp()
@@ -83,6 +90,10 @@ Describe(the_InputDistributor)
   }
 
   // TODO mapping pixel coordinates into WorldCoordinates with ProjectionView...
+  It(should_map_2D_mouse_coordinates_into_3D_WorldCoordinates)
+  {
+    // NOTE assuming surface is at Z=0
+  }
 };
 
 #endif

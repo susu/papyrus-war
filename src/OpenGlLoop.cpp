@@ -19,6 +19,7 @@
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/Camera.hpp>
+#include <cw/opengl/GlmPicking.hpp>
 
 namespace
 {
@@ -69,10 +70,6 @@ void OpenGlLoop::run()
   core::ModelContainer models;
   graph::ViewContainer views;
 
-  core::InputDistributor inputDistributor; // forwards input to models
-  GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
-  inputTranslator.registerCallbacks( cbRepo );
-
   Program shaderProgram;
 
   try
@@ -92,6 +89,12 @@ void OpenGlLoop::run()
   cam.setPos( 0, 0, -13 );
   cam.lookAt( 0, 0, 0 );
   cam.orientation( Camera::HEADS_UP );
+
+  GlmPicking glmPicking;
+  core::InputDistributor inputDistributor( glmPicking ); // forwards input to models
+  GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
+  inputTranslator.registerCallbacks( cbRepo );
+
 
   auto modelCallback = [&models]( Ref<core::Model> model )
   {
