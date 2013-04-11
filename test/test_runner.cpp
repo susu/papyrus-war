@@ -23,6 +23,7 @@ namespace
 #include "TestProgram.hpp"
 #include "TestShader.hpp"
 #include "TestProjectionView.hpp"
+#include "TestGlmPicking.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
