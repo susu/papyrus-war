@@ -3,10 +3,14 @@
 
 #include <cw/core/PickingInterface.hpp>
 
-namespace cw {
-  namespace opengl {
+namespace cw
+{
+  namespace opengl
+  {
     class GlmPicking : public core::PickingInterface
     {
+      public:
+        virtual core::Pos3d unProject( core::Pos ) override;
     };
   }
 }

@@ -11,6 +11,7 @@ GRAPH_SRC= \
   Program.cpp \
   ProjectionView.cpp \
   Camera.cpp \
+  GlmPicking.cpp \
 
 CORE_SRC= \
   Logger.cpp \

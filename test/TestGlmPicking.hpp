@@ -5,13 +5,22 @@
 
 Describe(AGlmPicking)
 {
-  It(can_be_instantiated)
+  Ref<cw::opengl::Program> prog;
+  Ref<cw::opengl::ProjectionView> projView;
+  Ref<cw::opengl::GlmPicking> picking;
+  void SetUp()
   {
-    cw::opengl::Program prog;
-    cw::opengl::ProjectionView projView(prog);
+    prog.reset( new cw::opengl::Program );
+    projView.reset( new cw::opengl::ProjectionView(*prog) );
+    picking.reset( new cw::opengl::GlmPicking );
+  }
 
-    cw::opengl::GlmPicking picking;
-    std::cout << &picking << std::endl;
+  It(can_respond_same_pixels_if_matrices_are_identities)
+  {
+    cw::core::Pos click( 230, 123 );
+    auto worldCoord = picking->unProject( click );
+
+    AssertThat( worldCoord, Equals( cw::core::Pos3d( 230.0, 123.0, 0.0 ) ) );
   }
 };
 
