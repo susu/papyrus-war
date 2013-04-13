@@ -27,6 +27,12 @@ namespace cw
 
         void sendMVP( const glm::mat4 & model = glm::mat4(1.0) );
 
+        const glm::mat4 & getProjectionMatrix() const
+        { return m_projectionMatrix; }
+
+        const glm::mat4 & getViewMatrix() const
+        { return m_viewMatrix; }
+
       private:
         glm::mat4 m_projectionMatrix;
         glm::mat4 m_viewMatrix;
