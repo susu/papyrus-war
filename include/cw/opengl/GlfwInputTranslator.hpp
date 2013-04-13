@@ -14,6 +14,10 @@ namespace cw
         GlfwInputTranslator( cw::core::UnifiedInputHandler & );
         ~GlfwInputTranslator();
 
+        GlfwInputTranslator(GlfwInputTranslator&) = delete;
+        GlfwInputTranslator(GlfwInputTranslator&&) = delete;
+        void operator=(GlfwInputTranslator) = delete;
+
         void mouseMoveEvent(int x, int y);
         void mouseButtonEvent(int btn, int action);
         void mouseWheelEvent(int pos);

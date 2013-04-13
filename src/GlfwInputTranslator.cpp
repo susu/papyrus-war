@@ -41,7 +41,7 @@ void GlfwInputTranslator::regCb( graph::CallbackRepo & repo,
                                  MemPtr method )
 {
   using namespace std::placeholders;
-  repo.registerCallback( a, std::bind( method, *this, _1, _2 ) );
+  repo.registerCallback( a, std::bind( method, std::ref(*this), _1, _2 ) );
 }
 
 void GlfwInputTranslator::registerCallbacks( graph::CallbackRepo & repo )
