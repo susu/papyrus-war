@@ -29,13 +29,14 @@ namespace cw
         }
 
         template<class T, typename... Args>
-        void create(Args&&... args)
+        Ref<T> create(Args&&... args)
         {
           Ref<T> model( new T( std::forward<Args>(args)... ) );
           m_modelCallback(model);
 
           auto view = m_viewFactory.template createViewFor<T>( model );
           m_viewCallback(view);
+          return model;
         }
       private:
         ModelCreatedCallback m_modelCallback;
