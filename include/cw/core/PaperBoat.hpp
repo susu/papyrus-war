@@ -16,6 +16,8 @@ namespace cw
 
         virtual void moveTo(double x, double y) override;
         virtual void tick() override;
+
+        void setPos( Pos p );
     };
   }
 }

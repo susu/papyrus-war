@@ -9,6 +9,7 @@
 
 #include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/View.hpp>
+#include <cw/graph/ScreenSize.hpp>
 
 #include <cw/opengl/GlException.hpp>
 #include <cw/opengl/GlfwCallbackRepo.hpp>
@@ -19,7 +20,7 @@
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/Camera.hpp>
-#include <cw/opengl/GlmPicking.hpp>
+#include <cw/opengl/RayCastPicking.hpp>
 
 namespace
 {
@@ -71,6 +72,7 @@ void OpenGlLoop::run()
   graph::ViewContainer views;
 
   Program shaderProgram;
+  graph::ScreenSize screen( SCREEN_X, SCREEN_Y );
 
   try
   {
@@ -86,12 +88,12 @@ void OpenGlLoop::run()
 
   ProjectionView projectionView(shaderProgram);
   Camera cam( projectionView );
-  cam.setPos( 0, 0, -13 );
+  cam.setPos( 6, 7, -13 );
   cam.lookAt( 0, 0, 0 );
   cam.orientation( Camera::HEADS_UP );
 
-  GlmPicking glmPicking;
-  core::InputDistributor inputDistributor( glmPicking ); // forwards input to models
+  RayCastPicking picking( projectionView, screen );
+  core::InputDistributor inputDistributor( picking ); // forwards input to models
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
 
@@ -108,16 +110,37 @@ void OpenGlLoop::run()
   graph::ModelFactory< opengl::OpenGlViewFactory > modelFactory(
     modelCallback, viewCallback, projectionView);
 
-  modelFactory.create< core::PaperBoat >(0,0);
+  auto boat = modelFactory.create< core::PaperBoat >(0,0);
+
+  inputDistributor.registerClickedOn(
+  [boat, &projectionView, &picking]( core::ClickEvent click )
+  {
+    LOG(DEBUG) << "click: x=" << click.pos.x << " y=" << click.pos.y;
+    auto worldSpace = picking.unProject( click.pos );
+    core::Pos p( worldSpace.x, worldSpace.y );
+    boat->setPos( p );
+  });
 
   glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
 
+  double camX = 0;
+  double camY = 0;
+  double angle = 0;
   do
   {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+    // TESTCODE TODO: delete
+    angle+= 0.01;
+    camX = 10* cos(angle);
+    camY = 10* sin(angle);
+    cam.setPos( camX, camY, -13 );
+    // TESTCODE
+
     models.doIt();
     views.doIt();
     glfwSwapBuffers();
+
     // glfwWaitEvents();
     timer.updateCurrentTime( glfwGetTime() );
   }
