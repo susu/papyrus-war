@@ -1,6 +1,18 @@
 Cellulose War
 =============
 
+Be the best and build your economy for creating paperboats!
+Recycle paper to save the trees! Build unique ships, customize them with office tools!
+
+Download binaries
+-----------------
+
+ * [windows]()
+ * [linux]()
+
+Development
+===========
+
 Get the source
 --------------
 
