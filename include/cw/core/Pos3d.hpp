@@ -24,6 +24,13 @@ namespace cw
       o << "Pos3d(" << pos.x << "," << pos.y << "," << pos.z << ")";
       return o;
     }
+
+    inline Pos3d operator-(Pos3d const & l, Pos3d const & r)
+    {
+      return Pos3d( l.x - r.x,
+                    l.y - r.y,
+                    l.z - r.z );
+    }
   }
 }
 
