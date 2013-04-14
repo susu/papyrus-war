@@ -30,6 +30,7 @@ RayCastPicking::~RayCastPicking()
 
 core::Pos3d RayCastPicking::unProject( core::Pos p )
 {
+  // TODO refactor this function
   core::Pos shifted( p.x, m_screenSize.y - p.y );
 
   glm::vec3 screenPos( shifted.x, shifted.y, NEAR_END );
