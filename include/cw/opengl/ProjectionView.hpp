@@ -24,6 +24,7 @@ namespace cw
         { return m_programId; }
 
         void setViewMatrix( const glm::mat4& view );
+        void setProjectionMatrix( const glm::mat4& proj );
 
         void sendMVP( const glm::mat4 & model = glm::mat4(1.0) );
 

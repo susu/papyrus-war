@@ -34,6 +34,11 @@ void ProjectionView::setViewMatrix( const glm::mat4& view )
   m_viewMatrix = view;
 }
 
+void ProjectionView::setProjectionMatrix( const glm::mat4 & projection )
+{
+  m_projectionMatrix = projection;
+}
+
 void ProjectionView::sendMVP( const glm::mat4 & model )
 {
   glm::mat4 mvp = m_projectionMatrix * m_viewMatrix * model; // model is identity by default

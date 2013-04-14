@@ -5,10 +5,13 @@
 #include <iostream>
 
 #include "ShaderRepo.hpp"
+#include "ProgramRepo.hpp"
 
 namespace glstub
 {
   ShadersRepo shaderRepo;
+  ProgramRepo programRepo;
+  GLuint lastProgram;
 }
 
 extern "C"
@@ -16,7 +19,7 @@ extern "C"
   GLuint stub_CreateProgram()
   {
     LOG(DEBUG);
-    return 0;
+    return glstub::programRepo.createProgram();
   }
 
   GLuint stub_CreateShader(GLenum type)
@@ -55,6 +58,16 @@ extern "C"
     return 1;
   }
 
+  void stub_UseProgram( GLuint programId )
+  {
+    glstub::lastProgram = programId;
+  }
+
+  void stub_UniformMatrix4fv(int matrixId, int,unsigned char,const float* matrixPtr)
+  {
+    glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, matrixPtr);
+  }
+
   GLenum glewInit()
   {
     __glewCreateProgram = &stub_CreateProgram;
@@ -65,6 +78,8 @@ extern "C"
     __glewCompileShader = &stub_CompileShader;
     __glewGetShaderInfoLog = &stub_GetShaderInfoLog;
     __glewGetUniformLocation = &stub_GetUniformLocation;
+    __glewUseProgram = &stub_UseProgram;
+    __glewUniformMatrix4fv = &stub_UniformMatrix4fv;
     return 0;
   }
 }
