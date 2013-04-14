@@ -6,7 +6,7 @@
 
 #include "ShaderRepo.hpp"
 
-namespace
+namespace glstub
 {
   ShadersRepo shaderRepo;
 }
@@ -22,13 +22,13 @@ extern "C"
   GLuint stub_CreateShader(GLenum type)
   {
     LOG(DEBUG);
-    return shaderRepo.createShader(type);
+    return glstub::shaderRepo.createShader(type);
   }
 
   void stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
   {
     LOG(DEBUG);
-    *out = shaderRepo.getShaderiv(index, infoType);
+    *out = glstub::shaderRepo.getShaderiv(index, infoType);
   }
 
   void stub_DeleteShader(GLuint)
@@ -44,7 +44,7 @@ extern "C"
   void stub_CompileShader(GLuint id)
   {
     LOG(DEBUG);
-    shaderRepo.compileShader(id);
+    glstub::shaderRepo.compileShader(id);
   }
 
   void stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
