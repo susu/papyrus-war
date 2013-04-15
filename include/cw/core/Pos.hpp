@@ -3,6 +3,8 @@
 
 #include <ostream>
 
+#include <cw/core/CommonGeometry.hpp>
+
 namespace cw
 {
   namespace core
@@ -16,13 +18,6 @@ namespace cw
 
       double x,y;
     };
-
-    const double PRECISION = 1e-5;
-
-    inline bool equals(double one, double two)
-    {
-      return abs(one-two) < PRECISION;
-    }
 
     inline bool operator==(Pos const & l, Pos const & r)
     {

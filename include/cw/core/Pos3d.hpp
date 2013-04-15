@@ -1,6 +1,8 @@
 #ifndef CW_CORE_POS3D_HPP_INC
 #define CW_CORE_POS3D_HPP_INC
 
+#include <cw/core/CommonGeometry.hpp>
+
 namespace cw
 {
   namespace core
