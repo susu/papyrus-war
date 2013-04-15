@@ -27,6 +27,9 @@ namespace cw
 
         virtual core::Pos3d unProject( core::Pos ) override;
       private:
+        core::Pos transformClickToBottomLeftCorner( core::Pos ) const;
+        core::Pos3d unProjectScreenPos( const glm::vec3 & ) const;
+
         ProjectionView & m_projView;
         graph::ScreenSize m_screenSize;
         glm::vec4 m_viewPort;

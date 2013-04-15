@@ -1,6 +1,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <cw/core/Logger.hpp>
+#include <cw/core/Line.hpp>
 
 #include <cw/opengl/RayCastPicking.hpp>
 #include <cw/opengl/ProjectionView.hpp>
@@ -30,43 +31,25 @@ RayCastPicking::~RayCastPicking()
 
 core::Pos3d RayCastPicking::unProject( core::Pos p )
 {
-  // TODO refactor this function
-  core::Pos shifted( p.x, m_screenSize.y - p.y );
+  core::Pos shifted = transformClickToBottomLeftCorner( p );
 
-  glm::vec3 screenPos( shifted.x, shifted.y, NEAR_END );
-  glm::vec3 nearEnd = glm::unProject( screenPos,
-                                      m_projView.getViewMatrix(),
-                                      m_projView.getProjectionMatrix(),
-                                      m_viewPort );
+  core::Pos3d nearEnd = unProjectScreenPos( glm::vec3( shifted.x, shifted.y, NEAR_END ) );
+  core::Pos3d farEnd = unProjectScreenPos( glm::vec3( shifted.x, shifted.y, FAR_END ) );
 
-  screenPos = glm::vec3( shifted.x, shifted.y, FAR_END );
-  glm::vec3 farEnd = glm::unProject( screenPos,
-                                      m_projView.getViewMatrix(),
-                                      m_projView.getProjectionMatrix(),
-                                      m_viewPort );
-  core::Pos3d n( nearEnd.x, nearEnd.y, nearEnd.z );
-  core::Pos3d f( farEnd.x, farEnd.y, farEnd.z );
+  auto line = core::Line::createFromPoints( nearEnd, farEnd );
+  return line.getPointAtZ( 0.0 );
+}
 
-  core::Pos3d dirVec = n - f;
-  LOG(DEBUG) << "Found points: " << n << ", " << f;
-  LOG(DEBUG) << "Direction vector: " << dirVec;
+core::Pos RayCastPicking::transformClickToBottomLeftCorner( core::Pos p ) const
+{
+  return core::Pos( p.x, m_screenSize.y - p.y );
+}
 
-  // x = x1 + at
-  // y = y1 + bt
-  // z = z1 + ct
-
-  // 0 = z1 + ct
-  // z1 = -ct
-  // -z1/c = t
-
-  // find the point, where z == 0
-  double t = - farEnd.z / dirVec.z;
-
-  double x = farEnd.x + dirVec.x * t;
-  double y = farEnd.y + dirVec.y * t;
-  double z = farEnd.z + dirVec.z * t;
-
-  return core::Pos3d( x, y, z );
+core::Pos3d RayCastPicking::unProjectScreenPos( const glm::vec3 & screenPos ) const
+{
+  glm::vec3 unproj = glm::unProject( screenPos, m_projView.getViewMatrix(),
+                                     m_projView.getProjectionMatrix(),m_viewPort );
+  return core::Pos3d( unproj.x, unproj.y, unproj.z );
 }
 
   }
