@@ -1,6 +1,8 @@
 #ifndef CW_CORE_POS3D_HPP_INC
 #define CW_CORE_POS3D_HPP_INC
 
+#include <ostream>
+
 #include <cw/core/CommonGeometry.hpp>
 
 namespace cw
@@ -32,6 +34,21 @@ namespace cw
       return Pos3d( l.x - r.x,
                     l.y - r.y,
                     l.z - r.z );
+    }
+
+    inline Pos3d operator+(Pos3d const & l, Pos3d const & r)
+    {
+      return Pos3d( l.x + r.x,
+                    l.y + r.y,
+                    l.z + r.z );
+    }
+
+    // * scalar
+    inline Pos3d operator*(Pos3d const & l, double scalar)
+    {
+      return Pos3d( l.x * scalar,
+                    l.y * scalar,
+                    l.z * scalar );
     }
   }
 }
