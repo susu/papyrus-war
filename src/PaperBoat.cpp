@@ -12,10 +12,6 @@ PaperBoat::PaperBoat(double x, double y)
 PaperBoat::~PaperBoat()
 {}
 
-void PaperBoat::moveTo(double x, double y)
-{
-}
-
 void PaperBoat::tick()
 {
 }

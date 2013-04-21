@@ -14,7 +14,6 @@ namespace cw
         PaperBoat(double x, double y);
         virtual ~PaperBoat();
 
-        virtual void moveTo(double x, double y) override;
         virtual void tick() override;
 
         void setPos( Pos p );

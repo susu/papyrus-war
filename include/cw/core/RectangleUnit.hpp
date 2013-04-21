@@ -13,9 +13,9 @@ namespace cw
       public:
         RectangleUnit( Pos pos, Pos size );
         ~RectangleUnit() = default;
-        virtual bool hasFocus() const override;
-        virtual void setFocus(bool) override;
-        virtual bool isOver(double x, double y) const override;
+        virtual bool hasFocus() const;
+        virtual void setFocus(bool);
+        virtual bool isOver(double x, double y) const;
 
         Pos getPos() const;
       protected:

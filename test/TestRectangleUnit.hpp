@@ -12,9 +12,6 @@ struct RectStub : public cw::core::RectangleUnit
     : cw::core::RectangleUnit(p,size)
   {}
 
-  virtual void moveTo(double,double) override
-  {}
-
   virtual void tick() override
   {}
 };
