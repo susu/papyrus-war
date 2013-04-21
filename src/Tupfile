@@ -20,6 +20,7 @@ CORE_SRC= \
   RectangleUnit.cpp \
   PaperBoat.cpp \
   Line.cpp \
+  Surface.cpp \
 
 : foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)

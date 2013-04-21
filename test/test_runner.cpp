@@ -24,6 +24,7 @@ namespace
 #include "TestShader.hpp"
 #include "TestProjectionView.hpp"
 #include "TestRayCastPicking.hpp"
+#include "TestSurface.hpp"
 
 class LoggerTestListener : public NullTestListener
 {
