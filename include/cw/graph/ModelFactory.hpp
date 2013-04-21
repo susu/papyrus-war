@@ -11,6 +11,10 @@ namespace cw
   namespace graph
   {
     //  TODO register at InputDistributor
+    /**
+     * Responsible to create XyModel, and corresponding XyView
+     * Template parameter: the factory which decides the corresponding type of View
+     */
     template<class Factory>
     class ModelFactory
     {
@@ -18,6 +22,11 @@ namespace cw
         typedef std::function< void( Ref<core::Model> ) > ModelCreatedCallback;
         typedef std::function< void( Ref<View> ) > ViewCreatedCallback;
 
+        /**
+         * modelCallback, viewCalback: these functions are called if
+         *   a model/view is created. Useful to store models/views in a common place
+         * arg: arguments forwarded to viewFactory
+         */
         template<typename... FactoryCtorArgs>
         ModelFactory( ModelCreatedCallback modelCallback,
                      ViewCreatedCallback viewCallback,
@@ -28,6 +37,12 @@ namespace cw
         {
         }
 
+        /**
+         * Template parameter T: the type of the model
+         * args: parameters for ctor of T
+         *
+         *  returns the created model
+         */
         template<class T, typename... Args>
         Ref<T> create(Args&&... args)
         {
