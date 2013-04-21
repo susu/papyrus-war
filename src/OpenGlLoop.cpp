@@ -159,7 +159,7 @@ void startGlFw()
   LOG(DEBUG) << "GLFW initialized.";
 
   glfwOpenWindowHint( GLFW_FSAA_SAMPLES, 4 ); // 4x anit-aliasing
-  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 2 );
+  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
   glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 1 );
 
   const int COLOR_DEPTH = 32;
