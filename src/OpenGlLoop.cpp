@@ -154,6 +154,7 @@ void OpenGlLoop::run()
       && glfwGetWindowParam( GLFW_OPENED ) );
 
   GlfwCallbackRepo::terminate();
+  glfwTerminate();
 }
 
 void startGlFw()
