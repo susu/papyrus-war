@@ -6,6 +6,7 @@
 #include <cw/core/Model.hpp>
 #include <cw/core/InputDistributor.hpp>
 #include <cw/core/PaperBoat.hpp>
+#include <cw/core/Surface.hpp>
 
 #include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/View.hpp>
@@ -111,6 +112,7 @@ void OpenGlLoop::run()
     modelCallback, viewCallback, projectionView);
 
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
+  auto surface = modelFactory.create< core::Surface >( );
 
   inputDistributor.registerClickedOn(
   [boat, &projectionView, &picking]( core::ClickEvent click )
