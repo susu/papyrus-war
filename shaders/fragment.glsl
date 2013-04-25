@@ -1,6 +1,14 @@
 #version 130
 
+uniform vec4 currentColor;
+
+varying float intensity;
+
 void main()
 {
-  gl_FragColor = vec4(1,1,1,1);
+  vec4 color = currentColor;
+  // if ( intensity > 1.20 )
+  //   color = vec4(0.2,0.6,0.8,0.0);
+
+  gl_FragColor = color;
 }
