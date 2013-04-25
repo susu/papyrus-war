@@ -24,8 +24,6 @@ namespace cw
         PaperBoatView( core::PaperBoatRef model, ProjectionView & projView );
 
         virtual void show() override;
-      private:
-        std::vector< GLfloat > m_vertexBuffer;
     };
   }
 }

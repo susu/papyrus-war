@@ -17,9 +17,17 @@ namespace cw
         typedef OpenGlViewBase<ModelType> BaseType;
         OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView )
           : m_model( model )
+          , m_programId( projView.getProgramId() )
           , m_projView( projView )
         {
           loadVertexPosModelSpaceId();
+
+          m_colorUniformId = glGetUniformLocation(m_programId, "currentColor" );
+          if ( -1 == m_colorUniformId )
+          {
+            throw GlException( "Uniform location 'currentColor': does not exist. "
+                "It may can be optimized out!");
+          }
         }
 
         void loadVertexPosModelSpaceId()
@@ -39,11 +47,31 @@ namespace cw
           return m_vertexPositionModelSpaceId;
         }
 
+        void setModelVertices( std::initializer_list< GLfloat > vertices )
+        {
+          m_vertexBuffer.assign( vertices );
+          glGenBuffers(1, &m_vertexBufferId);
+          glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
+          glBufferData(GL_ARRAY_BUFFER,
+                       m_vertexBuffer.size() * sizeof(m_vertexBuffer[0]),
+                       &m_vertexBuffer[0],
+                       GL_STATIC_DRAW );
+        }
+
+        void sendColor( float r, float g, float b )
+        {
+          glUseProgram( m_programId );
+          glUniform4f(m_colorUniformId, r, g, b, 0.0f);
+        }
+
         Ref<ModelType> m_model;
         GLuint m_vertexBufferId;
+        const GLint m_programId;
       private:
         ProjectionView & m_projView;
         GLuint m_vertexPositionModelSpaceId;
+        GLint m_colorUniformId;
+        std::vector< GLfloat > m_vertexBuffer;
     };
   }
 }
