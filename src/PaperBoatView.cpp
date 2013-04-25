@@ -24,38 +24,34 @@ namespace cw
   {
 
 PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
-  : m_paperBoatModel(m)
-  , m_projView(projView)
+  : BaseType(m,projView)
 {
-  m_model.assign(
+  m_vertexBuffer.assign(
   {
     -1.0f, -1.0f, 0.0f,
      1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
   });
-  glGenBuffers(1, &m_vertexBuffer);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+  glGenBuffers(1, &m_vertexBufferId);
+  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
   glBufferData(GL_ARRAY_BUFFER,
-               m_model.size() * sizeof(m_model[0]),
-               &m_model[0],
+               m_vertexBuffer.size() * sizeof(m_vertexBuffer[0]),
+               &m_vertexBuffer[0],
                GL_STATIC_DRAW );
 
-  int attrLoc = glGetAttribLocation(m_projView.getProgramId(), "vertexPos_modelspace");
-  if (attrLoc == -1) throw GlException( "vertexPos_modelspace is not a valid attrib!" );
-  m_vertexPositionModelSpaceId = attrLoc;
 }
 
 void PaperBoatView::show()
 {
-  core::Pos modelPos = m_paperBoatModel->getPos();
+  core::Pos modelPos = m_model->getPos();
   double x = modelPos.x;
   double y = modelPos.y;
   glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, 0.0f ) );
-  m_projView.sendMVP( modelMatrix );
+  sendMVP( modelMatrix );
 
   glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-  glVertexAttribPointer(m_vertexPositionModelSpaceId,3,GL_FLOAT,GL_FALSE,0,nullptr);
+  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
+  glVertexAttribPointer(getVertexPosModelSpaceId(), 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
   glDrawArrays(GL_TRIANGLES, 0, 3);
   glDisableVertexAttribArray(0);
