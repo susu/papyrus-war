@@ -2,10 +2,12 @@
 #define CW_OPENGL_OPENGL_VIEW_MAPPING_HPP_INC
 
 #include <cw/core/PaperBoat.hpp>
+#include <cw/core/Surface.hpp>
 #include <cw/graph/ViewFactory.hpp>
 
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/PaperBoatView.hpp>
+#include <cw/opengl/SurfaceView.hpp>
 
 namespace cw
 {
@@ -20,6 +22,7 @@ namespace cw
         using Mapping = OpenGlViewMapping<T>;
     };
     VIEW_MAPPING(OpenGlViewMapping, cw::core::PaperBoat, cw::opengl::PaperBoatView);
+    VIEW_MAPPING(OpenGlViewMapping, cw::core::Surface, cw::opengl::SurfaceView);
 
     class OpenGlViewFactory
     {

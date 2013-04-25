@@ -12,6 +12,7 @@ GRAPH_SRC= \
   ProjectionView.cpp \
   Camera.cpp \
   RayCastPicking.cpp \
+  SurfaceView.cpp \
 
 CORE_SRC= \
   Logger.cpp \
