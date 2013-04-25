@@ -123,7 +123,11 @@ void OpenGlLoop::run()
     boat->setPos( p );
   });
 
-  glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
+  const float skyBlueR = 0.529f;
+  const float skyBlueG = 0.807f;
+  const float skyBlueB = 0.980f;
+  glClearColor( skyBlueR, skyBlueG, skyBlueB, 0.0f );
+  glEnable( GL_DEPTH_TEST );
 
   double camX = 0;
   double camY = 0;
