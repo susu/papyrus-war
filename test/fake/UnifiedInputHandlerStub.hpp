@@ -1,7 +1,11 @@
 #ifndef FAKE_UNIFIED_INPUT_HANDLER_STUB_HPP_INC
 #define FAKE_UNIFIED_INPUT_HANDLER_STUB_HPP_INC
 
+#include <igloo/igloo.h>
+
 #include <cw/core/UnifiedInputHandler.hpp>
+
+using namespace igloo;
 
 namespace fake
 {

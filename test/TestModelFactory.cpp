@@ -1,5 +1,7 @@
-#ifndef TEST_MODEL_FACTORY_HPP_INC
-#define TEST_MODEL_FACTORY_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
+
+#include <cw/core/Model.hpp>
 
 #include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/ViewFactory.hpp>
@@ -33,11 +35,6 @@ Describe(the_ModelFactory)
         [this]( Ref<cw::graph::View> v ) { createdView = v; } )
   {}
 
-  It(can_be_instantiated)
-  {
-    LOG(DEBUG) << &factory;
-  }
-
   It(should_call_callbacks_with_the_created_elements)
   {
     factory.create<fake::ModelStub>();
@@ -50,5 +47,3 @@ Describe(the_ModelFactory)
     AssertThat( createdModel, Equals( viewStub->getModel() ) );
   }
 };
-
-#endif

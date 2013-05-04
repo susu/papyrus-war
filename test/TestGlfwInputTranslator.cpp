@@ -1,6 +1,3 @@
-#ifndef TEST_GLFW_INPUT_TRANSLATOR_HPP_INC
-#define TEST_GLFW_INPUT_TRANSLATOR_HPP_INC
-
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
@@ -9,6 +6,8 @@
 #include <cw/opengl/GlfwInputTranslator.hpp>
 
 #include "fake/UnifiedInputHandlerStub.hpp"
+
+using namespace igloo;
 
 Describe(the_glfwInputTranslator)
 {
@@ -116,5 +115,3 @@ Describe(the_glfwInputTranslator)
   }
 
 };
-
-#endif

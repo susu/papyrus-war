@@ -1,8 +1,10 @@
-#ifndef TEST_OPENGL_PROGRAM_HPP_INC
-#define TEST_OPENGL_PROGRAM_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include <cw/opengl/Program.hpp>
-#include "openglstub/stubs.h"
+#include "OpenGlStubs.hpp"
+
+using namespace igloo;
 
 Describe(the_Program)
 {
@@ -12,5 +14,3 @@ Describe(the_Program)
     cw::opengl::Program p;
   }
 };
-
-#endif

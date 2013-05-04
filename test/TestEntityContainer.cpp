@@ -1,6 +1,3 @@
-#ifndef TEST_ENTITY_CONTAINER_HPP_INC
-#define TEST_ENTITY_CONTAINER_HPP_INC
-
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
@@ -46,5 +43,3 @@ Describe(the_EntityContainer)
     AssertThat( dummy->isCalled(), Equals(true) );
   }
 };
-
-#endif

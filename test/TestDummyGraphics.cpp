@@ -1,6 +1,3 @@
-#ifndef TEST_DUMMY_GRAPHICS_HPP_INC
-#define TEST_DUMMY_GRAPHICS_HPP_INC
-
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
@@ -15,5 +12,3 @@ Describe(a_DummyGraphics)
     cw::graph::DummyGraphics gr;
   }
 };
-
-#endif

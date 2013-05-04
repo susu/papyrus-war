@@ -1,6 +1,3 @@
-#ifndef TEST_SUFFIX_OPERATORS_FOR_TIME_HPP_INC
-#define TEST_SUFFIX_OPERATORS_FOR_TIME_HPP_INC
-
 #include <cw/core/Timer.hpp>
 
 #include <igloo/igloo.h>
@@ -55,5 +52,3 @@ Describe(suffix_operators)
     AssertThat( 1000_nanosec, EqualsWithDelta( 1_microsec, DELTA ) );
   }
 };
-
-#endif

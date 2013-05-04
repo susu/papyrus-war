@@ -1,5 +1,5 @@
-#ifndef TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
-#define TEST_CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include "fake/PickingStub.hpp"
 
@@ -95,5 +95,3 @@ Describe(AInputDistributor)
     // NOTE assuming surface is at Z=0
   }
 };
-
-#endif

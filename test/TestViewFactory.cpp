@@ -1,7 +1,9 @@
-#ifndef TEST_GRAPH_VIEW_FACTORY_HPP_INC
-#define TEST_GRAPH_VIEW_FACTORY_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include <cw/graph/ViewFactory.hpp>
+
+using namespace igloo;
 
 template<class T>
 struct DummyMapping;
@@ -32,5 +34,3 @@ Describe(the_ViewFactory)
     Ref<ViewForOne> view = factory.createViewFor<One>();
   }
 };
-
-#endif

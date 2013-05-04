@@ -1,7 +1,11 @@
-#ifndef TEST_CW_OPENGL_SHADER_HPP_INC
-#define TEST_CW_OPENGL_SHADER_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include <cw/opengl/Shader.hpp>
+
+#include "OpenGlStubs.hpp"
+
+using namespace igloo;
 
 Describe(the_Shader)
 {
@@ -32,5 +36,3 @@ Describe(the_Shader)
     AssertThat( glstub::shaderRepo.shaders().back().checked, Equals(true) );
   }
 };
-
-#endif

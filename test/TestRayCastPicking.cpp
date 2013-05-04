@@ -1,8 +1,15 @@
-#ifndef TEST_RAY_CAST_PICKING_HPP_INC
-#define TEST_RAY_CAST_PICKING_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
+
+#include <cw/core/Types.hpp>
 
 #include <cw/opengl/RayCastPicking.hpp>
+#include <cw/opengl/Program.hpp>
+#include <cw/opengl/ProjectionView.hpp>
+
 #include <cw/graph/ScreenSize.hpp>
+
+using namespace igloo;
 
 Describe(ARayCastPicking)
 {
@@ -36,5 +43,3 @@ Describe(ARayCastPicking)
   }
 
 };
-
-#endif

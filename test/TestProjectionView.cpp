@@ -1,9 +1,14 @@
-#ifndef TEST_PROJECTION_VIEW_HPP_INC
-#define TEST_PROJECTION_VIEW_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
+
+#include "OpenGlStubs.hpp"
+
+using namespace igloo;
 
 Describe(the_ProjectionView)
 {
@@ -74,5 +79,3 @@ Describe(the_ProjectionView)
                       generateRandomFloat());
   }
 };
-
-#endif

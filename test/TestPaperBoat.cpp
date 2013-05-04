@@ -1,10 +1,9 @@
-#ifndef TEST_PAPER_BOAT_HPP_INC
-#define TEST_PAPER_BOAT_HPP_INC
-
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
 #include <cw/core/PaperBoat.hpp>
+
+using namespace igloo;
 
 Describe(a_PaperBoat)
 {
@@ -13,5 +12,3 @@ Describe(a_PaperBoat)
     auto boat = cw::core::PaperBoat(10,10);
   }
 };
-
-#endif

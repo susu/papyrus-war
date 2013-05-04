@@ -1,6 +1,3 @@
-#ifndef TEST_TIMER_HPP_INC
-#define TEST_TIMER_HPP_INC
-
 #include <cw/core/Timer.hpp>
 
 #include <igloo/igloo.h>
@@ -39,5 +36,3 @@ Describe(the_Timer)
     AssertThat( timerExpired, Equals(true) );
   }
 };
-
-#endif

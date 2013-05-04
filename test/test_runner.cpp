@@ -9,22 +9,7 @@ namespace
   cw::core::Logger logger("unittest");
 }
 
-#include "TestDummyGraphics.hpp"
-#include "TestTimer.hpp"
-#include "TestSuffixOperatorsForTime.hpp"
-#include "TestGlfwInputTranslator.hpp"
-#include "TestInputDistributor.hpp"
-#include "TestEntityContainer.hpp"
-#include "TestPaperBoat.hpp"
-#include "TestRectangleUnit.hpp"
-#include "TestModelFactory.hpp"
-#include "TestViewFactory.hpp"
-#include "TestEnforce.hpp"
-#include "TestProgram.hpp"
-#include "TestShader.hpp"
-#include "TestProjectionView.hpp"
-#include "TestRayCastPicking.hpp"
-#include "TestSurface.hpp"
+using namespace igloo;
 
 class LoggerTestListener : public NullTestListener
 {

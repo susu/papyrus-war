@@ -1,6 +1,10 @@
 #ifndef GLSTUB_SHADER_REPO_HPP_INC
 #define GLSTUB_SHADER_REPO_HPP_INC
 
+#include <cassert>
+#include <map>
+#include <vector>
+
 class ShadersRepo
 {
     struct ShaderState

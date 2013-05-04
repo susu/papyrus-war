@@ -1,6 +1,3 @@
-#ifndef TEST_RECTANGLE_UNIT_HPP_INC
-#define TEST_RECTANGLE_UNIT_HPP_INC
-
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
@@ -43,5 +40,3 @@ Describe(a_RectangleUnit)
     AssertThat( stub.isOver(15,45), Equals(true) );
   }
 };
-
-#endif

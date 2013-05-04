@@ -1,9 +1,11 @@
-#ifndef TEST_CW_ENFORCE_HPP_INC
-#define TEST_CW_ENFORCE_HPP_INC
+#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 
 #include <stdexcept>
 
 #include <cw/Enforce.hpp>
+
+using namespace igloo;
 
 Describe(the_enforce_idiom)
 {
@@ -28,5 +30,3 @@ Describe(the_enforce_idiom)
     AssertThat( LastException<std::runtime_error>().what(), Equals( msg ) );
   }
 };
-
-#endif
