@@ -1,2 +1,3 @@
 target=build-debug/src
-LD_LIBRARY_PATH=${target} $target/cw
+[ "$1" == "nvidia" ] && optirunner=optirun
+LD_LIBRARY_PATH=${target} $optirunner $target/cw
