@@ -1,15 +1,12 @@
-#version 130
+#version 330
 
 attribute vec3 vertexPos_modelspace;
 
+layout (location = 1) in vec3 diffuseColor;
+
 uniform mat4 MVP;
-
-const vec3 lightDir = vec3(3.0, 2.0, 1.2);
-
-varying float intensity;
 
 void main()
 {
-  intensity = dot( lightDir, gl_Normal );
   gl_Position = MVP * vec4(vertexPos_modelspace, 1.0);
 }
