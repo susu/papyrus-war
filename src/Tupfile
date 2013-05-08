@@ -13,6 +13,7 @@ GRAPH_SRC= \
   Camera.cpp \
   RayCastPicking.cpp \
   SurfaceView.cpp \
+  ShaderResourceLocator.cpp \
 
 CORE_SRC= \
   Logger.cpp \

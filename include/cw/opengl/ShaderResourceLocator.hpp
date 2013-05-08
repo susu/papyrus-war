@@ -1,0 +1,30 @@
+#ifndef CW_OPENGL_SHADER_RESOURCE_LOCATOR_HPP_INC
+#define CW_OPENGL_SHADER_RESOURCE_LOCATOR_HPP_INC
+
+#include <GL/glew.h>
+#include <string>
+
+namespace cw
+{
+  namespace opengl
+  {
+    class ShaderResourceLocator
+    {
+      public:
+        ShaderResourceLocator(GLuint programId);
+        ~ShaderResourceLocator();
+
+        ShaderResourceLocator(ShaderResourceLocator&) = delete;
+        void operator=(ShaderResourceLocator) = delete;
+
+        GLuint getUniform( const char * name ) const;
+        GLuint getAttrib( const char * name ) const;
+
+      private:
+        GLuint m_programId;
+
+        int checkedLocation( int location, const std::string & locationName ) const;
+    };
+  }
+}
+#endif
