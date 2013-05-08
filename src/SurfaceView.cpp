@@ -38,7 +38,7 @@ void SurfaceView::show()
 
   glEnableVertexAttribArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
-  glVertexAttribPointer(getVertexPosModelSpaceId(), 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+  glVertexAttribPointer(getVertexAttribute( VERTEXPOS_ATTR ), 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
   glDrawArrays(GL_TRIANGLES, 0, 6);
   glDisableVertexAttribArray(0);
