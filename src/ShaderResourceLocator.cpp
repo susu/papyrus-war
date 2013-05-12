@@ -23,6 +23,16 @@ GLuint ShaderResourceLocator::getAttrib( const char * name ) const
   return checkedLocation( glGetAttribLocation(m_programId,name), name );
 }
 
+void ShaderResourceLocator::setUniform( const char * name, float value )
+{
+  glUniform1fv( getUniform(name), 1, &value );
+}
+
+void ShaderResourceLocator::setUniform( const char * name, const glm::vec3 & value )
+{
+  glUniform3fv( getUniform(name), 1, &value[0] );
+}
+
 int ShaderResourceLocator::checkedLocation( int location, const std::string & locName ) const
 {
   if (location == -1)

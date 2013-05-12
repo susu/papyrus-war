@@ -2,6 +2,8 @@
 #define CW_OPENGL_SHADER_RESOURCE_LOCATOR_HPP_INC
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+
 #include <string>
 
 namespace cw
@@ -19,6 +21,9 @@ namespace cw
 
         GLuint getUniform( const char * name ) const;
         GLuint getAttrib( const char * name ) const;
+
+        void setUniform( const char * name, float value );
+        void setUniform( const char * name, const glm::vec3 & value );
 
       private:
         GLuint m_programId;
