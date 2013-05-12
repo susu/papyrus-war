@@ -29,21 +29,25 @@ PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
   setModelVertices(
   {
     -1.0f, -1.0f, 0.0f,
-     1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
+     1.0f, -1.0f, 0.0f,
 
      0.0f,  1.0f, 0.0f,
-     1.0f, -1.0f, 0.0f,
      0.0f, -1.0f, -0.5f,
+     1.0f, -1.0f, 0.0f,
 
      0.0f,  1.0f, 0.0f,
     -1.0f, -1.0f, 0.0f,
      0.0f, -1.0f, -0.5f,
   });
+
+  computeNormals();
 }
 
 void PaperBoatView::show()
 {
+  setUpDraw();
+
   core::Pos modelPos = m_model->getPos();
   double x = modelPos.x;
   double y = modelPos.y;
@@ -51,12 +55,13 @@ void PaperBoatView::show()
   sendMVP( modelMatrix );
   sendColor( 1.0, 1.0, 1.0 );
 
-  glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
-  glVertexAttribPointer( getVertexAttribute( VERTEXPOS_ATTR ), 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+  glEnableVertexAttribArray( AttrIndex::POSITION );
+  glEnableVertexAttribArray( AttrIndex::NORMAL );
 
   glDrawArrays(GL_TRIANGLES, 0, 9);
-  glDisableVertexAttribArray(0);
+
+  glDisableVertexAttribArray( POSITION );
+  glDisableVertexAttribArray( NORMAL );
 }
 
   }

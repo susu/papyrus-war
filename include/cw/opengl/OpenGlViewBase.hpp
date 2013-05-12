@@ -3,21 +3,33 @@
 
 #include <map>
 
+#include <glm/ext.hpp>
+
+#include <cw/Enforce.hpp>
+
+#include <cw/core/Logger.hpp>
 #include <cw/graph/View.hpp>
 
 #include <cw/opengl/GlException.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/ShaderResourceLocator.hpp>
+#include <cw/opengl/Plane.hpp>
 
 namespace cw
 {
   namespace opengl
   {
+    // TODO big and messy class, refactor somehow
     template<class ModelType>
     class OpenGlViewBase : public graph::View
     {
       protected:
-        const static std::string VERTEXPOS_ATTR;
+        enum AttrIndex
+        {
+          POSITION = 0,
+          COORD    = 1,
+          NORMAL   = 2
+        };
         typedef OpenGlViewBase<ModelType> BaseType;
         OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView )
           : m_model( model )
@@ -26,58 +38,113 @@ namespace cw
           , m_shaderResourceLocator( projView.getProgramId() )
         {
           m_colorUniformId = m_shaderResourceLocator.getUniform( "currentColor" );
+          glGenVertexArrays(1, &m_vaoId);
+          glBindVertexArray( m_vaoId );
+          initializeVBOs();
         }
 
-        GLuint loadVertexAttribute( const std::string & name )
+        void setUpDraw()
         {
-          return m_shaderResourceLocator.getAttrib( name.c_str() );
+          glBindVertexArray( m_vaoId );
         }
 
         void sendMVP( const glm::mat4 & model )
         {
+          glm::mat4 normalMatrix = glm::transpose( glm::inverse( model ) );
+          // TODO use ShaderResourceLocator
+          auto normalMatrixId = m_shaderResourceLocator.getUniform( "normalMatrix" );
+          glUniformMatrix4fv(normalMatrixId, 1, GL_FALSE, &normalMatrix[0][0]);
           m_projView.sendMVP( model );
-        }
-
-        GLuint getVertexAttribute( const std::string & name )
-        {
-          auto it = m_vertexAttributes.find(name);
-          if ( it == m_vertexAttributes.end() )
-          {
-            auto result = m_vertexAttributes.emplace( name, loadVertexAttribute( name ) );
-            it = result.first;
-          }
-          return it->second;
         }
 
         void setModelVertices( std::initializer_list< GLfloat > vertices )
         {
           m_vertexBuffer.assign( vertices );
-          glGenBuffers(1, &m_vertexBufferId);
-          glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId);
-          glBufferData(GL_ARRAY_BUFFER,
-                       m_vertexBuffer.size() * sizeof(m_vertexBuffer[0]),
-                       &m_vertexBuffer[0],
-                       GL_STATIC_DRAW );
+          storeDataInGPU( m_vertexBufferId, m_vertexBuffer );
+          glEnableVertexAttribArray( POSITION );
+          glVertexAttribPointer( POSITION, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+        }
+
+        void computeNormals()
+        {
+          ENFORCE( !m_vertexBuffer.empty(), "setModelVertices should be called first!" );
+          ENFORCE( m_vertexBuffer.size() % 3 == 0, "Vertices must be 3-element vectors" );
+          ENFORCE( m_vertexBuffer.size() % 9 == 0, "Triangles must consist of vertices" );
+
+          std::vector< GLfloat > vertexNormals; // will be sent to 'inNormal'
+
+          // for each triangle ( 1 triangle == 3 vertices, 1 vertex == 3 float )
+          for ( auto it = m_vertexBuffer.begin(); m_vertexBuffer.end() != it; it += 9 )
+          {
+            Plane plane( createVec3( it ),
+                         createVec3( it + 3 ),
+                         createVec3( it + 6 ) );
+            auto normal = plane.getNormal();
+            // Need to be added 3 times, for each vertex. Inefficient use of GPU memory,
+            // but shader implementation is more simple, and ready for Gouraud shading.
+            addNormal( vertexNormals, normal );
+            addNormal( vertexNormals, normal );
+            addNormal( vertexNormals, normal );
+          }
+          storeDataInGPU( m_normalBufferId, vertexNormals );
+          glEnableVertexAttribArray( AttrIndex::NORMAL );
+          glVertexAttribPointer( AttrIndex::NORMAL, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
         }
 
         void sendColor( float r, float g, float b )
         {
           glUseProgram( m_programId );
-          glUniform4f(m_colorUniformId, r, g, b, 0.0f);
+          glUniform4f(m_colorUniformId, r, g, b, 0.0f); // TODO use ShaderResourceLocator
         }
 
         Ref<ModelType> m_model;
-        GLuint m_vertexBufferId;
         GLuint m_programId;
       private:
+
+        // TODO utility function, move to common place
+        template<typename Iterator>
+        glm::vec3 createVec3(Iterator iter) const
+        {
+          glm::vec3 ret;
+          ret.x = *(iter);
+          ret.y = *(iter + 1);
+          ret.z = *(iter + 2);
+          return ret;
+        }
+
+        // TODO utility function, move to common place
+        template<typename Coord>
+        static void addNormal( std::vector<GLfloat> & vertexNormals, Coord normal )
+        {
+          vertexNormals.push_back( normal.x );
+          vertexNormals.push_back( normal.y );
+          vertexNormals.push_back( normal.z );
+        }
+
+        // TODO utility function, move to common place
+        static void storeDataInGPU( GLuint bufferId, const std::vector< GLfloat > & what )
+        {
+          glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+          glBufferData(GL_ARRAY_BUFFER,
+                       what.size() * sizeof(what[0]),
+                       &what[0],
+                       GL_STATIC_DRAW );
+        }
+
+        void initializeVBOs()
+        {
+          glGenBuffers(1, &m_vertexBufferId);
+          glGenBuffers(1, &m_normalBufferId);
+        }
+
+        GLuint m_vertexBufferId;
+        GLuint m_normalBufferId;
         ProjectionView & m_projView;
-        std::map< std::string, GLuint > m_vertexAttributes;
         GLint m_colorUniformId;
         std::vector< GLfloat > m_vertexBuffer;
         ShaderResourceLocator m_shaderResourceLocator;
+        GLuint m_vaoId;
     };
-    template<class T>
-    const std::string OpenGlViewBase<T>::VERTEXPOS_ATTR = "vertexPos_modelspace";
   }
 }
 
