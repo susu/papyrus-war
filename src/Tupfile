@@ -14,6 +14,7 @@ GRAPH_SRC= \
   RayCastPicking.cpp \
   SurfaceView.cpp \
   ShaderResourceLocator.cpp \
+  Plane.cpp \
 
 CORE_SRC= \
   Logger.cpp \
