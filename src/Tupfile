@@ -15,6 +15,7 @@ GRAPH_SRC= \
   SurfaceView.cpp \
   ShaderResourceLocator.cpp \
   Plane.cpp \
+  Sun.cpp \
 
 CORE_SRC= \
   Logger.cpp \
