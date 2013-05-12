@@ -22,6 +22,7 @@
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/Camera.hpp>
 #include <cw/opengl/RayCastPicking.hpp>
+#include <cw/opengl/Sun.hpp>
 
 namespace
 {
@@ -58,9 +59,9 @@ void OpenGlLoop::run()
     return;
   }
 
-  GLuint VertexArrayID;
-  glGenVertexArrays(1, &VertexArrayID);
-  glBindVertexArray(VertexArrayID);
+  // GLuint VertexArrayID;
+  // glGenVertexArrays(1, &VertexArrayID);
+  // glBindVertexArray(VertexArrayID);
 
   glfwEnable( GLFW_STICKY_KEYS );
 
@@ -113,6 +114,7 @@ void OpenGlLoop::run()
 
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
   auto surface = modelFactory.create< core::Surface >( );
+  opengl::Sun sun( shaderProgram, core::Pos3d(10,10,-5) );
 
   inputDistributor.registerClickedOn(
   [boat, &projectionView, &picking]( core::ClickEvent click )
@@ -129,18 +131,24 @@ void OpenGlLoop::run()
   glClearColor( skyBlueR, skyBlueG, skyBlueB, 0.0f );
   glEnable( GL_DEPTH_TEST );
 
-  double camX = 0;
-  double camY = 0;
-  double angle = 0;
+  // double camX = 0;
+  // double camY = 0;
+  // double angle = 0;
+  core::Pos3d sunPos( 10.0, 10.0, -5.0 );
   do
   {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     // TESTCODE TODO: delete
-    angle+= 0.01;
-    camX = 10* cos(angle);
-    camY = 10* sin(angle);
-    cam.setPos( camX, camY, -13 );
+    // angle+= 0.01;
+    //camX = 10* cos(angle);
+    //camY = 10* sin(angle);
+    //cam.setPos( camX, camY, -13 );
+    // sunPos.z = 30 * ( cos(angle) );
+    // sunPos.x = 10 * ( -2.5 + sin(angle) );
+    // sun.setPos( sunPos );
+    // sun.updateVariables();
+    //LOG(DEBUG) << "Sun's position: " << sunPos;
     // TESTCODE
 
     models.doIt();
@@ -167,7 +175,7 @@ void startGlFw()
 
   glfwOpenWindowHint( GLFW_FSAA_SAMPLES, 4 ); // 4x anit-aliasing
   glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
-  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 1 );
+  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 2 );
 
   const int COLOR_DEPTH = 32;
   if ( !glfwOpenWindow( SCREEN_X, SCREEN_Y, 0,0,0,0, COLOR_DEPTH, 0, GLFW_WINDOW ) )
