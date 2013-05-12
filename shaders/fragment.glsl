@@ -1,14 +1,24 @@
 #version 330
 
+smooth in vec3 vNormal;
+out vec4 outputColor;
+
 uniform vec4 currentColor;
 
-varying float intensity;
+struct SimpleDirectLight
+{
+  vec3 vColor;
+  vec3 vDirection;
+  float fAmbientIntensity;
+};
+
+uniform SimpleDirectLight sunLight;
 
 void main()
 {
-  vec4 color = currentColor;
-  // if ( intensity > 1.20 )
-  //   color = vec4(0.2,0.6,0.8,0.0);
+  float diffuseIntensity = clamp( dot( normalize(vNormal), -normalize(sunLight.vDirection) ), 0.0, 1.0 );
 
-  gl_FragColor = color;
+  float intensity = sunLight.fAmbientIntensity + diffuseIntensity;
+  vec4 lightColor = vec4( sunLight.vColor * intensity, 1.0 );
+  outputColor = currentColor * lightColor;
 }
