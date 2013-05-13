@@ -183,7 +183,7 @@ void startGlFw()
     glfwTerminate();
     throw GlException( "Failed to open GLFW window!" );
   }
-  glfwSetWindowTitle( "CelluloseWar" );
+  glfwSetWindowTitle( "PapyrusWar" );
   int actualX;
   int actualY;
   glfwGetWindowSize( &actualX, &actualY );

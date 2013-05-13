@@ -1,4 +1,4 @@
-Cellulose War
+Papyrus War
 =============
 
 Be the best and build your economy for creating paperboats!
