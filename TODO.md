@@ -28,4 +28,10 @@ Always a good idea to ``ack --cpp TODO`` or ``grep -nrs TODO``
 
   * [DONE] show a blue surface (Surface class)
   * [DONE] show a white ship (PaperBoat class)
+  * Scrollable surface
+    - SurfaceView needs to know Camera
+    - SurfaceView needs callbacks for mouse-edge events (enter/leave) )
+  * Controlling with mouse right click
+    - PaperBoat should register callback for move command
+    - physical model timing: needs improvement (e.g. diff time as argument)
 
