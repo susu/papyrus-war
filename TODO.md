@@ -26,6 +26,6 @@ Always a good idea to ``ack --cpp TODO`` or ``grep -nrs TODO``
 
 ## broken down sub-tasks for v0.0.1:
 
-  * show a blue surface (Surface class)
-  * show a white ship (PaperBoat class)
+  * [DONE] show a blue surface (Surface class)
+  * [DONE] show a white ship (PaperBoat class)
 
