@@ -20,7 +20,7 @@ namespace cw
 Program::Program()
   : m_programId( glCreateProgram() )
 {
-  LOG(DEBUG) << "Program created: id=" << m_programId;
+  LOG_DEBUG("Program created: id=", m_programId);
 }
 
 Program::~Program()
@@ -40,7 +40,7 @@ void Program::link()
 {
   glLinkProgram(m_programId);
   check();
-  LOG(DEBUG) << "Program linked successfully: id=" << m_programId;
+  LOG_DEBUG("Program linked successfully: id=", m_programId);
 }
 
 void Program::check() const

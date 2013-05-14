@@ -22,7 +22,7 @@ void GlfwCallbackRepo::initialize()
     m_instance = new GlfwCallbackRepo;
     m_instance->initGlfwCallbacks();
   }
-  LOG(DEBUG) << "GlfwCallbackRepo initialized.";
+  LOG_DEBUG("GlfwCallbackRepo initialized.");
 }
 
 void GlfwCallbackRepo::terminate()

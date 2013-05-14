@@ -6,19 +6,29 @@
 
 #ifdef CW_DEBUG
 
-#define LOG_MSG(loglevel) \
-  logger.getGuardedStream( (loglevel), __FILE__, __LINE__, __PRETTY_FUNCTION__ )
+#define LOG_DEBUG LOG_MSG(cw::core::DEBUG)
+#define LOG_FINE  LOG_MSG(cw::core::FINE)
 
 #else // CW_DEBUG
 
-#define LOG_MSG(a) logger.getNullStream()
+#define LOG_DEBUG(...)
+#define LOG_FINE(...)
 
 #endif
 
-#define LOG(level) LOG_MSG(cw::core::Logger::level)
+#define LOG_MSG(loglevel) \
+  logger.getGuardedStream( \
+      cw::core::LogDetails{\
+        (loglevel), __FILE__, __LINE__, __PRETTY_FUNCTION__} )
+
+
+// errors,warnings,infos always logged
+#define LOG_ERROR LOG_MSG(cw::core::ERROR)
+#define LOG_WARNING LOG_MSG(cw::core::WARNING)
+#define LOG_INFO  LOG_MSG(cw::core::INFO)
 
 #define LOG_EXCEPTION( ex ) \
-   LOG(ERROR) << "Exception: '" << ex.what() << "'"
+   LOG_ERROR("Exception: '", (ex).what(), "'")
 
 
 namespace cw
@@ -26,55 +36,76 @@ namespace cw
   namespace core
   {
     class Logger;
+    enum LogLevel
+    {
+      // The following severity levels always compiled into build.
+      ERROR,
+      WARNING,
+      INFO,
+
+      // The following severity levels are not compiled into release build.
+      DEBUG,
+      FINE
+    };
+    struct LogDetails
+    {
+      LogLevel loglevel;
+      const char* file;
+      int line;
+      const char* pretty;
+    };
+
     class StreamGuard
     {
       public:
-        StreamGuard( Logger & logger );
+        StreamGuard(Logger & logger, LogDetails details);
         ~StreamGuard();
 
-        template<typename T>
-        StreamGuard& operator<<( const T & val )
+        template<typename...Args>
+        void operator()(Args...args)
         {
-          m_out << val;
-          return *this;
+          m_logger(m_details,args...);
         }
       private:
         Logger & m_logger;
-        std::ostream & m_out;
+        LogDetails m_details;
     };
     class Logger
     {
       public:
-        enum LogLevel
-        {
-          ERROR,
-          DEBUG
-        };
         Logger( const std::string & loggerName );
         ~Logger();
 
-        StreamGuard getGuardedStream( LogLevel loglevel, const char * file, int line,
-                                      const char * pretty)
+        StreamGuard getGuardedStream(LogDetails details)
         {
-          startLog(loglevel, file, line, pretty);
-          return StreamGuard(*this);
+          return StreamGuard(*this, details);
         }
 
-        std::ostream& getOutputStream()
+        template<typename...Args>
+        void operator()(LogDetails details, Args...args)
         {
-          return std::cout;
-        }
-
-        std::ostream& getNullStream()
-        {
-          return m_null;
+          startLog(details.loglevel, details.file, details.line, details.pretty);
+          print(args...);
         }
 
         void endLog();
       private:
         void startLog( LogLevel loglevel, const char * file, int line,
                        const char * pretty);
-        std::ofstream m_null;
+        std::ostream& getOutputStream()
+        { return *m_outputStream; }
+
+        template<typename First,typename...Args>
+        void print(First first, Args...args)
+        {
+          getOutputStream() << first;
+          print(args...);
+        }
+
+        void print()
+        {}
+
+        std::ostream * m_outputStream;
     };
   }
 }

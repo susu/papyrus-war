@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include <cw/core/Logger.hpp>
+
 class ProgramRepo
 {
   public:
@@ -15,7 +17,7 @@ class ProgramRepo
 
         void uniformMatrix( GLuint matrixId, const float * matrixPtr )
         {
-          LOG(DEBUG);
+          LOG_DEBUG();
           const int MATRIX_SIZE = 4;
           for ( int i = 0; i < MATRIX_SIZE; ++i )
           {

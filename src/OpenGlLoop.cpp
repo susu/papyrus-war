@@ -119,7 +119,7 @@ void OpenGlLoop::run()
   inputDistributor.registerClickedOn(
   [boat, &projectionView, &picking]( core::ClickEvent click )
   {
-    LOG(DEBUG) << "click: x=" << click.pos.x << " y=" << click.pos.y;
+    LOG_DEBUG("click: x=", click.pos.x, " y=", click.pos.y);
     auto worldSpace = picking.unProject( click.pos );
     core::Pos p( worldSpace.x, worldSpace.y );
     boat->setPos( p );
@@ -148,7 +148,7 @@ void OpenGlLoop::run()
     // sunPos.x = 10 * ( -2.5 + sin(angle) );
     // sun.setPos( sunPos );
     // sun.updateVariables();
-    //LOG(DEBUG) << "Sun's position: " << sunPos;
+    //LOG_DEBUG("Sun's position: ", sunPos);
     // TESTCODE
 
     models.doIt();
@@ -161,6 +161,7 @@ void OpenGlLoop::run()
   while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS
       && glfwGetWindowParam( GLFW_OPENED ) );
 
+  LOG_INFO("Exiting gracefully.");
   GlfwCallbackRepo::terminate();
   glfwTerminate();
 }
@@ -171,7 +172,7 @@ void startGlFw()
   {
     throw GlException( "Failed to initialize GLFW!" );
   }
-  LOG(DEBUG) << "GLFW initialized.";
+  LOG_INFO("GLFW initialized.");
 
   glfwOpenWindowHint( GLFW_FSAA_SAMPLES, 4 ); // 4x anit-aliasing
   glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
@@ -187,9 +188,9 @@ void startGlFw()
   int actualX;
   int actualY;
   glfwGetWindowSize( &actualX, &actualY );
-  LOG(DEBUG) << "GLFW Window opened. " <<
-    "requested_size=" << SCREEN_X << "x" << SCREEN_Y << " " <<
-    "actual_size=" << actualX << "x" << actualY;
+  LOG_INFO("GLFW Window opened. ",
+    "requested_size=", SCREEN_X, "x", SCREEN_Y, " ",
+    "actual_size=", actualX, "x", actualY);
 
 }
 
@@ -201,7 +202,7 @@ void initGlew()
   {
     throw GlException( "Failed to initialize GLEW!" );
   }
-  LOG(DEBUG) << "GLEW initialized successfully.";
+  LOG_INFO("GLEW initialized successfully.");
 }
 
   }

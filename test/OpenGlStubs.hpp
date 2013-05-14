@@ -28,36 +28,36 @@ extern "C"
   inline GLuint stub_CreateProgram()
   {
     auto programId = glstub::programRepo.createProgram();
-    LOG(DEBUG) << "programId=" << programId;
+    LOG_DEBUG("programId=", programId);
     return programId;
   }
 
   inline GLuint stub_CreateShader(GLenum type)
   {
     GLuint shaderId = glstub::shaderRepo.createShader(type);
-    LOG(DEBUG) << "shaderId=" << shaderId;
+    LOG_DEBUG("shaderId=", shaderId);
     return shaderId;
   }
 
   inline void stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
   {
-    LOG(DEBUG);
+    LOG_DEBUG();
     *out = glstub::shaderRepo.getShaderiv(index, infoType);
   }
 
   inline void stub_DeleteShader(GLuint)
   {
-    LOG(DEBUG);
+    LOG_DEBUG();
   }
 
   inline void stub_ShaderSource(GLuint id,int,const char **,const int*)
   {
-    LOG(DEBUG);
+    LOG_DEBUG();
   }
 
   inline void stub_CompileShader(GLuint id)
   {
-    LOG(DEBUG);
+    LOG_DEBUG();
     glstub::shaderRepo.compileShader(id);
   }
 

@@ -111,7 +111,7 @@ void GlfwInputTranslator::keyEvent(int key, int action)
   }
   if ( GLFW_PRESS == action )
   {
-    LOG(DEBUG) << "PRESSED: " << key;
+    LOG_DEBUG("PRESSED: ", key);
     m_inputHandler.startScroll( keyToScrollDir(key) );
   }
   else if ( GLFW_RELEASE == action )

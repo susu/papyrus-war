@@ -7,6 +7,7 @@ namespace cw
   namespace core
   {
 Logger::Logger( const std::string & loggername )
+  : m_outputStream( &std::cout )
 {}
 
 Logger::~Logger()
@@ -25,12 +26,15 @@ std::string getFormattedDate()
   return buffer;
 }
 
-std::string logLevelToStr(Logger::LogLevel level)
+const char* logLevelToStr(LogLevel level)
 {
   switch( level )
   {
-    case Logger::ERROR: return "ERROR";
-    case Logger::DEBUG: return "DEBUG";
+    case LogLevel::ERROR: return "ERROR";
+    case LogLevel::WARNING: return "WARNING";
+    case LogLevel::INFO: return "INFO";
+    case LogLevel::DEBUG: return "DEBUG";
+    case LogLevel::FINE: return "FINE";
   }
   return "UNDEF";
 }
@@ -49,9 +53,9 @@ void Logger::endLog()
   getOutputStream() << std::endl;
 }
 
-StreamGuard::StreamGuard( Logger & logger )
+StreamGuard::StreamGuard( Logger & logger, LogDetails details )
   : m_logger(logger)
-  , m_out( logger.getOutputStream() )
+  , m_details(details)
 {}
 
 StreamGuard::~StreamGuard()

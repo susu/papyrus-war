@@ -52,7 +52,7 @@ void Shader::read()
 
 void Shader::compile()
 {
-  LOG(DEBUG) << getLogMessageHeader() << "compiling: " << m_filename;
+  LOG_DEBUG(getLogMessageHeader(), "compiling: '", m_filename, "'");
   char const * shaderSrcPtr = m_filecontent.c_str();
   glShaderSource( m_shaderId, 1, &shaderSrcPtr, NULL );
   glCompileShader( m_shaderId );
