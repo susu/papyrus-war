@@ -11,6 +11,11 @@
 
 using namespace igloo;
 
+namespace
+{
+  const cw::graph::ScreenSize g_screenSize(1024,768);
+}
+
 Describe(ARayCastPicking)
 {
   Ref<cw::opengl::Program> prog;
@@ -20,9 +25,9 @@ Describe(ARayCastPicking)
   void SetUp()
   {
     prog.reset( new cw::opengl::Program );
-    projView.reset( new cw::opengl::ProjectionView(*prog) );
+    projView.reset( new cw::opengl::ProjectionView(*prog,g_screenSize) );
     picking.reset( new cw::opengl::RayCastPicking(
-        *projView, cw::graph::ScreenSize(1024,768) ) );
+        *projView, g_screenSize) );
   }
 
   It(can_return_the_shifted_coords_if_matrices_are_identities)

@@ -86,7 +86,7 @@ void OpenGlLoop::run()
     return;
   }
 
-  ProjectionView projectionView(shaderProgram);
+  ProjectionView projectionView(shaderProgram,screen);
   Camera cam( projectionView );
   cam.setPos( 6, 7, -13 );
   cam.lookAt( 0, 0, 0 );

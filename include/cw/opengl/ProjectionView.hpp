@@ -8,6 +8,10 @@
 
 namespace cw
 {
+  namespace graph
+  {
+    struct ScreenSize;
+  }
   namespace opengl
   {
     class Program;
@@ -18,7 +22,7 @@ namespace cw
     class ProjectionView
     {
       public:
-        ProjectionView( const Program & p );
+        ProjectionView( const Program & p, const graph::ScreenSize & screenSize );
 
         GLuint getProgramId() const
         { return m_programId; }
@@ -40,6 +44,8 @@ namespace cw
 
         GLuint m_programId;
         GLuint m_mvpMatrixId;
+
+        const graph::ScreenSize & m_screenSize;
     };
   }
 }

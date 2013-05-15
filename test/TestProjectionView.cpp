@@ -3,6 +3,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <cw/graph/ScreenSize.hpp>
+
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 
@@ -10,18 +12,23 @@
 
 using namespace igloo;
 
+namespace
+{
+  const cw::graph::ScreenSize g_screenSize(1024,768);
+}
+
 Describe(the_ProjectionView)
 {
   It(can_be_instantiated)
   {
     cw::opengl::Program program;
-    cw::opengl::ProjectionView projView(program);
+    cw::opengl::ProjectionView projView(program,g_screenSize);
   }
 
   Spec(view_matrix_can_be_set_and_gotten)
   {
     cw::opengl::Program program;
-    cw::opengl::ProjectionView projView(program);
+    cw::opengl::ProjectionView projView(program,g_screenSize);
     glm::mat4 view = glm::mat4(1);
 
     projView.setViewMatrix( view );
@@ -31,7 +38,7 @@ Describe(the_ProjectionView)
   Spec(projection_matrix_can_be_set_and_gotten_back)
   {
     cw::opengl::Program program;
-    cw::opengl::ProjectionView projView(program);
+    cw::opengl::ProjectionView projView(program,g_screenSize);
     glm::mat4 projection = glm::mat4(1);
 
     projView.setProjectionMatrix( projection );
@@ -41,7 +48,7 @@ Describe(the_ProjectionView)
   It(should_send_MVP_matrix)
   {
     cw::opengl::Program program;
-    cw::opengl::ProjectionView projView(program);
+    cw::opengl::ProjectionView projView(program,g_screenSize);
 
     glm::mat4 viewMatrix = glm::lookAt(
         generateRandomVec3(),

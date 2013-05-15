@@ -2,6 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <cw/Enforce.hpp>
+#include <cw/graph/ScreenSize.hpp>
+
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/GlException.hpp>
 
@@ -11,7 +14,9 @@ namespace cw
   {
 const std::string MVP_MATRIX_NAME = "MVP";
 
-ProjectionView::ProjectionView( const Program & program )
+ProjectionView::ProjectionView( const Program & program,
+                                const graph::ScreenSize & screenSize )
+  : m_screenSize(screenSize)
 {
   int mvpId = glGetUniformLocation(program.getId(), MVP_MATRIX_NAME.c_str() );
   if ( -1 == mvpId )
@@ -22,10 +27,13 @@ ProjectionView::ProjectionView( const Program & program )
   m_programId = program.getId();
   m_mvpMatrixId = mvpId;
 
+  ENFORCE(m_screenSize.y > 0, "Invalid screen dimensions!");
+  float screenRatio = float(m_screenSize.x) / m_screenSize.y;
+
   // TODO do not hardcode
   m_projectionMatrix = glm::perspective(
       35.0f, // degree: FoV
-      4.0f / 3.0f, // ratio // TODO set from ScreenSize!
+      screenRatio,
       0.1f, 100.0f ); // draw depth
 }
 
