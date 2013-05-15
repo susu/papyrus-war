@@ -160,7 +160,7 @@ void OpenGlLoop::run()
     views.doIt();
     glfwSwapBuffers();
 
-    // glfwWaitEvents();
+    glfwWaitEvents();
     timer.updateCurrentTime( glfwGetTime() );
   }
   while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS
