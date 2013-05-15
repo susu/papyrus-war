@@ -5,6 +5,7 @@
 #include <cw/core/Surface.hpp>
 
 #include <cw/opengl/OpenGlViewBase.hpp>
+#include <cw/opengl/Camera.hpp>
 
 namespace cw
 {
@@ -16,6 +17,8 @@ namespace cw
       public:
         SurfaceView(Ref< core::Surface >, ProjectionView&);
         virtual void show() override;
+      private:
+        Camera m_camera;
     };
   }
 }

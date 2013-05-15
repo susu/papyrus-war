@@ -20,7 +20,6 @@
 #include <cw/opengl/OpenGlViewMapping.hpp>
 #include <cw/opengl/Program.hpp>
 #include <cw/opengl/ProjectionView.hpp>
-#include <cw/opengl/Camera.hpp>
 #include <cw/opengl/RayCastPicking.hpp>
 #include <cw/opengl/Sun.hpp>
 #include <cw/opengl/Gpu.hpp>
@@ -87,10 +86,6 @@ void OpenGlLoop::run()
   }
 
   ProjectionView projectionView(shaderProgram,screen);
-  Camera cam( projectionView );
-  cam.setPos( 6, 7, -13 );
-  cam.lookAt( 0, 0, 0 );
-  cam.orientation( Camera::HEADS_UP );
 
   RayCastPicking picking( projectionView, screen );
   core::InputDistributor inputDistributor( picking ); // forwards input to models
@@ -136,8 +131,6 @@ void OpenGlLoop::run()
   glClearColor( skyBlueR, skyBlueG, skyBlueB, 0.0f );
   glEnable( GL_DEPTH_TEST );
 
-  // double camX = 0;
-  // double camY = 0;
   // double angle = 0;
   core::Pos3d sunPos( 10.0, 10.0, -5.0 );
   do
@@ -148,7 +141,6 @@ void OpenGlLoop::run()
     // angle+= 0.01;
     //camX = 10* cos(angle);
     //camY = 10* sin(angle);
-    //cam.setPos( camX, camY, -13 );
     // sunPos.z = 30 * ( cos(angle) );
     // sunPos.x = 10 * ( -2.5 + sin(angle) );
     // sun.setPos( sunPos );
