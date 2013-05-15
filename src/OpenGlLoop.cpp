@@ -23,6 +23,7 @@
 #include <cw/opengl/Camera.hpp>
 #include <cw/opengl/RayCastPicking.hpp>
 #include <cw/opengl/Sun.hpp>
+#include <cw/opengl/Gpu.hpp>
 
 namespace
 {
@@ -59,10 +60,7 @@ void OpenGlLoop::run()
     return;
   }
 
-  // GLuint VertexArrayID;
-  // glGenVertexArrays(1, &VertexArrayID);
-  // glBindVertexArray(VertexArrayID);
-
+  LOG_INFO("Video memory size: ", opengl::gpu::getDedicatedMemory()/1000.0, " MB");
   glfwEnable( GLFW_STICKY_KEYS );
 
   GlfwCallbackRepo::initialize();
@@ -123,6 +121,13 @@ void OpenGlLoop::run()
     auto worldSpace = picking.unProject( click.pos );
     core::Pos p( worldSpace.x, worldSpace.y );
     boat->setPos( p );
+  });
+
+  timer.setUpTimer( 1_sec, []()
+  {
+    LOG_DEBUG("Current GPU memory usage: ",
+              opengl::gpu::getDedicatedMemory()-opengl::gpu::getAvailabelDedicatedMemory(),
+              " KB");
   });
 
   const float skyBlueR = 0.529f;
