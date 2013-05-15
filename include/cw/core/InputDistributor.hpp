@@ -16,25 +16,42 @@ namespace cw
     {
       Pos pos;
     };
+    struct ScrollEvent
+    {
+      enum Action
+      {
+        START,
+        STOP
+      };
+      ScrollDir scrollDir;
+      Action action;
+    };
     class InputDistributor : public UnifiedInputHandler
     {
       public:
         typedef unsigned long long CallbackId;
         typedef std::function< void(ClickEvent) > ClickedOnCallback;
+        typedef std::function< void(ScrollEvent) > ScrollCallback;
+
         InputDistributor( const PickingInterface & );
         virtual ~InputDistributor();
 
         CallbackId registerClickedOn( ClickedOnCallback );
         void unregisterClickedOn( CallbackId );
 
+        CallbackId registerScroll( ScrollCallback );
+        void unregisterScroll( CallbackId );
+
         virtual void clickedAt(int x, int y) override; //< pixel-level
         virtual void zoom(ZoomDir dir) override;
         virtual void startScroll(ScrollDir dir) override;
         virtual void stopScroll() override;
       private:
-        CallbackId getNextKey() const;
         std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
+        std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
         const PickingInterface & m_picking;
+
+        ScrollEvent m_scrollEvent;
     };
   }
 }

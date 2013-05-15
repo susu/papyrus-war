@@ -94,4 +94,44 @@ Describe(AInputDistributor)
   {
     // NOTE assuming surface is at Z=0
   }
+
+  It(can_register_scroll)
+  {
+    dist.registerScroll([](cw::core::ScrollEvent ev){});
+  }
+
+  It(should_call_scroll_callback)
+  {
+    bool isCalled = false;
+    dist.registerScroll([&isCalled](cw::core::ScrollEvent ev)
+    {
+      isCalled = true;
+    });
+    dist.startScroll( cw::core::ScrollDir::UP );
+    AssertThat(isCalled,Equals(true));
+  }
+
+  It(should_call_scroll_callback_with_proper_values)
+  {
+    cw::core::ScrollEvent startEvent, stopEvent;
+    auto cb = [&startEvent,&stopEvent](cw::core::ScrollEvent ev)
+    {
+      if (ev.action == cw::core::ScrollEvent::START)
+        startEvent = ev;
+      else
+        stopEvent = ev;
+    };
+
+    dist.registerScroll(cb);
+
+    dist.startScroll(cw::core::ScrollDir::LEFT);
+    AssertThat(startEvent.action, Equals(cw::core::ScrollEvent::START));
+    AssertThat(startEvent.scrollDir, Equals(cw::core::ScrollDir::LEFT));
+
+
+    dist.stopScroll();
+    AssertThat(stopEvent.action, Equals(cw::core::ScrollEvent::STOP));
+    AssertThat(stopEvent.scrollDir, Equals(cw::core::ScrollDir::LEFT));
+  }
+
 };

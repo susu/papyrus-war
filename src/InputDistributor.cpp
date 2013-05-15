@@ -7,6 +7,17 @@
 namespace
 {
   cw::core::Logger logger("core");
+
+template<typename MapType>
+auto getNextKey(const MapType & cbMap) -> decltype(cbMap.rbegin()->first)
+{
+  if (cbMap.empty())
+  {
+    return 0;
+  }
+  return cbMap.rbegin()->first + 1;
+}
+
 }
 
 namespace cw
@@ -24,7 +35,7 @@ InputDistributor::~InputDistributor()
 InputDistributor::CallbackId InputDistributor::registerClickedOn(
     std::function< void(ClickEvent) > callback )
 {
-  CallbackId max = getNextKey();
+  CallbackId max = getNextKey( m_clickedOnCallbacks );
   m_clickedOnCallbacks[ max ] = callback;
   return max;
 }
@@ -38,13 +49,12 @@ void InputDistributor::unregisterClickedOn( CallbackId id )
   }
 }
 
-InputDistributor::CallbackId InputDistributor::getNextKey() const
+InputDistributor::CallbackId InputDistributor::registerScroll(
+    ScrollCallback callback)
 {
-  if (m_clickedOnCallbacks.empty())
-  {
-    return 0;
-  }
-  return m_clickedOnCallbacks.rbegin()->first + 1;
+  CallbackId key = getNextKey( m_scrollCallbacks );
+  m_scrollCallbacks[key] = callback;
+  return key;
 }
 
 void InputDistributor::clickedAt(int x, int y)
@@ -62,10 +72,26 @@ void InputDistributor::zoom(ZoomDir dir)
 {}
 
 void InputDistributor::startScroll(ScrollDir dir)
-{}
+{
+  ScrollEvent event;
+  event.scrollDir = dir;
+  event.action = ScrollEvent::START;
+  m_scrollEvent = event;
+
+  for(auto callback : m_scrollCallbacks)
+  {
+    callback.second(event);
+  }
+}
 
 void InputDistributor::stopScroll()
-{}
+{
+  m_scrollEvent.action = ScrollEvent::STOP;
+  for(auto callback : m_scrollCallbacks)
+  {
+    callback.second(m_scrollEvent);
+  }
+}
 
   }
 }
