@@ -16,6 +16,7 @@ GRAPH_SRC= \
   ShaderResourceLocator.cpp \
   Plane.cpp \
   Sun.cpp \
+  Gpu.cpp \
 
 CORE_SRC= \
   Logger.cpp \
