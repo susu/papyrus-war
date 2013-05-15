@@ -5,6 +5,13 @@ namespace cw
 {
   namespace core
   {
+    enum class ScrollDir : int
+    {
+      RIGHT,
+      DOWN,
+      LEFT,
+      UP
+    };
     class UnifiedInputHandler
     {
       public:
@@ -12,13 +19,6 @@ namespace cw
         {
           IN,
           OUT
-        };
-        enum class ScrollDir : int
-        {
-          RIGHT,
-          DOWN,
-          LEFT,
-          UP
         };
         virtual ~UnifiedInputHandler()
         {}

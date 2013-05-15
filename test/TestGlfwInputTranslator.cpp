@@ -97,7 +97,7 @@ Describe(the_glfwInputTranslator)
 
   It(should_interpret_key_arrows_as_scrolling)
   {
-    typedef cw::core::UnifiedInputHandler::ScrollDir ScrollDir;
+    typedef cw::core::ScrollDir ScrollDir;
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
 
     translator.keyEvent(GLFW_KEY_LEFT, GLFW_PRESS);

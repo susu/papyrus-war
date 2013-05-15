@@ -29,7 +29,7 @@ namespace fake
         else ++m_zoomOut;
       }
 
-      virtual void startScroll(ScrollDir direction)
+      virtual void startScroll(cw::core::ScrollDir direction)
       {
         m_hasScrollDir = true;
         m_scrollDir = direction;
@@ -69,7 +69,7 @@ namespace fake
         return m_hasScrollDir;
       }
 
-      ScrollDir getLastScrollDir() const
+      cw::core::ScrollDir getLastScrollDir() const
       {
         return m_scrollDir;
       }
@@ -84,7 +84,7 @@ namespace fake
       int m_zoomOut;
 
       bool m_hasScrollDir;
-      ScrollDir m_scrollDir;
+      cw::core::ScrollDir m_scrollDir;
   };
 }
 

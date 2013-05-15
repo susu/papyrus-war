@@ -36,7 +36,7 @@ namespace cw
             , pressed(false)
           {}
         };
-        typedef core::UnifiedInputHandler::ScrollDir ScrollDir;
+        typedef core::ScrollDir ScrollDir;
 
         ScrollDir keyToScrollDir(int key) const;
 
