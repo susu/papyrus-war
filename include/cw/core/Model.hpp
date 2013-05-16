@@ -12,7 +12,6 @@ namespace cw
       public:
         virtual void tick() = 0;
     };
-    typedef EntityContainer<Model, &Model::tick> ModelContainer;
   }
 }
 

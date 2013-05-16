@@ -21,7 +21,6 @@ namespace cw
         View()
         {}
     };
-    typedef core::EntityContainer<View, &View::show> ViewContainer;
   }
 }
 #endif

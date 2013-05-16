@@ -30,16 +30,24 @@ Describe(the_EntityContainer)
 {
   It(can_store_stuff)
   {
-    cw::core::EntityContainer<Dummy, &Dummy::method> container;
+    cw::core::EntityContainer<Dummy> container;
     container.add( Dummy::create() );
   }
 
   It(can_call_method_specified_in_template_arg)
   {
-    cw::core::EntityContainer<Dummy, &Dummy::method> container;
+    // Arrange
+    cw::core::EntityContainer<Dummy> container;
     auto dummy = Dummy::create();
     container.add( dummy );
-    container.doIt();
+
+    // Act
+    container.each([](DummyRef & d)
+    {
+      d->method();
+    });
+
+    // Assert
     AssertThat( dummy->isCalled(), Equals(true) );
   }
 };

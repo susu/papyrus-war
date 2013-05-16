@@ -4,33 +4,32 @@
 #include <memory>
 #include <vector>
 
-#define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))
-
 namespace cw
 {
   namespace core
   {
-    template<typename T, void (T::*Method)() >
+    template<typename T>
     class EntityContainer
     {
       public:
         EntityContainer() = default;
         ~EntityContainer() = default;
 
-        EntityContainer(EntityContainer<T,Method>&) = delete;
-        EntityContainer(EntityContainer<T,Method>&&) = delete;
-        void operator=(EntityContainer<T,Method>) = delete;
+        EntityContainer(EntityContainer<T>&) = delete;
+        EntityContainer(EntityContainer<T>&&) = delete;
+        void operator=(EntityContainer<T>) = delete;
 
         typedef std::shared_ptr<T> TRef;
         void add( TRef x )
         {
           m_entities.push_back( x );
         }
-        void doIt()
+        template<typename Func>
+        void each(Func func)
         {
           for ( auto & i : m_entities )
           {
-            CALL_MEMBER_FN(*i,Method)();
+            func(i);
           }
         }
       private:

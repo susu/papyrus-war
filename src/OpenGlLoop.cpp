@@ -67,8 +67,8 @@ void OpenGlLoop::run()
 
   core::Timer timer( glfwGetTime() );
 
-  core::ModelContainer models;
-  graph::ViewContainer views;
+  core::EntityContainer<core::Model> models;
+  core::EntityContainer<graph::View> views;
 
   Program shaderProgram;
   graph::ScreenSize screen( SCREEN_X, SCREEN_Y );
@@ -148,8 +148,16 @@ void OpenGlLoop::run()
     //LOG_DEBUG("Sun's position: ", sunPos);
     // TESTCODE
 
-    models.doIt();
-    views.doIt();
+    models.each([](Ref<core::Model> & model)
+    {
+      model->tick();
+    });
+
+    views.each([](Ref<graph::View> & view)
+    {
+      view->show();
+    });
+
     glfwSwapBuffers();
 
     glfwWaitEvents();
