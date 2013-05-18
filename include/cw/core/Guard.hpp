@@ -7,22 +7,59 @@ namespace cw
 {
   namespace core
   {
+    /**
+     * Universal guard with delayed function call.
+     * Example:
+     *   auto guard = CreateGuard( @function, @params... );
+     *
+     * It will call the @function with parameters @params
+     * when 'guard' leaves the scope.
+     *
+     * TODO:
+     * It's noncopyable, but moveable (MoveConstructible,MoveAssignable).
+     * It implies it can be used inside containers.
+     */
     template<typename DestroyerCallback, typename... Args>
     class Guard
     {
+        // not needed elsewhere, defined in private
+        template<int ...>
+        struct seq {};
+
+        template<int N, int ...S>
+        struct gens : gens< N-1, N-1, S...> {};
+
+        template<int ...S>
+        struct gens<0,S...>
+        {
+          typedef seq<S...> type;
+        };
+        template<int ...S>
+        void callDestroyer(seq<S...>)
+        {
+          m_destroyerCallback(std::get<S>(m_tuple) ...);
+        }
+
       public:
         Guard(DestroyerCallback cb, Args&&...args)
           : m_tuple(args...)
           , m_destroyerCallback(cb)
         {}
+
         ~Guard()
         {
-          // TODO template black magic needed
-          //   need to build a parameter pack of numbers, and unpack them
-          //   http://stackoverflow.com/questions/7858817/unpacking-a-tuple-to-call-a-matching-function-pointer
-          //m_destroyerCallback( m_tuple );
+          callDestroyer(typename gens< sizeof...(Args) >::type());
         }
+
+        // noncopyable
+        Guard(Guard&) = delete;
+        Guard& operator=(Guard) = delete;
+
+        // TODO only moveable
+        Guard(Guard&&) = default;
+        Guard& operator=(Guard&&) = default;
       private:
+
         std::tuple<Args...> m_tuple;
         DestroyerCallback m_destroyerCallback;
     };

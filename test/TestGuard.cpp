@@ -8,20 +8,33 @@ using cw::core::CreateGuard;
 
 Describe(AGuard)
 {
-  It(can_be_instantiated)
+  It(works_with_vector)
   {
     std::vector<int> numbers;
 
     {
       numbers.push_back(42);
-      auto exitCallback = []( std::vector<int> & nums, int number )
+      auto exitCallback = [&numbers]( int number )
       {
-        nums.erase( std::remove(nums.begin(), nums.end(), number) );
+        numbers.erase( std::remove(numbers.begin(), numbers.end(), number) );
       };
-      auto guard = CreateGuard( exitCallback, std::ref(numbers) );
+      auto guard = CreateGuard( exitCallback, 42 );
     }
 
-    // (in progress) TODO
-    // AssertThat(numbers.empty(), Equals(true));
+    AssertThat(numbers.empty(), Equals(true));
+  }
+
+  It(calls_the_function_only_once)
+  {
+    int numberOfCalls = 0;
+
+    { // TEST block
+      auto guard = CreateGuard( [&numberOfCalls]()
+      {
+        ++numberOfCalls;
+      });
+    } // TEST block
+
+    AssertThat(numberOfCalls, Equals(1));
   }
 };
