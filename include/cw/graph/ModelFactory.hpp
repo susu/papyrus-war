@@ -10,7 +10,6 @@ namespace cw
 {
   namespace graph
   {
-    //  TODO register at InputDistributor
     /**
      * Responsible to create XyModel, and corresponding XyView
      * Template parameter: the factory which decides the corresponding type of View
