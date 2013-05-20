@@ -89,9 +89,9 @@ void OpenGlLoop::run()
 
   RayCastPicking picking( projectionView, screen );
   core::InputDistributor inputDistributor( picking ); // forwards input to models
+
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks( cbRepo );
-
 
   auto modelCallback = [&models]( Ref<core::Model> model )
   {
@@ -102,8 +102,10 @@ void OpenGlLoop::run()
     views.add(view);
   };
 
+  core::CallbackRegistrars cbRegistrars(inputDistributor, timer);
   graph::ModelFactory< opengl::OpenGlViewFactory > modelFactory(
     modelCallback, viewCallback, projectionView);
+  modelFactory.setCallbackRegistrar(cbRegistrars);
 
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
   auto surface = modelFactory.create< core::Surface >( );
