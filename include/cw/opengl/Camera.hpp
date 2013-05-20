@@ -18,7 +18,13 @@ namespace cw
         Camera( ProjectionView & );
 
         void setPos( float x, float y, float z );
+        glm::vec3 getPos() const
+        { return m_pos; }
+
         void lookAt( float x, float y, float z );
+        glm::vec3 getLookAt() const
+        { return m_lookAt; }
+
         void orientation(Orientation orient);
       private:
         void sendViewMatrix();
