@@ -1,13 +1,13 @@
 #ifndef CW_CORE_MODEL_HPP_INC
 #define CW_CORE_MODEL_HPP_INC
 
-#include <cw/core/EntityContainer.hpp>
+#include <cw/core/HasCallbackRegistrar.hpp>
 
 namespace cw
 {
   namespace core
   {
-    class Model
+    class Model : public HasCallbackRegistrar
     {
       public:
         virtual void tick() = 0;

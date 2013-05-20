@@ -2,6 +2,7 @@
 #define CW_GRAPH_MODEL_FACTORY_HPP_INC
 
 #include <cw/core/Types.hpp>
+#include <cw/core/HasCallbackRegistrar.hpp>
 
 #include <cw/graph/Types.hpp>
 #include <cw/graph/ViewFactory.hpp>
@@ -15,7 +16,7 @@ namespace cw
      * Template parameter: the factory which decides the corresponding type of View
      */
     template<class Factory>
-    class ModelFactory
+    class ModelFactory : public core::HasCallbackRegistrar
     {
       public:
         typedef std::function< void( Ref<core::Model> ) > ModelCreatedCallback;
@@ -24,7 +25,7 @@ namespace cw
         /**
          * modelCallback, viewCalback: these functions are called if
          *   a model/view is created. Useful to store models/views in a common place
-         * arg: arguments forwarded to viewFactory
+         * args: arguments forwarded to viewFactory
          */
         template<typename... FactoryCtorArgs>
         ModelFactory( ModelCreatedCallback modelCallback,
@@ -50,8 +51,21 @@ namespace cw
 
           auto view = m_viewFactory.template createViewFor<T>( model );
           m_viewCallback(view);
+
+
+          if ( hasRegistrars() )
+          {
+            model->setCallbackRegistrar( getRegistrars() );
+            view->setCallbackRegistrar( getRegistrars() );
+          }
+
           return model;
         }
+
+        using HasCallbackRegistrar::setCallbackRegistrar;
+
+        ModelFactory(ModelFactory&) = delete;
+        ModelFactory& operator=(ModelFactory) = delete;
       private:
         ModelCreatedCallback m_modelCallback;
         ViewCreatedCallback m_viewCallback;

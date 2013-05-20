@@ -2,12 +2,13 @@
 #define CW_GRAPH_VIEW_HPP_INC
 
 #include <cw/core/EntityContainer.hpp>
+#include <cw/core/HasCallbackRegistrar.hpp>
 
 namespace cw
 {
   namespace graph
   {
-    class View
+    class View : public core::HasCallbackRegistrar
     {
       public:
         View(View&) = delete;
