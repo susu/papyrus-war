@@ -27,8 +27,8 @@
 namespace
 {
   cw::core::Logger logger("opengl");
-  const int SCREEN_X = 1024;
-  const int SCREEN_Y = 600;
+  const int SCREEN_X = 1280;
+  const int SCREEN_Y = 700;
 }
 
 namespace cw
