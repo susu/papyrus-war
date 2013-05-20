@@ -120,7 +120,7 @@ void OpenGlLoop::run()
     boat->setPos( p );
   });
 
-  timer.setUpTimer( 1_sec, []()
+  timer.setUpTimer( 10_sec, []()
   {
     LOG_DEBUG("Current GPU memory usage: ",
               opengl::gpu::getDedicatedMemory()-opengl::gpu::getAvailabelDedicatedMemory(),
@@ -164,8 +164,9 @@ void OpenGlLoop::run()
     });
 
     glfwSwapBuffers();
+    glfwSleep( 0.01 );
 
-    glfwWaitEvents();
+    //glfwWaitEvents();
     timer.updateCurrentTime( glfwGetTime() );
   }
   while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS
