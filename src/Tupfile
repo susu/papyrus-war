@@ -30,11 +30,18 @@ CORE_SRC= \
 : foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
 
+# glew is compiled into DLL under win
+ifeq (@(TUP_PLATFORM),win32)
+  GLEW_C=$(WINLIBS)/glew.c
+  GLEW_O=glew.o
+  : $(GLEW_C) |> cxx |> %B.o
+endif
+
 LDFLAGS=\
   $(OPENGL_LIBS)
 
 : foreach $(GRAPH_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {graph_objs}
-: {graph_objs} |> !o2shared |> $(LIBCW_GRAPH_SO)
+: {graph_objs} $(GLEW_O) |> !o2shared |> $(LIBCW_GRAPH_SO)
 
 LDFLAGS= \
   -L$(LD_PATH) \
@@ -42,4 +49,4 @@ LDFLAGS= \
   -l$(LIBCW_CORE) \
 
 : main.cpp |> !cxx |> main.o | $(GCNO_OUT)
-: main.o | $(LIBCW_GRAPH_SO) $(LIBCW_CORE_SO) |> !o2bin |> cw
+: main.o | $(LIBCW_GRAPH_SO) $(LIBCW_CORE_SO) |> !o2bin |> cw$(BIN_EXT)

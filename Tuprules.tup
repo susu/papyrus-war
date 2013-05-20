@@ -26,16 +26,30 @@ ifeq (@(DEBUG_SYM),y)
   CXXFLAGS+= -g -DCW_DEBUG
 endif
 
-OPENGL_LIBS= -lglfw -lGLEW -lGL
+ifeq (@(TUP_PLATFORM),win32)
+  WINLIBS=../winlibs
+  LIB_EXT=.dll
+  BIN_EXT=.exe
+  OPENGL_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
+  CXXFLAGS+= -DGLEW_STATIC
+endif
+
+ifeq (@(TUP_PLATFORM),linux)
+  LIB_EXT=.so
+  BIN_EXT=
+  OPENGL_LIBS= -lglfw -lGLEW -lGL
+  CXXFLAGS+= -fPIC
+endif
+
 
 LIBCW_GRAPH=cellulose-graphics
-LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH).so
+LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH)$(LIB_EXT)
 
 LIBCW_CORE=cellulose-core
-LIBCW_CORE_SO=lib$(LIBCW_CORE).so
+LIBCW_CORE_SO=lib$(LIBCW_CORE)$(LIB_EXT)
 
-!cxx = |> $(CC) -fPIC $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
-!o2shared = |> $(CC) $(BASE_LDFLAGS) $(LDFLAGS) -shared %f -o %o |>
+!cxx = |> $(CC) $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
+!o2shared = |> $(CC) -shared %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
 
 !o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
 

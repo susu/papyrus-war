@@ -1,5 +1,8 @@
 include_rules
 
+ifeq (@(TUP_PLATFORM),linux)
+# OpenGlStubs is not portable, unit tests are supported only on linux right now
+
 CXXFLAGS+= -Iigloo/
 
 : foreach *.cpp |> !cxx |> %B.o | $(GCNO_OUT) {test_objs}
@@ -13,3 +16,4 @@ ifeq (@(VALGRIND),y)
 endif
 
 : test_runner |> LD_LIBRARY_PATH=$(LD_PATH) $(VALGRIND) ./test_runner --verbose|>
+endif
