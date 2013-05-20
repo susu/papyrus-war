@@ -132,6 +132,9 @@ void OpenGlLoop::run()
   const float skyBlueB = 0.980f;
   glClearColor( skyBlueR, skyBlueG, skyBlueB, 0.0f );
   glEnable( GL_DEPTH_TEST );
+  glEnable( GL_CULL_FACE );
+  glCullFace( GL_BACK );
+  glFrontFace( GL_CW );
 
   // double angle = 0;
   core::Pos3d sunPos( 10.0, 10.0, -5.0 );
