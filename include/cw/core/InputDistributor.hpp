@@ -46,6 +46,9 @@ namespace cw
         virtual void zoom(ZoomDir dir) override;
         virtual void startScroll(ScrollDir dir) override;
         virtual void stopScroll() override;
+
+        InputDistributor(InputDistributor&) = delete;
+        InputDistributor& operator=(InputDistributor) = delete;
       private:
         std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
