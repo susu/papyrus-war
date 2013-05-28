@@ -11,7 +11,7 @@ namespace cw
 {
   namespace graph
   {
-    class ScreenSize;
+    struct ScreenSize;
   }
   namespace opengl
   {
