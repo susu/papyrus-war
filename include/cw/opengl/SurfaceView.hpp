@@ -1,6 +1,8 @@
 #ifndef CW_OPENGL_SURFACE_VIEW_HPP_INC
 #define CW_OPENGL_SURFACE_VIEW_HPP_INC
 
+#include <vector>
+
 #include <cw/core/Types.hpp>
 #include <cw/core/Surface.hpp>
 #include <cw/core/InputDistributor.hpp>
@@ -24,9 +26,12 @@ namespace cw
         void processScrollback(core::ScrollEvent);
         void tick();
 
+        bool isScrolling() const;
+
         Camera m_camera;
-        core::ScrollDir m_scrollDir;
-        bool m_isScrolling;
+
+        typedef std::vector<int> ActiveScrollDirs;
+        ActiveScrollDirs m_activeScrollDirs;
     };
   }
 }

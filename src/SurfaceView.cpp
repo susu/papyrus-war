@@ -1,6 +1,8 @@
 #include <cw/opengl/SurfaceView.hpp>
 
 #include <functional>
+#include <algorithm>
+
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <cw/core/Logger.hpp>
@@ -18,7 +20,7 @@ namespace cw
 SurfaceView::SurfaceView( Ref< core::Surface> surface, ProjectionView& projView )
   : BaseType( surface, projView )
   , m_camera( projView )
-  , m_isScrolling( false )
+  , m_activeScrollDirs(4,false)
 {
   m_camera.setPos( 0, 0, -13 );
   m_camera.lookAt( 0, 0, 0 );
@@ -65,40 +67,53 @@ void SurfaceView::show()
 
 void SurfaceView::processScrollback(core::ScrollEvent ev)
 {
-  m_isScrolling = (ev.action == core::ScrollEvent::START);
-  m_scrollDir = ev.scrollDir;
+  bool isStartScroll = (ev.action == core::ScrollEvent::START);
+  m_activeScrollDirs[ to_underlying(ev.scrollDir) ] = isStartScroll;
+}
+
+bool SurfaceView::isScrolling() const
+{
+  return std::find(m_activeScrollDirs.begin(),
+                   m_activeScrollDirs.end(),
+                   true) != m_activeScrollDirs.end();
 }
 
 void SurfaceView::tick()
 {
   using core::ScrollDir;
 
-  if (!m_isScrolling)
+  if (!isScrolling())
     return;
 
   auto nextPos = m_camera.getPos();
   auto nextLook = m_camera.getLookAt();
 
   float step = 0.1;
-  switch(m_scrollDir)
+
+  if ( m_activeScrollDirs[ to_underlying(ScrollDir::RIGHT) ] )
   {
-    case ScrollDir::RIGHT:
-      nextPos.x -= step;
-      nextLook.x -= step;
-      break;
-    case ScrollDir::LEFT:
-      nextPos.x += step;
-      nextLook.x += step;
-      break;
-    case ScrollDir::DOWN:
-      nextPos.y -= step;
-      nextLook.y -= step;
-      break;
-    case ScrollDir::UP:
-      nextPos.y += step;
-      nextLook.y += step;
-      break;
+    nextPos.x -= step;
+    nextLook.x -= step;
   }
+
+  if ( m_activeScrollDirs[ to_underlying(ScrollDir::LEFT) ] )
+  {
+    nextPos.x += step;
+    nextLook.x += step;
+  }
+
+  if ( m_activeScrollDirs[ to_underlying(ScrollDir::DOWN) ] )
+  {
+    nextPos.y -= step;
+    nextLook.y -= step;
+  }
+
+  if ( m_activeScrollDirs[ to_underlying(ScrollDir::UP) ] )
+  {
+    nextPos.y += step;
+    nextLook.y += step;
+  }
+
   m_camera.setPos( nextPos.x, nextPos.y, nextPos.z );
   m_camera.lookAt( nextLook.x, nextLook.y, nextLook.z );
 }
