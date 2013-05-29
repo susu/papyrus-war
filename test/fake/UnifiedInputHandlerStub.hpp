@@ -15,8 +15,12 @@ namespace fake
       UnifiedInputHandlerStub()
         : m_zoomIn(0)
         , m_zoomOut(0)
-        , m_hasScrollDir(false)
-      {}
+      {
+        m_activeScrollDirs[ cw::core::ScrollDir::LEFT ] = false;
+        m_activeScrollDirs[ cw::core::ScrollDir::RIGHT ] = false;
+        m_activeScrollDirs[ cw::core::ScrollDir::UP ] = false;
+        m_activeScrollDirs[ cw::core::ScrollDir::DOWN ] = false;
+      }
       virtual void clickedAt(int x, int y)
       {
         m_clicks.push_back( Click{x,y} );
@@ -31,13 +35,12 @@ namespace fake
 
       virtual void startScroll(cw::core::ScrollDir direction)
       {
-        m_hasScrollDir = true;
-        m_scrollDir = direction;
+        m_activeScrollDirs[direction] = true;
       }
 
-      virtual void stopScroll()
+      virtual void stopScroll(cw::core::ScrollDir direction)
       {
-        m_hasScrollDir = false;
+        m_activeScrollDirs[ direction ] = false;
       }
 
       bool hasClickAt(int x, int y) const
@@ -66,12 +69,27 @@ namespace fake
 
       bool hasScrollDir() const
       {
-        return m_hasScrollDir;
+        return getNumberOfActiveScrolls() != 0;
       }
 
-      cw::core::ScrollDir getLastScrollDir() const
+      size_t getNumberOfActiveScrolls() const
       {
-        return m_scrollDir;
+        return std::count_if( m_activeScrollDirs.begin(), m_activeScrollDirs.end(),
+        [](std::map<cw::core::ScrollDir,bool>::value_type x)
+        {
+          return x.second == true;
+        });
+      }
+
+      std::vector<cw::core::ScrollDir> getActiveScrollDirs() const
+      {
+        std::vector<cw::core::ScrollDir> ret;
+        for ( auto x : m_activeScrollDirs )
+        {
+          if (x.second)
+            ret.push_back(x.first);
+        }
+        return ret;
       }
     private:
       struct Click
@@ -83,8 +101,7 @@ namespace fake
       int m_zoomIn;
       int m_zoomOut;
 
-      bool m_hasScrollDir;
-      cw::core::ScrollDir m_scrollDir;
+      std::map<cw::core::ScrollDir,bool> m_activeScrollDirs;
   };
 }
 

@@ -45,7 +45,7 @@ namespace cw
         virtual void clickedAt(int x, int y) override; //< pixel-level
         virtual void zoom(ZoomDir dir) override;
         virtual void startScroll(ScrollDir dir) override;
-        virtual void stopScroll() override;
+        virtual void stopScroll(ScrollDir dir) override;
 
         InputDistributor(InputDistributor&) = delete;
         InputDistributor& operator=(InputDistributor) = delete;
@@ -53,8 +53,6 @@ namespace cw
         std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
         const PickingInterface & m_picking;
-
-        ScrollEvent m_scrollEvent;
     };
   }
 }

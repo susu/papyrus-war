@@ -11,6 +11,8 @@ using namespace igloo;
 
 Describe(the_glfwInputTranslator)
 {
+  typedef cw::core::ScrollDir ScrollDir;
+
   fake::UnifiedInputHandlerStub unifiedInputHandler;
   cw::opengl::GlfwInputTranslator translator;
 
@@ -97,15 +99,29 @@ Describe(the_glfwInputTranslator)
 
   It(should_interpret_key_arrows_as_scrolling)
   {
-    typedef cw::core::ScrollDir ScrollDir;
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
 
     translator.keyEvent(GLFW_KEY_LEFT, GLFW_PRESS);
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(true) );
-    AssertThat( unifiedInputHandler.getLastScrollDir(), Equals(ScrollDir::LEFT) );
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), Contains(ScrollDir::LEFT) );
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), HasLength(1) );
 
     translator.keyEvent(GLFW_KEY_LEFT, GLFW_RELEASE);
     AssertThat( unifiedInputHandler.hasScrollDir(), Equals(false) );
+  }
+
+  It(should_interpret_multiple_press_simultaneously)
+  {
+    translator.keyEvent(GLFW_KEY_LEFT, GLFW_PRESS);
+    translator.keyEvent(GLFW_KEY_DOWN, GLFW_PRESS);
+
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), HasLength(2) );
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), Contains(ScrollDir::LEFT) );
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), Contains(ScrollDir::DOWN) );
+
+    translator.keyEvent(GLFW_KEY_LEFT, GLFW_RELEASE);
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), HasLength(1) );
+    AssertThat( unifiedInputHandler.getActiveScrollDirs(), Contains(ScrollDir::DOWN) );
   }
 
   It(should_handle_other_key_inputs_also)

@@ -10,6 +10,7 @@ using namespace igloo;
 Describe(AInputDistributor)
 {
   typedef cw::core::InputDistributor::CallbackId CallbackId;
+  typedef cw::core::ScrollDir ScrollDir;
 
   fake::PickingStub pickingStub;
   cw::core::InputDistributor dist;
@@ -107,7 +108,7 @@ Describe(AInputDistributor)
     {
       isCalled = true;
     });
-    dist.startScroll( cw::core::ScrollDir::UP );
+    dist.startScroll( ScrollDir::UP );
     AssertThat(isCalled,Equals(true));
   }
 
@@ -124,14 +125,20 @@ Describe(AInputDistributor)
 
     dist.registerScroll(cb);
 
-    dist.startScroll(cw::core::ScrollDir::LEFT);
+    dist.startScroll(ScrollDir::LEFT);
     AssertThat(startEvent.action, Equals(cw::core::ScrollEvent::START));
-    AssertThat(startEvent.scrollDir, Equals(cw::core::ScrollDir::LEFT));
+    AssertThat(startEvent.scrollDir, Equals(ScrollDir::LEFT));
 
 
-    dist.stopScroll();
+    dist.stopScroll(ScrollDir::LEFT);
     AssertThat(stopEvent.action, Equals(cw::core::ScrollEvent::STOP));
-    AssertThat(stopEvent.scrollDir, Equals(cw::core::ScrollDir::LEFT));
-  }
+    AssertThat(stopEvent.scrollDir, Equals(ScrollDir::LEFT));
 
+    dist.startScroll(ScrollDir::RIGHT);
+    dist.startScroll(ScrollDir::UP);
+    dist.stopScroll(ScrollDir::RIGHT);
+
+    AssertThat(stopEvent.action, Equals(cw::core::ScrollEvent::STOP));
+    AssertThat(stopEvent.scrollDir, Equals(ScrollDir::RIGHT));
+  }
 };

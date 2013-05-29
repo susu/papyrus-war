@@ -117,7 +117,7 @@ void GlfwInputTranslator::keyEvent(int key, int action)
   else if ( GLFW_RELEASE == action )
   {
     LOG_DEBUG("RELEASED: ", key);
-    m_inputHandler.stopScroll();
+    m_inputHandler.stopScroll( keyToScrollDir(key) );
   }
 }
 

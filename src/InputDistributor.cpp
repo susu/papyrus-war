@@ -76,7 +76,6 @@ void InputDistributor::startScroll(ScrollDir dir)
   ScrollEvent event;
   event.scrollDir = dir;
   event.action = ScrollEvent::START;
-  m_scrollEvent = event;
 
   for(auto callback : m_scrollCallbacks)
   {
@@ -84,12 +83,15 @@ void InputDistributor::startScroll(ScrollDir dir)
   }
 }
 
-void InputDistributor::stopScroll()
+void InputDistributor::stopScroll(ScrollDir dir)
 {
-  m_scrollEvent.action = ScrollEvent::STOP;
+  ScrollEvent event;
+  event.scrollDir = dir;
+  event.action = ScrollEvent::STOP;
+
   for(auto callback : m_scrollCallbacks)
   {
-    callback.second(m_scrollEvent);
+    callback.second(event);
   }
 }
 
