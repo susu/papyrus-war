@@ -56,17 +56,8 @@ struct MakeMoving
 
 Describe(AMoving)
 {
-  Moving createMoving()
-  {
-    Moving::Config config;
-    config.rotateSpeed = 1.4_rad_per_sec;
-    config.travelSpeed = 1.0_meter_per_sec;
-    Pos startPos(0.0,0.0);
-    auto startOrientation = 0.0_rad;
-    return Moving(config, startPos, startOrientation);
-  }
-
-  It(start_into_way_of_the_target_point)
+  constexpr static double PI = 3.14159265359;
+  It(start_into_way_of_the_target_point_if_x_aligned)
   {
     Moving moving = MakeMoving().orientation(0.0_rad)
                                 .travelSpeed(1.0_meter_per_sec);
@@ -75,5 +66,15 @@ Describe(AMoving)
     moving.tick( 10_millisec );
 
     AssertThat(moving.getCurrentPos(), Equals(Pos(0.01_meter, 0.0)));
+  }
+
+  It(start_into_way_of_the_taget_if_not_aligned)
+  {
+    Moving moving = MakeMoving().orientation(PI/4.0)
+                                .travelSpeed(1.2_meter_per_sec);
+    moving.setTarget( Pos(5.0,5.0) );
+    moving.tick( 25_millisec );
+
+    AssertThat(moving.getCurrentPos(), Equals(Pos(0.0212132,0.0212132)));
   }
 };

@@ -1,6 +1,8 @@
 #ifndef CW_CORE_MOVING_HPP_INC
 #define CW_CORE_MOVING_HPP_INC
 
+#include <cw/Enforce.hpp>
+
 namespace cw
 {
   namespace core
@@ -17,7 +19,7 @@ namespace cw
           : m_config(config)
           , m_pos(startPos)
           , m_targetPos(startPos) //< no moving by default
-          , m_orientation(orientation)
+          , m_orientation(Pos::createFromPolar(1.0, orientation))
         {}
 
         void setTarget(Pos pos)
@@ -32,13 +34,16 @@ namespace cw
 
         void tick(double diffTime)
         {
-          m_pos.x += m_config.travelSpeed * diffTime;
+          ENFORCE( ( m_targetPos || m_orientation ), "Implemented only for parallel vectors!" );
+
+          Pos normalDirectionVector = normalize(m_targetPos);
+          m_pos += normalDirectionVector * m_config.travelSpeed * diffTime;
         }
       private:
         const Config m_config;
         Pos m_pos;
         Pos m_targetPos;
-        double m_orientation;
+        Pos m_orientation;
     };
   }
 }
