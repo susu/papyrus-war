@@ -9,6 +9,7 @@ namespace cw
 {
   namespace core
   {
+    constexpr static double PI = 3.14159265359;
     struct Pos
     {
       Pos() : x(0.0), y(0.0) {}
@@ -17,11 +18,43 @@ namespace cw
       {}
 
       double x,y;
+
+      static Pos createFromPolar(double radius, double angle)
+      {
+        Pos ret;
+        ret.x = radius * cos(angle);
+        ret.y = radius * sin(angle);
+        return ret;
+      }
     };
+
+    inline double length(Pos const & p)
+    {
+      return std::sqrt( p.x*p.x + p.y*p.y );
+    }
+
+    // dot product
+    inline double operator*(Pos const& l, Pos const& r)
+    {
+      return l.x * r.x + l.y * r.y;
+    }
+
+    // parallel?
+    inline bool operator||(Pos const &l, Pos const &r)
+    {
+      return equals(1.0,
+                    std::abs( ( l * r ) / ( length(l)*length(r) ) ) );
+    }
 
     inline bool operator==(Pos const & l, Pos const & r)
     {
       return equals(l.x, r.x) && equals(l.y,r.y);
+    }
+
+    // difference vector
+    inline Pos operator-(Pos const& l, Pos const & r)
+    {
+      return Pos(l.x - r.x, l.y - r.y);
     }
 
     inline std::ostream& operator<<(std::ostream & o, Pos const & pos)
