@@ -33,10 +33,34 @@ namespace cw
       return std::sqrt( p.x*p.x + p.y*p.y );
     }
 
+    inline Pos normalize(Pos const & p)
+    {
+      auto len = length(p);
+      return Pos( p.x / len, p.y / len );
+    }
+
     // dot product
     inline double operator*(Pos const& l, Pos const& r)
     {
       return l.x * r.x + l.y * r.y;
+    }
+
+    // multiply with scalar
+    inline Pos operator*(Pos const &p, double scalar)
+    {
+      return Pos(p.x * scalar, p.y * scalar);
+    }
+    inline Pos operator*(double scalar, Pos const &p)
+    {
+      return p * scalar;
+    }
+
+    // add
+    inline Pos& operator+=(Pos & l, Pos const &r)
+    {
+      l.x += r.x;
+      l.y += r.y;
+      return l;
     }
 
     // parallel?

@@ -79,6 +79,28 @@ Describe(APos)
 
       AssertThat( a || b, Equals(true));
     }
+
+    Spec(x_aligned)
+    {
+      Pos a(10.0, 0.0);
+      Pos v(1.0, 0.0);
+
+      AssertThat( a || v, Equals(true));
+    }
   };
+
+  It(can_be_multiplied_with_scalar)
+  {
+    Pos a(8.7, 27.0);
+    AssertThat( a * 1.0, Equals( Pos(8.7, 27.0) ) );
+    AssertThat( 1.0 * a, Equals( Pos(8.7, 27.0) ) );
+  }
+
+  Spec(another_Pos_can_be_added_with_shorthand_plusequal)
+  {
+    Pos a(1.0,2.0);
+    a += Pos(-2.0, 5.0);
+    AssertThat( a, Equals( Pos(-1.0, 7.0) ) );
+  }
 
 };
