@@ -97,6 +97,12 @@ namespace cw
           glUniform4f(m_colorUniformId, r, g, b, 0.0f); // TODO use ShaderResourceLocator
         }
 
+        auto getNumberOfVertices() -> std::vector<GLfloat>::size_type
+        {
+          // each vertex has 3 element: x,y,z
+          return m_vertexBuffer.size() / 3;
+        }
+
         Ref<ModelType> m_model;
         GLuint m_programId;
       private:

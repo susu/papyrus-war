@@ -26,19 +26,35 @@ namespace cw
 PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
   : BaseType(m,projView)
 {
+  float height = 1.0f;
+  // TODO load from file!
+  // Winding order: Counter clockwise
   setModelVertices(
   {
+    // Front Base Plane
     -1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
      1.0f, -1.0f, 0.0f,
 
+     // Right upper plane
      0.0f,  1.0f, 0.0f,
-     0.0f, -1.0f, -0.5f,
+     0.0f, -1.0f, -height,
      1.0f, -1.0f, 0.0f,
 
+     // Left upper plane
      0.0f,  1.0f, 0.0f,
     -1.0f, -1.0f, 0.0f,
-     0.0f, -1.0f, -0.5f,
+     0.0f, -1.0f, -height,
+
+     // Right lower plane
+     0.0f, -1.0f, -height,
+    -1.0f, -1.0f, 0.0f,
+     0.0f, -3.0f, 0.0f,
+
+     // Left lower plane
+     1.0f, -1.0f, 0.0f,
+     0.0f, -1.0f, -height,
+     0.0f, -3.0f, 0.0f,
   });
 
   computeNormals();
@@ -58,7 +74,7 @@ void PaperBoatView::show()
   glEnableVertexAttribArray( AttrIndex::POSITION );
   glEnableVertexAttribArray( AttrIndex::NORMAL );
 
-  glDrawArrays(GL_TRIANGLES, 0, 9);
+  glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices() );
 
   glDisableVertexAttribArray( POSITION );
   glDisableVertexAttribArray( NORMAL );
