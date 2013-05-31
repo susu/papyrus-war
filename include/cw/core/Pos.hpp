@@ -39,6 +39,14 @@ namespace cw
       return Pos( p.x / len, p.y / len );
     }
 
+    inline Pos rotate(Pos const & p, double radian)
+    {
+      Pos ret;
+      ret.x = p.x * cos(radian) - p.y * sin(radian);
+      ret.y = p.x * sin(radian) + p.y * cos(radian);
+      return ret;
+    }
+
     // dot product
     inline double operator*(Pos const& l, Pos const& r)
     {

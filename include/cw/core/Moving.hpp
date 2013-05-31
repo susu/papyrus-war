@@ -1,8 +1,6 @@
 #ifndef CW_CORE_MOVING_HPP_INC
 #define CW_CORE_MOVING_HPP_INC
 
-#include <cw/Enforce.hpp>
-
 namespace cw
 {
   namespace core
@@ -32,10 +30,30 @@ namespace cw
           return m_pos;
         }
 
+        double getCurrentOrientation() const
+        {
+          Pos xAxis( 1.0, 0.0 );
+          auto dotProd = m_orientation * xAxis;
+          auto cosine = dotProd / ( length(m_orientation) * length(xAxis) );
+          return std::acos(cosine);
+        }
+
+        /**
+         *  Updates the actual rotation/moving if needed.
+         *  @param diffTime: seconds elapsed since last call
+         */
         void tick(double diffTime)
         {
-          ENFORCE( ( m_targetPos || m_orientation ), "Implemented only for parallel vectors!" );
-
+          if ( !(m_targetPos || m_orientation ) )
+          {
+            // rotation needed
+            // TODO check if positive or negative rotation is smaller!
+            auto orientStep = m_config.rotateSpeed * diffTime;
+            m_orientation = rotate(m_orientation, orientStep);
+            return;
+          }
+          // translation needed
+          // TODO check length of translation vector to not jump over targetPos
           Pos normalDirectionVector = normalize(m_targetPos);
           m_pos += normalDirectionVector * m_config.travelSpeed * diffTime;
         }

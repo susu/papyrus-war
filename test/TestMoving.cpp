@@ -8,6 +8,7 @@
 using namespace igloo;
 using cw::core::Moving;
 using cw::core::Pos;
+using cw::core::PRECISION;
 
 // Builder
 struct MakeMoving
@@ -76,5 +77,18 @@ Describe(AMoving)
     moving.tick( 25_millisec );
 
     AssertThat(moving.getCurrentPos(), Equals(Pos(0.0212132,0.0212132)));
+  }
+
+  It(can_rotate_if_target_not_in_the_same_way)
+  {
+    Moving moving = MakeMoving().orientation(0.0).travelSpeed(1.0_meter_per_sec);
+    moving.setTarget( Pos(5.0,5.0) );
+    moving.tick(10_millisec);
+
+    // position is the same
+    AssertThat(moving.getCurrentPos(), Equals( Pos(0.0,0.0) ));
+
+    // (1 rad/sec) / 10 ms = 0.01 rad
+    AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(0.01_rad, PRECISION));
   }
 };
