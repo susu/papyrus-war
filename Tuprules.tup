@@ -31,7 +31,7 @@ ifeq (@(TUP_PLATFORM),win32)
   LIB_EXT=.dll
   BIN_EXT=.exe
   OPENGL_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
-  CXXFLAGS+= -DGLEW_STATIC
+  CXXFLAGS+= -DGLEW_STATIC -I$(WINLIBS)
 endif
 
 ifeq (@(TUP_PLATFORM),linux)

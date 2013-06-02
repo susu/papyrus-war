@@ -8,3 +8,5 @@ test_runner
 build-*/src
 *.swo
 *.swp
+*.exe
+*.dll
