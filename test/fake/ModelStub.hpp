@@ -12,7 +12,7 @@ namespace fake
       ModelStub()
       {}
 
-      virtual void tick() override
+      virtual void tick(double) override
       {}
   };
 }

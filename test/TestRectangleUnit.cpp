@@ -9,7 +9,7 @@ struct RectStub : public cw::core::RectangleUnit
     : cw::core::RectangleUnit(p,size)
   {}
 
-  virtual void tick() override
+  virtual void tick(double) override
   {}
 };
 

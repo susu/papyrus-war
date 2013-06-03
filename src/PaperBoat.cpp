@@ -5,20 +5,29 @@ namespace cw
   namespace core
   {
 
+const static Moving::Config s_paperBoatConfig = { 1.0, 0.1 };
+
 PaperBoat::PaperBoat(double x, double y)
-  : RectangleUnit(Pos{x,y}, Pos{10,10})
+  : m_moving(s_paperBoatConfig,Pos(x,y),0.0_rad)
 {}
 
 PaperBoat::~PaperBoat()
 {}
 
-void PaperBoat::tick()
+void PaperBoat::tick(double diffTime)
 {
+  m_moving.tick(diffTime);
 }
 
-void PaperBoat::setPos( Pos p )
+
+const Pos & PaperBoat::getPos() const
 {
-  m_pos = p;
+  return m_moving.getCurrentPos();
+}
+
+void PaperBoat::setMoveTarget(const Pos & p)
+{
+  m_moving.setTarget(p);
 }
 
   }

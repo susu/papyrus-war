@@ -23,6 +23,7 @@
 #include <cw/opengl/RayCastPicking.hpp>
 #include <cw/opengl/Sun.hpp>
 #include <cw/opengl/Gpu.hpp>
+#include <cw/opengl/OpenGlViewBase.hpp>
 
 namespace
 {
@@ -35,6 +36,53 @@ namespace cw
 {
   namespace opengl
   {
+
+struct TargetMarker : core::Model
+{
+  TargetMarker(double x, double y)
+    : m_pos(x,y)
+  {}
+
+  void tick(double) override
+  {}
+
+  core::Pos m_pos;
+};
+
+struct TargetMarkerView : OpenGlViewBase<TargetMarker>
+{
+  TargetMarkerView(Ref<TargetMarker> tmarker, ProjectionView & projView)
+    : BaseType(tmarker,projView)
+  {
+    setModelVertices(
+    {
+       0.2f, -0.2f, 0.0f,
+       0.0f,  0.0f, 0.0f, // tip
+      -0.2f, -0.2f, 0.0f,
+    });
+    computeNormals();
+  }
+
+  void show() override
+  {
+    setUpDraw();
+    double x = m_model->m_pos.x;
+    double y = m_model->m_pos.y;
+    glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, -0.1f ) );
+    sendMVP(modelMatrix);
+    sendColor( 1.0, 0.0, 0.0 );
+
+    glEnableVertexAttribArray( AttrIndex::POSITION );
+    glEnableVertexAttribArray( AttrIndex::NORMAL );
+
+    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices() );
+
+    glDisableVertexAttribArray( POSITION );
+    glDisableVertexAttribArray( NORMAL );
+  }
+};
+
+VIEW_MAPPING(OpenGlViewMapping, TargetMarker, TargetMarkerView);
 
 void startGlFw();
 
@@ -109,16 +157,19 @@ void OpenGlLoop::run()
 
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
   auto surface = modelFactory.create< core::Surface >( );
-  opengl::Sun sun( shaderProgram, core::Pos3d(10,10,-5) );
+  auto targetMarker = modelFactory.create< TargetMarker >(0,0);
+  opengl::Sun sun( shaderProgram, core::Pos3d(-10,7.5,-5) );
 
   inputDistributor.registerClickedOn(
-  [boat, &projectionView, &picking]( core::ClickEvent click )
+  [targetMarker, boat, &picking]( core::ClickEvent click )
   {
     LOG_DEBUG("click: x=", click.pos.x, " y=", click.pos.y);
     auto worldSpace = picking.unProject( click.pos );
     core::Pos p( worldSpace.x, worldSpace.y );
-    boat->setPos( p );
+    boat->setMoveTarget( p );
+    targetMarker->m_pos = p;
   });
+
 
   timer.setUpTimer( 10_sec, []()
   {
@@ -138,6 +189,9 @@ void OpenGlLoop::run()
 
   // double angle = 0;
   core::Pos3d sunPos( 10.0, 10.0, -5.0 );
+
+  // TODO register timer callback
+  double lastTickShot = glfwGetTime();
   do
   {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -153,10 +207,12 @@ void OpenGlLoop::run()
     //LOG_DEBUG("Sun's position: ", sunPos);
     // TESTCODE
 
-    models.each([](Ref<core::Model> & model)
+    double timeDiff = glfwGetTime() - lastTickShot;
+    models.each([timeDiff](Ref<core::Model> & model)
     {
-      model->tick();
+      model->tick(timeDiff);
     });
+    lastTickShot = glfwGetTime();
 
     views.each([](Ref<graph::View> & view)
     {
@@ -164,7 +220,7 @@ void OpenGlLoop::run()
     });
 
     glfwSwapBuffers();
-    glfwSleep( 0.01 );
+    glfwSleep( 1/100.0 );
 
     //glfwWaitEvents();
     timer.updateCurrentTime( glfwGetTime() );

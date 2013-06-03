@@ -1,6 +1,8 @@
 #ifndef CW_CORE_MOVING_HPP_INC
 #define CW_CORE_MOVING_HPP_INC
 
+#include <cw/core/Logger.hpp>
+
 namespace cw
 {
   namespace core
@@ -44,14 +46,18 @@ namespace cw
          */
         void tick(double diffTime)
         {
+          if (m_targetPos == m_pos) return;
+          static cw::core::Logger logger("moving");
           if ( !(m_targetPos || m_orientation ) )
           {
             // rotation needed
             // TODO check if positive or negative rotation is smaller!
             auto orientStep = m_config.rotateSpeed * diffTime;
             m_orientation = rotate(m_orientation, orientStep);
+            LOG_DEBUG("difftime=",diffTime," rotation needed: ",m_orientation);
             return;
           }
+          LOG_DEBUG("translation needed: targetPos=",m_targetPos," orientation=",m_orientation);
           // translation needed
           // TODO check length of translation vector to not jump over targetPos
           Pos normalDirectionVector = normalize(m_targetPos);

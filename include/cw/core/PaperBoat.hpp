@@ -2,21 +2,27 @@
 #define CW_CORE_PAPER_BOAT_HPP_INC
 
 #include <cw/core/Types.hpp>
-#include <cw/core/RectangleUnit.hpp>
+#include <cw/core/Model.hpp>
+#include <cw/core/Moving.hpp>
 
 namespace cw
 {
   namespace core
   {
-    class PaperBoat : public RectangleUnit
+    class PaperBoat : public Model
     {
       public:
         PaperBoat(double x, double y);
         virtual ~PaperBoat();
 
-        virtual void tick() override;
+        virtual void tick(double diffTime) override;
 
-        void setPos( Pos p );
+        const Pos & getPos() const;
+        void setMoveTarget(const Pos & p);
+        double getCurrentOrientation() const
+        { return m_moving.getCurrentOrientation(); }
+      private:
+        Moving m_moving;
     };
   }
 }

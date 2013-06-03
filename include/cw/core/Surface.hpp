@@ -13,7 +13,7 @@ namespace cw
         Surface();
         virtual ~Surface();
 
-        virtual void tick() override;
+        virtual void tick(double diffTime) override;
     };
 
   }

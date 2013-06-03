@@ -10,7 +10,7 @@ namespace cw
     class Model : public HasCallbackRegistrar
     {
       public:
-        virtual void tick() = 0;
+        virtual void tick(double diffTime) = 0;
     };
   }
 }

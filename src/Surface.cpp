@@ -11,7 +11,7 @@ Surface::Surface()
 Surface::~Surface()
 {}
 
-void Surface::tick()
+void Surface::tick(double)
 {}
 
   }
