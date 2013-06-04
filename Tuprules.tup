@@ -26,6 +26,10 @@ ifeq (@(DEBUG_SYM),y)
   CXXFLAGS+= -g -DCW_DEBUG
 endif
 
+ifeq (@(CLANG),y)
+  CC=clang++
+endif
+
 ifeq (@(TUP_PLATFORM),win32)
   WINLIBS=../winlibs
   LIB_EXT=.dll
