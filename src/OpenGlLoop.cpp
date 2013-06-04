@@ -63,22 +63,15 @@ struct TargetMarkerView : OpenGlViewBase<TargetMarker>
     computeNormals();
   }
 
-  void show() override
+  void doShow() override
   {
-    setUpDraw();
     double x = m_model->m_pos.x;
     double y = m_model->m_pos.y;
     glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, -0.1f ) );
     sendMVP(modelMatrix);
     sendColor( 1.0, 0.0, 0.0 );
 
-    glEnableVertexAttribArray( AttrIndex::POSITION );
-    glEnableVertexAttribArray( AttrIndex::NORMAL );
-
     glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices() );
-
-    glDisableVertexAttribArray( POSITION );
-    glDisableVertexAttribArray( NORMAL );
   }
 };
 

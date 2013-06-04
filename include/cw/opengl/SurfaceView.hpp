@@ -19,12 +19,13 @@ namespace cw
     {
       public:
         SurfaceView(Ref< core::Surface >, ProjectionView&);
-        virtual void show() override;
       protected:
         virtual void registerCallbacks();
       private:
         void processScrollback(core::ScrollEvent);
         void tick();
+
+        virtual void doShow() override;
 
         bool isScrolling() const;
 

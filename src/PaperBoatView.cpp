@@ -60,10 +60,8 @@ PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
   computeNormals();
 }
 
-void PaperBoatView::show()
+void PaperBoatView::doShow()
 {
-  setUpDraw();
-
   core::Pos modelPos = m_model->getPos();
   double x = modelPos.x;
   double y = modelPos.y;
@@ -75,13 +73,7 @@ void PaperBoatView::show()
   sendMVP( modelMatrix );
   sendColor( 1.0, 1.0, 1.0 );
 
-  glEnableVertexAttribArray( AttrIndex::POSITION );
-  glEnableVertexAttribArray( AttrIndex::NORMAL );
-
   glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices() );
-
-  glDisableVertexAttribArray( POSITION );
-  glDisableVertexAttribArray( NORMAL );
 }
 
   }

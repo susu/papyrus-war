@@ -23,7 +23,8 @@ namespace cw
       public:
         PaperBoatView( core::PaperBoatRef model, ProjectionView & projView );
 
-        virtual void show() override;
+      private:
+        virtual void doShow() override;
     };
   }
 }

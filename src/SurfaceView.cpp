@@ -48,21 +48,14 @@ void SurfaceView::registerCallbacks()
       std::bind(&SurfaceView::tick,this) );
 }
 
-void SurfaceView::show()
+void SurfaceView::doShow()
 {
-  setUpDraw();
-
   glm::mat4 modelMatrix = glm::scale( glm::mat4(1.0f), glm::vec3( 5.0f, 5.0f, 1.0f ) );
 
   sendMVP( modelMatrix );
   sendColor( 0.145f, 0.427f, 0.782f );
 
-  glEnableVertexAttribArray( POSITION );
-  glEnableVertexAttribArray( NORMAL );
-
   glDrawArrays(GL_TRIANGLES, 0, 6);
-  glDisableVertexAttribArray( POSITION );
-  glDisableVertexAttribArray( NORMAL );
 }
 
 void SurfaceView::processScrollback(core::ScrollEvent ev)
