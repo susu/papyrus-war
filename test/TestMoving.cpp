@@ -91,4 +91,41 @@ Describe(AMoving)
     // (1 rad/sec) / 10 ms = 0.01 rad
     AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(0.01_rad, PRECISION));
   }
+
+  It(should_reach_final_target_after_awhile)
+  {
+    Moving moving = MakeMoving().orientation(0.0)
+                                .travelSpeed(1.0_meter_per_sec)
+                                .rotateSpeed(1.0_rad_per_sec)
+                                .startPos( Pos(0.0,0.0) );
+    // target orientation is PI/4
+    moving.setTarget( Pos(5.0,5.0) );
+
+    // with 1 rad/sec, orientation PI/4 will be reached within PI/4 sec
+    //moving.tick( PI/4.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+
+    AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(PI/4, PRECISION));
+  }
+
+  It(should_rotate_into_the_other_direction)
+  {
+    Moving moving = MakeMoving().orientation(0.0)
+                                .travelSpeed(1.0_meter_per_sec)
+                                .rotateSpeed(1.0_rad_per_sec)
+                                .startPos( Pos(0.0,0.0) );
+    // -PI/4
+    moving.setTarget( Pos(5.0, -5.0) );
+
+    moving.tick( PI/8.0 );
+    moving.tick( PI/8.0 );
+
+    AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(-PI/4, PRECISION));
+  }
 };

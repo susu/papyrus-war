@@ -10,6 +10,16 @@ namespace cw
   namespace core
   {
     constexpr static double PI = 3.14159265359;
+
+    struct Polar
+    {
+      Polar(double r_, double angle_)
+        : r(r_), angle(angle_)
+      {}
+
+      double r, angle;
+    };
+
     struct Pos
     {
       Pos() : x(0.0), y(0.0) {}
@@ -26,6 +36,8 @@ namespace cw
         ret.y = radius * sin(angle);
         return ret;
       }
+
+      operator Polar();
     };
 
     inline double length(Pos const & p)
@@ -93,6 +105,18 @@ namespace cw
     {
       o << "Pos(" << pos.x << "," << pos.y << ")";
       return o;
+    }
+
+    inline std::ostream& operator<<(std::ostream & o, const Polar & polar)
+    {
+      return o << "Polar(r=" << polar.r << ",a=" << polar.angle << ")";
+    }
+
+    inline Pos::operator Polar()
+    {
+      double radius = length(*this);
+      double angle = atan2(y,x);
+      return Polar(radius,angle);
     }
   }
 }
