@@ -5,7 +5,11 @@ namespace cw
   namespace core
   {
 
-const static Moving::Config s_paperBoatConfig = { 1.0, 0.1 };
+const static Moving::Config s_paperBoatConfig =
+{
+  8.0, // rot.speed
+  0.2  // travelspeed
+};
 
 PaperBoat::PaperBoat(double x, double y)
   : m_moving(s_paperBoatConfig,Pos(x,y),0.0_rad)

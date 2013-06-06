@@ -32,7 +32,7 @@ ProjectionView::ProjectionView( const Program & program,
 
   // TODO do not hardcode
   m_projectionMatrix = glm::perspective(
-      35.0f, // degree: FoV
+      45.0f, // degree: FoV // TODO implement zoom
       screenRatio,
       0.1f, 100.0f ); // draw depth
 }
