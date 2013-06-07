@@ -7,6 +7,15 @@
 
 #include <cw/core/Logger.hpp>
 
+#if defined(_WIN32)
+#define STUB_APIENTRY __attribute__((stdcall))
+#else
+#define STUB_APIENTRY
+#endif
+
+//#undef STUB_APIENTRY
+//#define STUB_APIENTRY
+
 namespace
 {
   cw::core::Logger logger( "openglstub" );
@@ -24,56 +33,56 @@ namespace glstub
 
 extern "C"
 {
-  inline GLuint stub_CreateProgram()
+  inline GLuint STUB_APIENTRY stub_CreateProgram()
   {
     auto programId = glstub::programRepo.createProgram();
     LOG_DEBUG("programId=", programId);
     return programId;
   }
 
-  inline GLuint stub_CreateShader(GLenum type)
+  inline GLuint STUB_APIENTRY stub_CreateShader(GLenum type)
   {
     GLuint shaderId = glstub::shaderRepo.createShader(type);
     LOG_DEBUG("shaderId=", shaderId);
     return shaderId;
   }
 
-  inline void stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
+  inline void STUB_APIENTRY stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
   {
     LOG_DEBUG();
     *out = glstub::shaderRepo.getShaderiv(index, infoType);
   }
 
-  inline void stub_DeleteShader(GLuint)
+  inline void STUB_APIENTRY stub_DeleteShader(GLuint)
   {
     LOG_DEBUG();
   }
 
-  inline void stub_ShaderSource(GLuint id,int,const char **,const int*)
+  inline void STUB_APIENTRY stub_ShaderSource(GLuint id,int,const char **,const int*)
   {
     LOG_DEBUG();
   }
 
-  inline void stub_CompileShader(GLuint id)
+  inline void STUB_APIENTRY stub_CompileShader(GLuint id)
   {
     LOG_DEBUG();
     glstub::shaderRepo.compileShader(id);
   }
 
-  inline void stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
+  inline void STUB_APIENTRY stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
   {}
 
-  inline GLint stub_GetUniformLocation(GLuint, const GLchar*)
+  inline GLint STUB_APIENTRY stub_GetUniformLocation(GLuint, const GLchar*)
   {
     return 1;
   }
 
-  inline void stub_UseProgram( GLuint programId )
+  inline void STUB_APIENTRY stub_UseProgram( GLuint programId )
   {
     glstub::lastProgram = programId;
   }
 
-  inline void stub_UniformMatrix4fv(int matrixId, int,unsigned char,const float* matrixPtr)
+  inline void STUB_APIENTRY stub_UniformMatrix4fv(int matrixId, int,unsigned char,const float* matrixPtr)
   {
     glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, matrixPtr);
   }
