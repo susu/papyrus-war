@@ -17,7 +17,7 @@
 #endif
 
 #define LOG_MSG(loglevel) \
-  logger.getGuardedStream( \
+  cw::core::Logger::instance().getGuardedStream( \
       cw::core::LogDetails{\
         (loglevel), __FILE__, __LINE__, __PRETTY_FUNCTION__} )
 
@@ -73,8 +73,12 @@ namespace cw
     class Logger
     {
       public:
-        Logger( const std::string & loggerName );
         ~Logger();
+        static Logger& instance()
+        {
+          static Logger logger("logger");
+          return logger;
+        }
 
         StreamGuard getGuardedStream(LogDetails details)
         {
@@ -90,6 +94,8 @@ namespace cw
 
         void endLog();
       private:
+        Logger( const std::string & loggerName );
+
         void startLog( LogLevel loglevel, const char * file, int line,
                        const char * pretty);
         std::ostream& getOutputStream()

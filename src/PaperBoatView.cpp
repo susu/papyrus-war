@@ -13,11 +13,6 @@
 #include <cw/opengl/Shader.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 
-namespace
-{
-  cw::core::Logger logger("view");
-}
-
 namespace cw
 {
   namespace opengl

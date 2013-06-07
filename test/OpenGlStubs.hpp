@@ -16,11 +16,6 @@
 //#undef STUB_APIENTRY
 //#define STUB_APIENTRY
 
-namespace
-{
-  cw::core::Logger logger( "openglstub" );
-}
-
 #include "openglstub/ShaderRepo.hpp"
 #include "openglstub/ProgramRepo.hpp"
 

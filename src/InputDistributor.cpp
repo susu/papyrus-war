@@ -6,7 +6,6 @@
 
 namespace
 {
-  cw::core::Logger logger("core");
 
 template<typename MapType>
 auto getNextKey(const MapType & cbMap) -> decltype(cbMap.rbegin()->first)

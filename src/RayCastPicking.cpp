@@ -6,11 +6,6 @@
 #include <cw/opengl/RayCastPicking.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 
-namespace
-{
-  cw::core::Logger logger("opengl");
-}
-
 namespace cw
 {
   namespace opengl

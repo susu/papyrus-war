@@ -12,7 +12,6 @@
 
 namespace
 {
-  cw::core::Logger logger("opengl");
   const std::vector<int> VALID_SCROLL_KEYS =
   {
     GLFW_KEY_LEFT,

@@ -7,11 +7,6 @@
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/GlException.hpp>
 
-namespace
-{
-  cw::core::Logger logger("opengl");
-}
-
 namespace cw
 {
   namespace opengl

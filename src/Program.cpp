@@ -7,11 +7,6 @@
 #include <cw/opengl/GlException.hpp>
 #include <cw/opengl/Shader.hpp>
 
-namespace
-{
-  cw::core::Logger logger("opengl");
-}
-
 namespace cw
 {
   namespace opengl

@@ -58,7 +58,6 @@ namespace cw
         void tick(double diffTime)
         {
           if (m_targetPos == m_pos) return;
-          static cw::core::Logger logger("moving");
           Polar offset = m_targetPos - m_pos;
 
           double remainingAngle = countRemainingAngle(offset.angle, m_orientation);

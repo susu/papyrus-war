@@ -3,11 +3,6 @@
 #include <cw/opengl/GlfwCallbackRepo.hpp>
 #include <cw/core/Logger.hpp>
 
-namespace
-{
-  cw::core::Logger logger("opengl");
-}
-
 namespace cw
 {
   namespace opengl

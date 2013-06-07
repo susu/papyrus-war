@@ -3,11 +3,6 @@
 #include <cw/core/Logger.hpp>
 #include <cw/core/Pos3d.hpp>
 
-namespace
-{
-  cw::core::Logger logger("opengl");
-}
-
 namespace cw
 {
   namespace opengl

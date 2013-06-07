@@ -4,10 +4,6 @@
 #include <GL/glew.h>
 
 #include <cw/core/Logger.hpp>
-namespace
-{
-  cw::core::Logger logger("unittest");
-}
 
 using namespace igloo;
 
