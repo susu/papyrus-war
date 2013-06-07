@@ -1,6 +1,6 @@
 include_rules
 
-ifeq (@TUP_PLATFORM,linux)
+ifeq (@(TUP_PLATFORM),linux)
 CXXFLAGS+= -Iigloo/
 
 : foreach *.cpp |> !cxx |> %B.o | $(GCNO_OUT) {test_objs}
@@ -14,7 +14,7 @@ ifeq (@(VALGRIND),y)
   #VALGRIND=valgrind --leak-check=yes --error-exitcode=255
 endif
 
-ifeq (@TUP_PLATFORM,linux)
+ifeq (@(TUP_PLATFORM),linux)
   : $(TEST_RUNNER) |> LD_LIBRARY_PATH=$(LD_PATH) $(VALGRIND) ./$(TEST_RUNNER) --verbose|>
 endif
 
