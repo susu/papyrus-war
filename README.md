@@ -7,6 +7,7 @@ Recycle paper to save the trees! Build unique ships, customize them with office 
 Download binaries
 -----------------
 
+Not available yet!
  * [windows]()
  * [linux]()
 
@@ -16,6 +17,8 @@ Development
 Get the source
 --------------
 
+Source code is under GPLv3
+
 ``git clone --recursive <repo>``
 
 Build
@@ -23,10 +26,7 @@ Build
 
 ``tup init`` (only first time)
 
-``tup upd`` (builds both release and debug)
-
-**NOTE:** debug compilation needs suid on ``/usr/bin/tup`` (``sudo chmod u+s /usr/bin/tup``)
-**NOTE:** debug compilation needs ``user_allow_other`` in ``/etc/fuse.conf``
+``tup upd`` (builds every config)
 
 If you want build release only:
 ``tup upd build-release``
@@ -52,8 +52,13 @@ If you have packer:
 
 ``packer -S tup-git``
 
+If you don't have packer, download from [AUR](aur.archlinux.org)
+
 ### Installing dependencies on Ubuntu/Debian
 
 ### Installing dependencies on Windows
+
+At the moment windows build is not working (compiles, but crashes at various places).
+If you need more info, drop me a mail!
 
 ### Installing dependencies on OSX
