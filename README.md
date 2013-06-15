@@ -24,11 +24,22 @@ Source code is under GPLv3
 Build
 -----
 
+There are several configs/targets:
+
+  * build-debug (no optimization, enables every loglevel, very verbose)
+  * build-release (with optimization, less loglevel)
+  * build-clang (same as debug, but compiled with clang)
+
+If you don't have clang, you can delete the build-clang directory,
+it will not harm the others.
+
 ``tup init`` (only first time)
 
 ``tup upd`` (builds every config)
 
-If you want build release only:
+You can compile only one config:
+
+E.g.: If you want build release only:
 ``tup upd build-release``
 
 Dependencies
@@ -37,6 +48,7 @@ Dependencies
   * [tup](http://gittup.org/tup/)
   * [GLEW - OpenGL Extension Wrangler Library](glew.sourceforge.net)
   * [GLFW - OpenGL FrameWork (or Good Luck Finding Willy)](www.glfw.org)
+  * [glm - OpenGL Mathematics](http://glm.g-truc.net/)
 
 ### Installing dependencies on ArchLinux
 
@@ -45,8 +57,9 @@ You'll need the following packages:
   * aur/tup-git
   * extra/glew
   * community/glfw
+  * community/glm
 
-``pacman -S glew glfw``
+``pacman -S glew glfw glm``
 
 If you have packer:
 
