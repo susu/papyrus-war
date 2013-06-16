@@ -23,7 +23,6 @@ namespace cw
 
         std::string getMessage() const noexcept
         {
-          std::cout << "haliho" << std::endl;
           return MakeString() << "thrown at " <<
                  m_file << ":" << m_line << " message: '" <<
                  m_msg << "'";
