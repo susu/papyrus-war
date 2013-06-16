@@ -1,5 +1,8 @@
 #include <GL/glew.h>
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
+
+#include <thread>
+#include <chrono>
 
 #include <cw/core/Logger.hpp>
 #include <cw/core/Timer.hpp>
@@ -13,7 +16,7 @@
 #include <cw/graph/ScreenSize.hpp>
 
 #include <cw/opengl/GlException.hpp>
-#include <cw/opengl/GlfwCallbackRepo.hpp>
+#include <cw/opengl/GlfwWindow.hpp>
 #include <cw/opengl/OpenGlLoop.hpp>
 #include <cw/opengl/PaperBoatView.hpp>
 #include <cw/opengl/GlfwInputTranslator.hpp>
@@ -76,42 +79,33 @@ struct TargetMarkerView : OpenGlViewBase<TargetMarker>
 
 VIEW_MAPPING(OpenGlViewMapping, TargetMarker, TargetMarkerView);
 
-void startGlFw();
-
 void initGlew();
 
 OpenGlLoop::OpenGlLoop()
-{}
+  : m_screenSize( SCREEN_X, SCREEN_Y )
+  , m_window(m_screenSize,"PapyrusWar")
+{
+  LOG_INFO("Window opened: size=", m_screenSize);
+  initGlew();
+  LOG_INFO("OpenGL context initialized");
+  LOG_INFO("Video memory size: ", opengl::gpu::getDedicatedMemory()/1000.0, " MB");
+
+  m_window.setInputMode(GLFW_STICKY_KEYS, GL_TRUE);
+}
 
 OpenGlLoop::~OpenGlLoop()
-{}
+{
+  glfwTerminate();
+}
 
 void OpenGlLoop::run()
 {
-  try
-  {
-    startGlFw();
-    initGlew();
-  }
-  catch( GlException const & ex )
-  {
-    LOG_EXCEPTION( ex );
-    return;
-  }
-
-  LOG_INFO("Video memory size: ", opengl::gpu::getDedicatedMemory()/1000.0, " MB");
-  glfwEnable( GLFW_STICKY_KEYS );
-
-  GlfwCallbackRepo::initialize();
-  graph::CallbackRepo & cbRepo = GlfwCallbackRepo::instance();
-
   core::Timer timer( glfwGetTime() );
 
   core::EntityContainer<core::Model> models;
   core::EntityContainer<graph::View> views;
 
   Program shaderProgram;
-  graph::ScreenSize screen( SCREEN_X, SCREEN_Y );
 
   try
   {
@@ -125,13 +119,13 @@ void OpenGlLoop::run()
     return;
   }
 
-  ProjectionView projectionView(shaderProgram,screen);
+  ProjectionView projectionView(shaderProgram, m_screenSize);
 
-  RayCastPicking picking( projectionView, screen );
+  RayCastPicking picking( projectionView, m_screenSize );
   core::InputDistributor inputDistributor( picking ); // forwards input to models
 
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
-  inputTranslator.registerCallbacks( cbRepo );
+  inputTranslator.registerCallbacks(m_window);
 
   auto modelCallback = [&models]( Ref<core::Model> model )
   {
@@ -147,11 +141,13 @@ void OpenGlLoop::run()
     modelCallback, viewCallback, projectionView);
   modelFactory.setCallbackRegistrar(cbRegistrars);
 
+  LOG_DEBUG("Creating initial objects");
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
-  auto surface = modelFactory.create< core::Surface >( );
+  modelFactory.create< core::Surface >( );
   auto targetMarker = modelFactory.create< TargetMarker >(0,0);
   opengl::Sun sun( shaderProgram, core::Pos3d(-10,7.5,-5) );
 
+  LOG_DEBUG("Set up click-following logic");
   inputDistributor.registerClickedOn(
   [targetMarker, boat, &picking]( core::ClickEvent click )
   {
@@ -166,7 +162,7 @@ void OpenGlLoop::run()
   timer.setUpTimer( 10_sec, []()
   {
     LOG_DEBUG("Current GPU memory usage: ",
-              opengl::gpu::getDedicatedMemory()-opengl::gpu::getAvailabelDedicatedMemory(),
+              gpu::getDedicatedMemory()-gpu::getAvailabelDedicatedMemory(),
               " KB");
   });
 
@@ -188,17 +184,6 @@ void OpenGlLoop::run()
   {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    // TESTCODE TODO: delete
-    // angle+= 0.01;
-    //camX = 10* cos(angle);
-    //camY = 10* sin(angle);
-    // sunPos.z = 30 * ( cos(angle) );
-    // sunPos.x = 10 * ( -2.5 + sin(angle) );
-    // sun.setPos( sunPos );
-    // sun.updateVariables();
-    //LOG_DEBUG("Sun's position: ", sunPos);
-    // TESTCODE
-
     double timeDiff = glfwGetTime() - lastTickShot;
     models.each([timeDiff](Ref<core::Model> & model)
     {
@@ -211,46 +196,17 @@ void OpenGlLoop::run()
       view->show();
     });
 
-    glfwSwapBuffers();
-    glfwSleep( 1/100.0 );
+    m_window.swapBuffers();
+    glfwPollEvents();
 
-    //glfwWaitEvents();
+    std::this_thread::sleep_for( std::chrono::milliseconds(10) );
+
     timer.updateCurrentTime( glfwGetTime() );
   }
-  while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS
-      && glfwGetWindowParam( GLFW_OPENED ) );
+  while( m_window.getKeyStatus(GLFW_KEY_ESCAPE) != GLFW_PRESS
+         && !m_window.shouldBeClosed());
 
   LOG_INFO("Exiting gracefully.");
-  GlfwCallbackRepo::terminate();
-  glfwTerminate();
-}
-
-void startGlFw()
-{
-  if ( !glfwInit() )
-  {
-    throw GlException( "Failed to initialize GLFW!" );
-  }
-  LOG_INFO("GLFW initialized.");
-
-  glfwOpenWindowHint( GLFW_FSAA_SAMPLES, 4 ); // 4x anit-aliasing
-  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
-  glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 2 );
-
-  const int COLOR_DEPTH = 32;
-  if ( !glfwOpenWindow( SCREEN_X, SCREEN_Y, 0,0,0,0, COLOR_DEPTH, 0, GLFW_WINDOW ) )
-  {
-    glfwTerminate();
-    throw GlException( "Failed to open GLFW window!" );
-  }
-  glfwSetWindowTitle( "PapyrusWar" );
-  int actualX;
-  int actualY;
-  glfwGetWindowSize( &actualX, &actualY );
-  LOG_INFO("GLFW Window opened. ",
-    "requested_size=", SCREEN_X, "x", SCREEN_Y, " ",
-    "actual_size=", actualX, "x", actualY);
-
 }
 
 void initGlew()

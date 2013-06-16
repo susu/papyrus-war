@@ -63,7 +63,7 @@ void PaperBoatView::doShow()
   glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, -0.1f ) );
 
   float orientation = (m_model->getCurrentOrientation()) * 180 / core::PI + 90;
-  LOG_DEBUG("orientation=",orientation);
+
   modelMatrix = glm::rotate(modelMatrix, orientation, glm::vec3(0.0f,0.0f,1.0f) );
   sendMVP( modelMatrix );
   sendColor( 1.0, 1.0, 1.0 );

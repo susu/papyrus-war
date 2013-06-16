@@ -1,6 +1,8 @@
 #ifndef CW_GRAPH_SCREEN_SIZE_HPP_INC
 #define CW_GRAPH_SCREEN_SIZE_HPP_INC
 
+#include <iostream>
+
 namespace cw
 {
   namespace graph
@@ -13,6 +15,11 @@ namespace cw
       unsigned int x, y;
     };
     
+
+    inline std::ostream& operator<<(std::ostream & o, const ScreenSize & scr)
+    {
+      return o << "ScreenSize(" << scr.x << "x" << scr.y << ")";
+    }
   }
 }
 

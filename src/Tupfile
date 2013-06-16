@@ -4,7 +4,6 @@ include_rules
 GRAPH_SRC= \
   DummyGraphics.cpp \
   OpenGlLoop.cpp \
-  GlfwCallbackRepo.cpp \
   GlfwInputTranslator.cpp \
   Shader.cpp \
   PaperBoatView.cpp \

@@ -1,7 +1,7 @@
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 
 #include <cw/opengl/GlfwInputTranslator.hpp>
 
@@ -64,7 +64,7 @@ Describe(the_glfwInputTranslator)
 
   It(should_interpret_mousewheel_up_as_zoom_in)
   {
-    translator.mouseWheelEvent(1);
+    translator.mouseWheelEvent(1,0);
 
     AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
   }
@@ -73,16 +73,16 @@ Describe(the_glfwInputTranslator)
   {
     AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(0) );
 
-    translator.mouseWheelEvent(1);
+    translator.mouseWheelEvent(1,0);
     AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
 
-    translator.mouseWheelEvent(1);
+    translator.mouseWheelEvent(1,0);
     AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(1) );
   }
 
   It(should_interpret_mousewheel_down_as_zoom_out)
   {
-    translator.mouseWheelEvent( -1 );
+    translator.mouseWheelEvent( -1,0 );
     AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
   }
 
@@ -90,10 +90,10 @@ Describe(the_glfwInputTranslator)
   {
     AssertThat( unifiedInputHandler.getNumberOfZoomIn(), Equals(0) );
 
-    translator.mouseWheelEvent(-1);
+    translator.mouseWheelEvent(-1,0);
     AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
 
-    translator.mouseWheelEvent(-1);
+    translator.mouseWheelEvent(-1,0);
     AssertThat( unifiedInputHandler.getNumberOfZoomOut(), Equals(1) );
   }
 

@@ -1,6 +1,8 @@
 #ifndef CW_CORE_UNIFIED_INPUT_HANDLER_HPP_INC
 #define CW_CORE_UNIFIED_INPUT_HANDLER_HPP_INC
 
+#include <cstddef>
+
 namespace cw
 {
   namespace core

@@ -78,7 +78,6 @@ namespace cw
             m_orientation = std::fmod(m_orientation + orientStep, 2*PI);
             return;
           }
-          LOG_DEBUG("translation needed: targetPos=",m_targetPos," currentPos=",m_pos);
           // translation needed
           // TODO check length of translation vector to not jump over targetPos
           Pos normalDirectionVector = normalize(m_targetPos - m_pos);

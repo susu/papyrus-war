@@ -1,15 +1,15 @@
+#include <cw/opengl/GlfwInputTranslator.hpp>
+
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
 
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 
 #include <cw/Enforce.hpp>
-#include <cw/opengl/GlfwInputTranslator.hpp>
-
 #include <cw/core/UnifiedInputHandler.hpp>
 #include <cw/core/Logger.hpp>
-
+#include <cw/opengl/GlfwWindow.hpp>
 namespace
 {
   const std::vector<int> VALID_SCROLL_KEYS =
@@ -28,33 +28,26 @@ namespace cw
 
 GlfwInputTranslator::GlfwInputTranslator(cw::core::UnifiedInputHandler & inputHandler)
   : m_inputHandler(inputHandler)
-  , m_mouseWheelPos(0)
+  , m_xMouseWheelPos(0)
 {}
 
 GlfwInputTranslator::~GlfwInputTranslator()
 {}
 
-template<typename MemPtr>
-void GlfwInputTranslator::regCb( graph::CallbackRepo & repo,
-                                 graph::CallbackRepo::EventType a,
-                                 MemPtr method )
+void GlfwInputTranslator::registerCallbacks(GlfwWindow & window)
 {
   using namespace std::placeholders;
-  repo.registerCallback( a, std::bind( method, std::ref(*this), _1, _2 ) );
-}
+  window.setKeyCallback(
+      std::bind(&GlfwInputTranslator::keyEvent, this, _1, _2));
 
-void GlfwInputTranslator::registerCallbacks( graph::CallbackRepo & repo )
-{
-  using graph::CallbackRepo;
-  regCb(repo, CallbackRepo::MOUSE_BUTTON, &GlfwInputTranslator::mouseButtonEvent );
-  regCb(repo, CallbackRepo::MOUSE_POS,    &GlfwInputTranslator::mouseMoveEvent );
-  regCb(repo, CallbackRepo::KEY_CALLBACK, &GlfwInputTranslator::keyEvent );
+  window.setMouseButtonCallback(
+      std::bind(&GlfwInputTranslator::mouseButtonEvent, this, _1, _2));
 
-  repo.registerCallback( CallbackRepo::MOUSE_WHEEL,
-  [this](int wheelPos, int)
-  {
-    mouseWheelEvent(wheelPos);
-  });
+  window.setScrollCallback(
+      std::bind(&GlfwInputTranslator::mouseWheelEvent, this, _1, _2));
+
+  window.setCursorMovedCallback(
+      std::bind(&GlfwInputTranslator::mouseMoveEvent, this, _1, _2 ));
 }
 
 void GlfwInputTranslator::mouseMoveEvent(int x, int y)
@@ -83,17 +76,17 @@ void GlfwInputTranslator::mouseButtonEvent(int btn, int action)
   }
 }
 
-void GlfwInputTranslator::mouseWheelEvent(int pos)
+void GlfwInputTranslator::mouseWheelEvent(double xOffset, double yOffset)
 {
-  if ( pos > m_mouseWheelPos )
+  if ( xOffset > m_xMouseWheelPos )
   {
     m_inputHandler.zoom( core::UnifiedInputHandler::ZoomDir::IN );
   }
-  else if ( pos < m_mouseWheelPos )
+  else if ( xOffset < m_xMouseWheelPos )
   {
     m_inputHandler.zoom( core::UnifiedInputHandler::ZoomDir::OUT );
   }
-  m_mouseWheelPos = pos;
+  m_xMouseWheelPos = xOffset;
 }
 
 bool isScrollKey(int k)

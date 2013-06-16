@@ -1,6 +1,7 @@
 #include <cw/opengl/Camera.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext.hpp>
 
 #include <cw/core/Logger.hpp>
 
@@ -15,7 +16,7 @@ Camera::Camera( ProjectionView & projView )
   : m_projView(projView)
   , m_pos(0,0,0)
   , m_lookAt(0,0,1)
-  , m_orientation(HEADS_UP)
+  , m_orientation(0,1,0) // HEADS_UP
 {
 }
 
