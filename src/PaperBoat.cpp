@@ -8,7 +8,7 @@ namespace cw
 const static Moving::Config s_paperBoatConfig =
 {
   8.0, // rot.speed
-  0.2  // travelspeed
+  1.2  // travelspeed
 };
 
 PaperBoat::PaperBoat(double x, double y)
