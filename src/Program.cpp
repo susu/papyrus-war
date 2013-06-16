@@ -48,7 +48,7 @@ void Program::check() const
   glGetProgramInfoLog(m_programId, loglen, NULL, &progErrMsg[0]);
   if (!result)
   {
-    throw GlException( std::string("Error with program: ") + &progErrMsg[0] );
+    THROW( GlException, std::string("Error with program: ") + &progErrMsg[0] );
   }
 }
 

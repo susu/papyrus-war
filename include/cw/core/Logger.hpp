@@ -28,8 +28,7 @@
 #define LOG_INFO  LOG_MSG(cw::core::INFO)
 
 #define LOG_EXCEPTION( ex ) \
-   LOG_ERROR("Exception: '", (ex).what(), "'")
-
+   LOG_ERROR("Exception ", (ex).getMessage())
 
 namespace cw
 {

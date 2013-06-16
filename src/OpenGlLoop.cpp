@@ -259,7 +259,7 @@ void initGlew()
 
   if ( glewInit() != GLEW_OK)
   {
-    throw GlException( "Failed to initialize GLEW!" );
+    THROW( GlException, "Failed to initialize GLEW!" );
   }
   LOG_INFO("GLEW initialized successfully.");
 }

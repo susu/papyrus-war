@@ -21,7 +21,7 @@ ProjectionView::ProjectionView( const Program & program,
   int mvpId = glGetUniformLocation(program.getId(), MVP_MATRIX_NAME.c_str() );
   if ( -1 == mvpId )
   {
-    throw GlException( "Uniform location '" + MVP_MATRIX_NAME +
+    THROW( GlException, "Uniform location '" + MVP_MATRIX_NAME +
         "': does not exist. It may can be optimized out!");
   }
   m_programId = program.getId();

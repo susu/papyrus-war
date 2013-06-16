@@ -35,7 +35,7 @@ void Shader::read()
   std::ifstream ifs( m_filename.c_str(), std::ios::in );
   if ( !ifs.is_open() )
   {
-    throw GlException(m_filename + ": cannot be opened!");
+    THROW( GlException,m_filename + ": cannot be opened!");
   }
   std::string line;
   while( getline(ifs, line) )
@@ -83,7 +83,7 @@ void Shader::check()
   glGetShaderInfoLog( m_shaderId, logLength, NULL, &shaderErrMsg[0] );
   if (!result)
   {
-    throw GlException( getLogMessageHeader() + " compile error: " + &shaderErrMsg[0] );
+    THROW( GlException, getLogMessageHeader() + " compile error: " + &shaderErrMsg[0] );
   }
 }
 

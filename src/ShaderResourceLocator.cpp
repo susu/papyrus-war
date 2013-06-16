@@ -36,7 +36,7 @@ void ShaderResourceLocator::setUniform( const char * name, const glm::vec3 & val
 int ShaderResourceLocator::checkedLocation( int location, const std::string & locName ) const
 {
   if (location == -1)
-    throw GlException( locName + " is not a valid location!" );
+    THROW(GlException, locName + " is not a valid location!" );
   return location;
 }
 

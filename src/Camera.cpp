@@ -40,7 +40,7 @@ void Camera::orientation( Orientation orient )
   else
   {
     LOG_ERROR("Orientation not supported: ", orient);
-    throw GlException( "Orientation not supported!" );
+    THROW( GlException, "Orientation not supported!" );
   }
   sendViewMatrix();
 }
