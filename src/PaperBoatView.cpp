@@ -9,8 +9,6 @@
 #include <cw/core/Pos.hpp>
 #include <cw/core/PaperBoat.hpp>
 
-#include <cw/opengl/GlException.hpp>
-#include <cw/opengl/Shader.hpp>
 #include <cw/opengl/ProjectionView.hpp>
 
 namespace cw
