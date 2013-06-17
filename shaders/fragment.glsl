@@ -1,4 +1,4 @@
-#version 330
+#version 130
 
 smooth in vec3 vNormal;
 out vec4 outputColor;

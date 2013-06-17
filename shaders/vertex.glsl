@@ -1,8 +1,8 @@
-#version 330
+#version 130
 
-layout (location = 0) in vec3 inPosition;
-layout (location = 1) in vec3 inCoord;
-layout (location = 2) in vec3 inNormal;
+in vec3 inPosition;
+in vec3 inCoord;
+in vec3 inNormal;
 
 uniform mat4 MVP;
 uniform mat4 normalMatrix;

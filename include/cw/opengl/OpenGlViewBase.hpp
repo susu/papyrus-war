@@ -40,12 +40,6 @@ namespace cw
         // sets up the context (VAO,VBOs) for this object
         void show() override;
       protected:
-        enum AttrIndex
-        {
-          POSITION = 0,
-          COORD    = 1,
-          NORMAL   = 2
-        };
         typedef OpenGlViewBase<ModelType> BaseType;
         OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView );
 
@@ -71,6 +65,9 @@ namespace cw
         GLint m_colorUniformId;
         std::vector< GLfloat > m_vertexBuffer;
         ShaderResourceLocator m_shaderResourceLocator;
+
+        GLint m_attribLocation_position;
+        GLint m_attribLocation_normal;
         GLuint m_vaoId;
     };
 

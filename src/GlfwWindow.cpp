@@ -12,7 +12,7 @@ namespace cw
 
 static int ANTIALIASING = 4;
 static int GL_VERSION_MAJOR = 3;
-static int GL_VERSION_MINOR = 2;
+static int GL_VERSION_MINOR = 0;
 
 static std::once_flag s_flag;
 

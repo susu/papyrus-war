@@ -40,6 +40,8 @@ OpenGlViewBase<ModelType>::OpenGlViewBase( Ref<ModelType> model, ProjectionView 
   , m_programId( projView.getProgramId() )
   , m_projView( projView )
   , m_shaderResourceLocator( projView.getProgramId() )
+  , m_attribLocation_position(m_shaderResourceLocator.getAttrib("inPosition"))
+  , m_attribLocation_normal(m_shaderResourceLocator.getAttrib("inNormal"))
 {
   m_colorUniformId = m_shaderResourceLocator.getUniform( "currentColor" );
   glGenVertexArrays(1, &m_vaoId);
@@ -59,13 +61,13 @@ void OpenGlViewBase<ModelType>::show()
 {
   setUpDraw();
   
-  glEnableVertexAttribArray( POSITION );
-  glEnableVertexAttribArray( NORMAL );
+  glEnableVertexAttribArray( m_attribLocation_position );
+  glEnableVertexAttribArray( m_attribLocation_normal );
 
   doShow();
 
-  glDisableVertexAttribArray( POSITION );
-  glDisableVertexAttribArray( NORMAL );
+  glDisableVertexAttribArray( m_attribLocation_position );
+  glDisableVertexAttribArray( m_attribLocation_normal );
 }
 
 template<typename ModelType>
@@ -89,8 +91,8 @@ void OpenGlViewBase<ModelType>::setModelVertices( std::initializer_list< GLfloat
 {
   m_vertexBuffer.assign( vertices );
   storeDataInGPU( m_vertexBufferId, m_vertexBuffer );
-  glEnableVertexAttribArray( POSITION );
-  glVertexAttribPointer( POSITION, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+  glEnableVertexAttribArray( m_attribLocation_position );
+  glVertexAttribPointer( m_attribLocation_position, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 }
 
 template<typename ModelType>
@@ -116,8 +118,8 @@ void OpenGlViewBase<ModelType>::computeNormals()
     addNormal( vertexNormals, normal );
   }
   storeDataInGPU( m_normalBufferId, vertexNormals );
-  glEnableVertexAttribArray( AttrIndex::NORMAL );
-  glVertexAttribPointer( AttrIndex::NORMAL, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+  glEnableVertexAttribArray( m_attribLocation_normal );
+  glVertexAttribPointer( m_attribLocation_normal, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 }
 
 template<typename ModelType>
