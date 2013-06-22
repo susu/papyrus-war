@@ -87,9 +87,9 @@ void OpenGlViewBase<ModelType>::sendMVP( const glm::mat4 & model )
 }
 
 template<typename ModelType>
-void OpenGlViewBase<ModelType>::setModelVertices( std::initializer_list< GLfloat > vertices )
+void OpenGlViewBase<ModelType>::setModelVertices( const std::vector<GLfloat> & vertices )
 {
-  m_vertexBuffer.assign( vertices );
+  m_vertexBuffer.assign( vertices.begin(), vertices.end() );
   storeDataInGPU( m_vertexBufferId, m_vertexBuffer );
   glEnableVertexAttribArray( m_attribLocation_position );
   glVertexAttribPointer( m_attribLocation_position, 3, GL_FLOAT, GL_FALSE, 0, nullptr);

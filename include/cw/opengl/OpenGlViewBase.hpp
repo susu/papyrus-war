@@ -44,7 +44,9 @@ namespace cw
         OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView );
 
         void sendMVP( const glm::mat4 & model );
-        void setModelVertices( std::initializer_list< GLfloat > vertices );
+
+        void setModelVertices( const std::vector<GLfloat> & vertices );
+
         void computeNormals();
         void sendColor( float r, float g, float b );
         auto getNumberOfVertices() -> std::vector<GLfloat>::size_type;
