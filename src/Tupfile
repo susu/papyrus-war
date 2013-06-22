@@ -17,6 +17,7 @@ GRAPH_SRC= \
   Sun.cpp \
   Gpu.cpp \
   GlfwWindow.cpp \
+  Mesh.cpp \
 
 CORE_SRC= \
   Logger.cpp \

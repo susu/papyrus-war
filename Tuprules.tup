@@ -41,7 +41,7 @@ endif
 ifeq (@(TUP_PLATFORM),linux)
   LIB_EXT=.so
   BIN_EXT=
-  GRAPHICS_LIBS= -lglfw -lGLEW -lGL
+  GRAPHICS_LIBS= -lglfw -lGLEW -lGL -lassimp
   CXXFLAGS+= -fPIC
 endif
 

@@ -49,6 +49,7 @@ Dependencies
   * [GLEW - OpenGL Extension Wrangler Library](glew.sourceforge.net)
   * [GLFW - OpenGL FrameWork (or Good Luck Finding Willy)](www.glfw.org)
   * [glm - OpenGL Mathematics](http://glm.g-truc.net/)
+  * [assimp - Open Asset Import Library](http://assimp.sourceforge.net/)
 
 ### Installing dependencies on ArchLinux
 
@@ -58,8 +59,9 @@ You'll need the following packages:
   * extra/glew
   * community/glfw
   * community/glm
+  * community/assimp
 
-``pacman -S glew glfw glm``
+``pacman -S glew glfw glm assimp``
 
 If you have packer:
 
