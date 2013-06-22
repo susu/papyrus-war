@@ -32,7 +32,7 @@ void Sun::updateVariables()
 {
   glm::vec3 vSunPos( m_pos.x, m_pos.y, m_pos.z );
   m_resLocator.setUniform( SUN_COLOR_NAME, glm::vec3(1.0f, 1.0f, 1.0f));
-  m_resLocator.setUniform( AMBIENT_INTENSITY_NAME, 0.3f);
+  m_resLocator.setUniform( AMBIENT_INTENSITY_NAME, 0.35);
   m_resLocator.setUniform( SUN_DIRECTION_NAME, -glm::normalize(vSunPos));
 }
   }

@@ -17,7 +17,7 @@ SurfaceView::SurfaceView( Ref< core::Surface> surface, ProjectionView& projView 
   , m_camera( projView )
   , m_activeScrollDirs(4,false)
 {
-  m_camera.setPos( 0, 0, -13 );
+  m_camera.setPos( 0, -4, -9 );
   m_camera.lookAt( 0, 0, 0 );
   m_camera.orientation( Camera::HEADS_UP );
 
@@ -45,7 +45,7 @@ void SurfaceView::registerCallbacks()
 
 void SurfaceView::doShow()
 {
-  glm::mat4 modelMatrix = glm::scale( glm::mat4(1.0f), glm::vec3( 5.0f, 5.0f, 1.0f ) );
+  glm::mat4 modelMatrix = glm::scale( glm::mat4(1.0f), glm::vec3( 10.0f, 10.0f, 1.0f ) );
 
   sendMVP( modelMatrix );
   sendColor( 0.145f, 0.427f, 0.782f );
