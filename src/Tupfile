@@ -38,7 +38,7 @@ ifeq (@(TUP_PLATFORM),win32)
 endif
 
 LDFLAGS=\
-  $(OPENGL_LIBS) \
+  $(GRAPHICS_LIBS) \
   -L$(LD_PATH) \
   -l$(LIBCW_CORE) \
 

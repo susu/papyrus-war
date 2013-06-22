@@ -5,7 +5,7 @@ CXXFLAGS+= -Iigloo/
 
 : foreach *.cpp |> !cxx |> %B.o | $(GCNO_OUT) {test_objs}
 
-LDFLAGS+= -l$(LIBCW_GRAPH) -l$(LIBCW_CORE) -L$(LD_PATH) $(OPENGL_LIBS)
+LDFLAGS+= -l$(LIBCW_GRAPH) -l$(LIBCW_CORE) -L$(LD_PATH) $(GRAPHICS_LIBS)
 
 TEST_RUNNER=test_runner$(BIN_EXT)
 : {test_objs} | $(LD_PATH)/$(LIBCW_GRAPH_SO) $(LD_PATH)/$(LIBCW_CORE_SO) |> !o2bin |> $(TEST_RUNNER)
