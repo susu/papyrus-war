@@ -10,6 +10,7 @@
 #include <cw/core/PaperBoat.hpp>
 
 #include <cw/opengl/ProjectionView.hpp>
+#include <cw/opengl/Mesh.hpp>
 
 namespace cw
 {
@@ -19,37 +20,10 @@ namespace cw
 PaperBoatView::PaperBoatView( core::PaperBoatRef m, ProjectionView & projView )
   : BaseType(m,projView)
 {
-  float height = 1.0f;
-  // TODO load from file!
-  // Winding order: Counter clockwise
-  setModelVertices(
-  {
-    // Front Base Plane
-    -1.0f, -1.0f, 0.0f,
-     0.0f,  1.0f, 0.0f,
-     1.0f, -1.0f, 0.0f,
+  Mesh mesh("objects/PaperBoat.dae", "PaperBoat");
+  setModelVertices( mesh.getVertices() );
 
-     // Right upper plane
-     0.0f,  1.0f, 0.0f,
-     0.0f, -1.0f, -height,
-     1.0f, -1.0f, 0.0f,
-
-     // Left upper plane
-     0.0f,  1.0f, 0.0f,
-    -1.0f, -1.0f, 0.0f,
-     0.0f, -1.0f, -height,
-
-     // Right lower plane
-     0.0f, -1.0f, -height,
-    -1.0f, -1.0f, 0.0f,
-     0.0f, -2.0f, 0.0f,
-
-     // Left lower plane
-     1.0f, -1.0f, 0.0f,
-     0.0f, -1.0f, -height,
-     0.0f, -2.0f, 0.0f,
-  });
-
+  // TODO load normals from Mesh
   computeNormals();
 }
 
