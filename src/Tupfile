@@ -28,7 +28,7 @@ CORE_SRC= \
   Line.cpp \
   Surface.cpp \
 
-: foreach $(CORE_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {core_objs}
+: foreach $(CORE_SRC) |> !cxx |> %B.$(O) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
 
 # glew is compiled into DLL under win

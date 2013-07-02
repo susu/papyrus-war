@@ -4,26 +4,6 @@
 #include <functional>
 #include <vector>
 
-inline double operator "" _nanosec(unsigned long long val)
-{
-  return val * 1e-9;
-}
-
-inline double operator "" _microsec(unsigned long long val)
-{
-  return val * 1000_nanosec;
-}
-
-inline double operator "" _millisec(unsigned long long val)
-{
-  return val * 1000_microsec;
-}
-
-inline double operator "" _sec(unsigned long long val)
-{
-  return val;
-}
-
 namespace cw
 {
   namespace core
@@ -49,11 +29,15 @@ namespace cw
         {
           const TimeType length;
           TimeType lastShot;
-          bool periodic = false;
+          bool periodic;
           SimpleCallback simpleCallback;
           //DiffCallback   diffCallback;
           TimerShot(TimeType len, TimeType setupTime, SimpleCallback cb)
-            : length(len), lastShot(setupTime), simpleCallback(cb) {}
+            : length(len)
+            , lastShot(setupTime)
+            , periodic(false)
+            , simpleCallback(cb)
+          {}
         };
         typedef std::vector< TimerShot > TimerShots;
 
