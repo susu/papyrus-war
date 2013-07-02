@@ -16,10 +16,6 @@ ifeq (@(DEBUG_SYM),y)
   CXXFLAGS+= -g -DCW_DEBUG
 endif
 
-ifeq (@(CLANG),y)
-  CC=clang++
-endif
-
 include linux.tup
 include libs.tup
 include win32.tup

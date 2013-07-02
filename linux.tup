@@ -4,6 +4,10 @@ ifeq (@(TUP_PLATFORM),linux)
   CC=g++
   LINKER=g++
 
+  ifeq (@(CLANG),y)
+    CC=clang++
+  endif
+
   CXXFLAGS+= -Wall -Werror -std=c++11 -pthread
 
   LIB_EXT=.so
