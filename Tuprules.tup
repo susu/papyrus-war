@@ -1,8 +1,4 @@
 
-CC=g++
-CXXFLAGS+= -Wall -Werror -std=c++11 -pthread
-GCOV=gcov
-
 INCLUDE= ../include
 SRC= ../src
 TST= ../test
@@ -16,12 +12,6 @@ ifeq (@(OPTIMIZATION),y)
   CXXFLAGS+= -O2
 endif
 
-ifeq (@(COV_ENABLE),y)
-  CXXFLAGS+= --coverage
-  BASE_LDFLAGS+= --coverage
-  GCNO_OUT=%B.gcno
-endif
-
 ifeq (@(DEBUG_SYM),y)
   CXXFLAGS+= -g -DCW_DEBUG
 endif
@@ -30,32 +20,7 @@ ifeq (@(CLANG),y)
   CC=clang++
 endif
 
-ifeq (@(TUP_PLATFORM),win32)
-  WINLIBS=../winlibs
-  LIB_EXT=.dll
-  BIN_EXT=.exe
-  GRAPHICS_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
-  CXXFLAGS+= -DGLEW_STATIC -I$(WINLIBS)
-endif
-
-ifeq (@(TUP_PLATFORM),linux)
-  LIB_EXT=.so
-  BIN_EXT=
-  GRAPHICS_LIBS= -lglfw -lGLEW -lGL -lassimp
-  CXXFLAGS+= -fPIC
-endif
-
-
-LIBCW_GRAPH=cellulose-graphics
-LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH)$(LIB_EXT)
-
-LIBCW_CORE=cellulose-core
-LIBCW_CORE_SO=lib$(LIBCW_CORE)$(LIB_EXT)
-
-!cxx = |> $(CC) $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
-!o2shared = |> $(CC) -shared %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
-
-!o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
-
-!gcov =|> $(GCOV) %f |>
+include linux.tup
+include libs.tup
+include win32.tup
 

@@ -1,0 +1,20 @@
+# NOTE: only Visual C++ compiler is supported
+
+ifeq (@(TUP_PLATFORM),win32)
+  CC=cl.exe
+  LINKER=link.exe
+  CXXFLAGS+=/EHsc /W3 /WX
+
+  WINLIBS=../winlibs
+  LIB_EXT=.dll
+  BIN_EXT=.exe
+  GRAPHICS_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
+  CXXFLAGS+= /DGLEW_STATIC /I$(WINLIBS)
+  O=obj
+
+# macroes
+  !cxx = |> $(CC) $(CXXFLAGS) /I$(INCLUDE) /c %f |> %B.obj
+
+  !o2shared = |> $(CC) -shared %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+  !o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+endif

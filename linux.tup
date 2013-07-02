@@ -1,0 +1,21 @@
+# GCC and clang is supported
+
+ifeq (@(TUP_PLATFORM),linux)
+  CC=g++
+  LINKER=g++
+
+  CXXFLAGS+= -Wall -Werror -std=c++11 -pthread
+
+  LIB_EXT=.so
+  BIN_EXT=
+  GRAPHICS_LIBS= -lglfw -lGLEW -lGL -lassimp
+  CXXFLAGS+= -fPIC
+# extension of object file
+  O=o
+
+# macroes
+  !cxx = |> $(CC) $(CXXFLAGS) -I$(INCLUDE) -c %f -o %o |>
+  !o2shared = |> $(CC) -shared %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+  !o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+
+endif

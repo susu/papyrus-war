@@ -1,0 +1,7 @@
+
+LIBCW_GRAPH=cellulose-graphics
+LIBCW_GRAPH_SO=lib$(LIBCW_GRAPH)$(LIB_EXT)
+
+LIBCW_CORE=cellulose-core
+LIBCW_CORE_SO=lib$(LIBCW_CORE)$(LIB_EXT)
+
