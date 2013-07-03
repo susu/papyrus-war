@@ -27,6 +27,7 @@ CORE_SRC= \
   PaperBoat.cpp \
   Line.cpp \
   Surface.cpp \
+  SafeLocaltime.cpp \
 
 : foreach $(CORE_SRC) |> !cxx |> %B.$(O) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)

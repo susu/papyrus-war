@@ -1,5 +1,7 @@
 #include <ctime>
+#include <string>
 
+#include <cw/core/SafeLocaltime.hpp>
 #include <cw/core/Logger.hpp>
 
 namespace cw
@@ -19,10 +21,10 @@ std::string getFormattedDate()
   time_t rawtime;
   struct tm * timeinfo;
   static char buffer[255];
-  time( &rawtime );
-  timeinfo = localtime( &rawtime );
+  time(&rawtime);
+  timeinfo = safeLocaltime(&rawtime);
 
-  strftime( buffer, 255, "%F %X", timeinfo );
+  strftime(buffer, 255, "%F %X", timeinfo);
   return buffer;
 }
 
