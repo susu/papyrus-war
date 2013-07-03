@@ -21,12 +21,6 @@ namespace cw
         GlfwWindow(graph::ScreenSize scrSize, const std::string & title);
         ~GlfwWindow();
 
-        GlfwWindow(GlfwWindow&) = delete;
-        GlfwWindow& operator=(GlfwWindow&) = delete;
-
-        GlfwWindow(GlfwWindow&&) = default;
-        GlfwWindow& operator=(GlfwWindow&&) = default;
-
         graph::ScreenSize getSize() const;
         void setTitle(const std::string & newTitle);
 
@@ -61,6 +55,12 @@ namespace cw
       private:
         typedef std::function<void(GLFWwindow*)> DeleterFunction;
         typedef std::unique_ptr<GLFWwindow, DeleterFunction> WindowRef;
+
+        GlfwWindow(GlfwWindow&);
+        GlfwWindow& operator=(GlfwWindow&);
+
+        GlfwWindow(GlfwWindow&&);
+        GlfwWindow& operator=(GlfwWindow&&);
 
         void registerInternalCallbacks();
 

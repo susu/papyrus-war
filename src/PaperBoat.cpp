@@ -12,7 +12,7 @@ const static Moving::Config s_paperBoatConfig =
 };
 
 PaperBoat::PaperBoat(double x, double y)
-  : m_moving(s_paperBoatConfig,Pos(x,y),0.0_rad)
+  : m_moving(s_paperBoatConfig,Pos(x,y),0.0)
 {}
 
 PaperBoat::~PaperBoat()

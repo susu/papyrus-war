@@ -12,12 +12,8 @@ namespace cw
     class EntityContainer
     {
       public:
-        EntityContainer() = default;
-        ~EntityContainer() = default;
-
-        EntityContainer(EntityContainer<T>&) = delete;
-        EntityContainer(EntityContainer<T>&&) = delete;
-        void operator=(EntityContainer<T>) = delete;
+        EntityContainer() {}
+        ~EntityContainer() {}
 
         typedef std::shared_ptr<T> TRef;
         void add( TRef x )
@@ -33,6 +29,10 @@ namespace cw
           }
         }
       private:
+        EntityContainer(EntityContainer<T>&);
+        EntityContainer(EntityContainer<T>&&);
+        void operator=(EntityContainer<T>);
+
         std::vector< TRef > m_entities;
     };
   }

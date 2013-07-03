@@ -19,12 +19,12 @@ std::string getFormattedDate()
 {
   // TODO std::chrono
   time_t rawtime;
-  struct tm * timeinfo;
+  struct tm timeinfo;
   static char buffer[255];
   time(&rawtime);
   timeinfo = safeLocaltime(&rawtime);
 
-  strftime(buffer, 255, "%F %X", timeinfo);
+  strftime(buffer, 255, "%F %X", &timeinfo);
   return buffer;
 }
 

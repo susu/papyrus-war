@@ -1,5 +1,6 @@
 #include <cw/opengl/Program.hpp>
 
+#include <algorithm>
 #include <vector>
 
 #include <cw/core/Logger.hpp>

@@ -2,6 +2,7 @@
 #define CW_CORE_INPUT_DISTRIBUTOR_HPP_INC
 
 #include <map>
+#include <functional>
 
 #include <cw/core/Types.hpp>
 #include <cw/core/Pos.hpp>
@@ -47,9 +48,11 @@ namespace cw
         virtual void startScroll(ScrollDir dir) override;
         virtual void stopScroll(ScrollDir dir) override;
 
-        InputDistributor(InputDistributor&) = delete;
-        InputDistributor& operator=(InputDistributor) = delete;
+
       private:
+        InputDistributor(InputDistributor&);
+        InputDistributor& operator=(InputDistributor);
+
         std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
         const PickingInterface & m_picking;

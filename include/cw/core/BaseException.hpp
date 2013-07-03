@@ -5,6 +5,8 @@
 #include <exception>
 #include <cw/core/MakeString.hpp>
 
+#include <cpp11hacks.hpp>
+
 #define THROW(type,msg) \
   throw type(__FILE__,__LINE__,(msg))
 

@@ -16,9 +16,6 @@ namespace cw
         ShaderResourceLocator(GLuint programId);
         ~ShaderResourceLocator();
 
-        ShaderResourceLocator(ShaderResourceLocator&) = delete;
-        void operator=(ShaderResourceLocator) = delete;
-
         GLuint getUniform( const char * name ) const;
         GLuint getAttrib( const char * name ) const;
 
@@ -26,6 +23,9 @@ namespace cw
         void setUniform( const char * name, const glm::vec3 & value );
 
       private:
+        ShaderResourceLocator(ShaderResourceLocator&);
+        void operator=(ShaderResourceLocator);
+
         GLuint m_programId;
 
         int checkedLocation( int location, const std::string & locationName ) const;

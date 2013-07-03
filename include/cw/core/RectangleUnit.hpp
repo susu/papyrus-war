@@ -12,7 +12,7 @@ namespace cw
     {
       public:
         RectangleUnit( Pos pos, Pos size );
-        ~RectangleUnit() = default;
+        ~RectangleUnit() {}
         virtual bool hasFocus() const;
         virtual void setFocus(bool);
         virtual bool isOver(double x, double y) const;

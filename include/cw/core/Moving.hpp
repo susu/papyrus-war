@@ -92,24 +92,4 @@ namespace cw
   }
 }
 
-inline double operator"" _rad_per_sec(long double d)
-{
-  return d;
-}
-
-inline double operator"" _meter_per_sec(long double d)
-{
-  return d;
-}
-
-inline double operator"" _rad(long double d)
-{
-  return d;
-}
-
-inline double operator"" _meter(long double d)
-{
-  return d;
-}
-
 #endif

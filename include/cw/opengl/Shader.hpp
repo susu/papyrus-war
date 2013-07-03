@@ -15,8 +15,6 @@ namespace cw
         Shader( const std::string & filename, GLenum shaderType );
 
         ~Shader();
-        Shader(Shader&) = delete;
-        void operator=(Shader) = delete;
 
         void read();
         void compile();
@@ -26,6 +24,9 @@ namespace cw
         GLuint getShaderId() const;
 
       private:
+        Shader(Shader&);
+        void operator=(Shader);
+
         std::string getLogMessageHeader() const;
 
         const std::string m_filename;

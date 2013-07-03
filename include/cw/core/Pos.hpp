@@ -4,6 +4,7 @@
 #include <ostream>
 
 #include <cw/core/CommonGeometry.hpp>
+#include <cpp11hacks.hpp>
 
 namespace cw
 {

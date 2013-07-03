@@ -22,11 +22,11 @@ namespace cw
         RayCastPicking( ProjectionView &, const graph::ScreenSize & );
         virtual ~RayCastPicking();
 
-        RayCastPicking(RayCastPicking&) = delete;
-        void operator=(RayCastPicking) = delete;
-
         virtual core::Pos3d unProject( core::Pos ) override;
       private:
+        RayCastPicking(RayCastPicking&);
+        void operator=(RayCastPicking);
+
         core::Pos transformClickToBottomLeftCorner( core::Pos ) const;
         core::Pos3d unProjectScreenPos( const glm::vec3 & ) const;
 

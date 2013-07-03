@@ -11,14 +11,14 @@ namespace cw
     class View : public core::HasCallbackRegistrar
     {
       public:
-        View(View&) = delete;
-        void operator=(View&) = delete;
-
         virtual ~View()
         {}
 
         virtual void show() = 0;
       protected:
+        View(View&);
+        void operator=(View&);
+
         View()
         {}
     };
