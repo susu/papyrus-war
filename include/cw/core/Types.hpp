@@ -4,15 +4,20 @@
 #include <memory>
 #include <type_traits>
 
+#include <cpp11hacks.hpp>
+
 template<class T>
-using Ref = std::shared_ptr<T>;
+struct Ref
+{
+  typedef std::shared_ptr<T> R;
+};
 
 namespace cw
 {
   namespace core
   {
     class PaperBoat;
-    typedef Ref<PaperBoat> PaperBoatRef;
+    typedef Ref<PaperBoat>::R PaperBoatRef;
   }
 }
 
