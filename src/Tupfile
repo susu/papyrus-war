@@ -35,8 +35,8 @@ CORE_SRC= \
 # glew is compiled into DLL under win
 ifeq (@(TUP_PLATFORM),win32)
   GLEW_C=$(WINLIBS)/glew.c
-  GLEW_O=glew.o
-  : $(GLEW_C) |> !cxx |> %B.o
+  GLEW_O=glew.$(O)
+  : $(GLEW_C) |> !cxx |> %B.$(O)
 endif
 
 LDFLAGS=\
@@ -44,7 +44,7 @@ LDFLAGS=\
   -L$(LD_PATH) \
   -l$(LIBCW_CORE) \
 
-: foreach $(GRAPH_SRC) |> !cxx |> %B.o | $(GCNO_OUT) {graph_objs}
+: foreach $(GRAPH_SRC) |> !cxx |> %B.$(O) | $(GCNO_OUT) {graph_objs}
 : {graph_objs} $(LIBCW_CORE_SO) $(GLEW_O) |> !o2shared |> $(LIBCW_GRAPH_SO)
 
 LDFLAGS= \
