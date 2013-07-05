@@ -10,6 +10,7 @@ ifeq (@(TUP_PLATFORM),win32)
   BIN_EXT=.exe
   GRAPHICS_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
   CXXFLAGS+= /DGLEW_STATIC /I$(WINLIBS)
+# extension of object file
   O=obj
 
 # macroes

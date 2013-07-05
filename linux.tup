@@ -1,12 +1,7 @@
-# GCC and clang is supported
+# clang is the main compiler on linux
 
 ifeq (@(TUP_PLATFORM),linux)
-  CC=g++
-  LINKER=g++
-
-  ifeq (@(CLANG),y)
-    CC=clang++
-  endif
+  CC=clang++
 
   CXXFLAGS+= -Wall -Werror -std=c++11 -pthread
 

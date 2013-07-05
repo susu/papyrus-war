@@ -8,14 +8,6 @@ LD_PATH= ../src
 
 BASE_LDFLAGS=
 
-ifeq (@(OPTIMIZATION),y)
-  CXXFLAGS+= -O2
-endif
-
-ifeq (@(DEBUG_SYM),y)
-  CXXFLAGS+= -g -DCW_DEBUG
-endif
-
 include linux.tup
 include libs.tup
 include win32.tup
