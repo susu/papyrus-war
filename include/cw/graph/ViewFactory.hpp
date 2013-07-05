@@ -19,11 +19,11 @@ namespace cw
     {
       public:
         template<class Model, typename... CtorArgs>
-        Ref< typename Policy::template Mapping<Model>::view_type >
+        typename Ref< typename Policy::template Mapping<Model>::view_type >::R
         createViewFor(CtorArgs&&... args)
         {
           return
-            Ref< typename Policy::template Mapping<Model>::view_type>
+            typename Ref< typename Policy::template Mapping<Model>::view_type>::R
             ( new typename Policy::template Mapping<Model>::view_type
               ( std::forward<CtorArgs>(args)... ) );
         }

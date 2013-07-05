@@ -18,9 +18,9 @@ namespace
 
 Describe(ARayCastPicking)
 {
-  Ref<cw::opengl::Program> prog;
-  Ref<cw::opengl::ProjectionView> projView;
-  Ref<cw::opengl::RayCastPicking> picking;
+  Ref<cw::opengl::Program>::R prog;
+  Ref<cw::opengl::ProjectionView>::R projView;
+  Ref<cw::opengl::RayCastPicking>::R picking;
 
   void SetUp()
   {

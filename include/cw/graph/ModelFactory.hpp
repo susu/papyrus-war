@@ -19,8 +19,8 @@ namespace cw
     class ModelFactory : public core::HasCallbackRegistrar
     {
       public:
-        typedef std::function< void( Ref<core::Model> ) > ModelCreatedCallback;
-        typedef std::function< void( Ref<View> ) > ViewCreatedCallback;
+        typedef std::function< void( Ref<core::Model>::R ) > ModelCreatedCallback;
+        typedef std::function< void( Ref<View>::R ) > ViewCreatedCallback;
 
         /**
          * modelCallback, viewCalback: these functions are called if
@@ -44,9 +44,9 @@ namespace cw
          *  returns the created model
          */
         template<class T, typename... Args>
-        Ref<T> create(Args&&... args)
+        typename Ref<T>::R create(Args&&... args)
         {
-          Ref<T> model( new T( std::forward<Args>(args)... ) );
+          typename Ref<T>::R model( new T( std::forward<Args>(args)... ) );
           m_modelCallback(model);
 
           auto view = m_viewFactory.template createViewFor<T>( model );

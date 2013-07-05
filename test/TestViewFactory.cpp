@@ -31,6 +31,6 @@ Describe(the_ViewFactory)
 
   It(should_create_an_instance_of_ViewForOne_for_One)
   {
-    Ref<ViewForOne> view = factory.createViewFor<One>();
+    Ref<ViewForOne>::R view = factory.createViewFor<One>();
   }
 };

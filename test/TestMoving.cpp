@@ -14,11 +14,11 @@ using cw::core::PRECISION;
 struct MakeMoving
 {
   MakeMoving()
-    : m_orient(0.0_rad)
+    : m_orient(0.0)
     , m_startPos(0.0, 0.0)
   {
-    m_config.rotateSpeed = 1.0_rad_per_sec;
-    m_config.travelSpeed = 1.0_meter_per_sec;
+    m_config.rotateSpeed = 1.0; //_rad_per_sec;
+    m_config.travelSpeed = 1.0; //_meter_per_sec;
   }
 
   MakeMoving& rotateSpeed(double rotSpd)
@@ -60,19 +60,19 @@ Describe(AMoving)
   constexpr static double PI = 3.14159265359;
   It(start_into_way_of_the_target_point_if_x_aligned)
   {
-    Moving moving = MakeMoving().orientation(0.0_rad)
-                                .travelSpeed(1.0_meter_per_sec);
+    Moving moving = MakeMoving().orientation(0.0)
+                                .travelSpeed(1.0);
 
     moving.setTarget( Pos(10.0, 0.0) );
     moving.tick( 10_millisec );
 
-    AssertThat(moving.getCurrentPos(), Equals(Pos(0.01_meter, 0.0)));
+    AssertThat(moving.getCurrentPos(), Equals(Pos(0.01, 0.0)));
   }
 
   It(start_into_way_of_the_taget_if_not_aligned)
   {
     Moving moving = MakeMoving().orientation(PI/4.0)
-                                .travelSpeed(1.2_meter_per_sec);
+                                .travelSpeed(1.2);
     moving.setTarget( Pos(5.0,5.0) );
     moving.tick( 25_millisec );
 
@@ -81,7 +81,7 @@ Describe(AMoving)
 
   It(can_rotate_if_target_not_in_the_same_way)
   {
-    Moving moving = MakeMoving().orientation(0.0).travelSpeed(1.0_meter_per_sec);
+    Moving moving = MakeMoving().orientation(0.0).travelSpeed(1.0);
     moving.setTarget( Pos(5.0,5.0) );
     moving.tick(10_millisec);
 
@@ -89,14 +89,14 @@ Describe(AMoving)
     AssertThat(moving.getCurrentPos(), Equals( Pos(0.0,0.0) ));
 
     // (1 rad/sec) / 10 ms = 0.01 rad
-    AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(0.01_rad, PRECISION));
+    AssertThat(moving.getCurrentOrientation(), EqualsWithDelta(0.01, PRECISION));
   }
 
   It(should_reach_final_target_after_awhile)
   {
     Moving moving = MakeMoving().orientation(0.0)
-                                .travelSpeed(1.0_meter_per_sec)
-                                .rotateSpeed(1.0_rad_per_sec)
+                                .travelSpeed(1.0)
+                                .rotateSpeed(1.0)
                                 .startPos( Pos(0.0,0.0) );
     // target orientation is PI/4
     moving.setTarget( Pos(5.0,5.0) );
@@ -117,8 +117,8 @@ Describe(AMoving)
   It(should_rotate_into_the_other_direction)
   {
     Moving moving = MakeMoving().orientation(0.0)
-                                .travelSpeed(1.0_meter_per_sec)
-                                .rotateSpeed(1.0_rad_per_sec)
+                                .travelSpeed(1.0)
+                                .rotateSpeed(1.0)
                                 .startPos( Pos(0.0,0.0) );
     // -PI/4
     moving.setTarget( Pos(5.0, -5.0) );

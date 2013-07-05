@@ -26,13 +26,13 @@ typedef cw::graph::ViewFactory<FakePolicy> FakeViewFactory;
 
 Describe(the_ModelFactory)
 {
-  Ref< cw::core::Model > createdModel;
-  Ref< cw::graph::View > createdView;
+  Ref< cw::core::Model >::R createdModel;
+  Ref< cw::graph::View >::R createdView;
   cw::graph::ModelFactory<FakeViewFactory> factory;
 
   the_ModelFactory() : factory(
-        [this]( Ref<cw::core::Model> u ) { createdModel = u; },
-        [this]( Ref<cw::graph::View> v ) { createdView = v; } )
+        [this]( Ref<cw::core::Model>::R u ) { createdModel = u; },
+        [this]( Ref<cw::graph::View>::R v ) { createdView = v; } )
   {}
 
   It(should_call_callbacks_with_the_created_elements)
@@ -41,8 +41,8 @@ Describe(the_ModelFactory)
 
     auto viewStub = std::dynamic_pointer_cast<fake::ViewStub>(createdView);
 
-    AssertThat( createdModel, Is().Not().EqualTo( Ref<cw::core::Model>() ) );
-    AssertThat( createdView, Is().Not().EqualTo( Ref<cw::graph::View>() ) );
+    AssertThat( createdModel, Is().Not().EqualTo( Ref<cw::core::Model>::R() ) );
+    AssertThat( createdView, Is().Not().EqualTo( Ref<cw::graph::View>::R() ) );
 
     AssertThat( createdModel, Equals( viewStub->getModel() ) );
   }
