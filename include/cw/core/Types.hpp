@@ -10,6 +10,7 @@ template<class T>
 struct Ref
 {
   typedef std::shared_ptr<T> R;
+  Ref() = delete;
 };
 
 namespace cw
