@@ -1,5 +1,4 @@
 *.o
-*.obj
 *.d
 *.so
 .tup
@@ -9,6 +8,10 @@ test_runner
 build-*/src
 *.swo
 *.swp
+
+# windows related
+*~
+*.obj
+*.lib
 *.exe
 *.dll
-*~
