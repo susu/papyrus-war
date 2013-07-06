@@ -53,7 +53,7 @@ struct TargetMarker : core::Model
 
 struct TargetMarkerView : OpenGlViewBase<TargetMarker>
 {
-  TargetMarkerView(Ref<TargetMarker> tmarker, ProjectionView & projView)
+  TargetMarkerView(Ref<TargetMarker>::R tmarker, ProjectionView & projView)
     : BaseType(tmarker,projView)
   {
     setModelVertices(
@@ -127,11 +127,11 @@ void OpenGlLoop::run()
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks(m_window);
 
-  auto modelCallback = [&models]( Ref<core::Model> model )
+  auto modelCallback = [&models]( Ref<core::Model>::R model )
   {
     models.add(model);
   };
-  auto viewCallback = [&views]( graph::ViewRef view )
+  auto viewCallback = [&views]( Ref<graph::View>::R view )
   {
     views.add(view);
   };
@@ -159,7 +159,7 @@ void OpenGlLoop::run()
   });
 
 
-  timer.setUpTimer( 10_sec, []()
+  timer.setUpTimer( 10.0, []()
   {
     LOG_DEBUG("Current GPU memory usage: ",
               gpu::getDedicatedMemory()-gpu::getAvailabelDedicatedMemory(),
@@ -185,13 +185,13 @@ void OpenGlLoop::run()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     double timeDiff = glfwGetTime() - lastTickShot;
-    models.each([timeDiff](Ref<core::Model> & model)
+    models.each([timeDiff](Ref<core::Model>::R & model)
     {
       model->tick(timeDiff);
     });
     lastTickShot = glfwGetTime();
 
-    views.each([](Ref<graph::View> & view)
+    views.each([](Ref<graph::View>::R & view)
     {
       view->show();
     });

@@ -19,7 +19,10 @@ namespace cw
     struct OpenGlViewPolicy
     {
       template<class T>
-        using Mapping = OpenGlViewMapping<T>;
+      struct Mapping
+      {
+        typedef OpenGlViewMapping<T> type;
+      };
     };
     VIEW_MAPPING(OpenGlViewMapping, cw::core::PaperBoat, cw::opengl::PaperBoatView);
     VIEW_MAPPING(OpenGlViewMapping, cw::core::Surface, cw::opengl::SurfaceView);
@@ -31,7 +34,7 @@ namespace cw
           : m_projView(projView)
         {}
         template<typename T, typename Model>
-        Ref<graph::View> createViewFor(Model model)
+        typename Ref<graph::View>::R createViewFor(Model model)
         {
           return m_viewFactory.template createViewFor<T>(model, m_projView);
         }

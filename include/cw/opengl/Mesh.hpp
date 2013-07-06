@@ -2,6 +2,7 @@
 #define CW_OPENGL_MESH_HPP_INC
 
 #include <GL/glew.h>
+#include <vector>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

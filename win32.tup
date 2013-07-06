@@ -2,20 +2,23 @@
 
 ifeq (@(TUP_PLATFORM),win32)
   CC=cl.exe
-  LINKER=link.exe
+  LINKER=lib.exe
   CXXFLAGS+=/EHsc /W3 /WX
 
   WINLIBS=../winlibs
-  LIB_EXT=.dll
+  LIB_EXT=.lib
   BIN_EXT=.exe
-  GRAPHICS_LIBS= -lglfw -lopengl32 -L$(WINLIBS)
-  CXXFLAGS+= /DGLEW_STATIC /I$(WINLIBS)
+  GRAPHICS_LIBS= assimp.lib glfw3dll.lib opengl32.lib
+  CXXFLAGS+= /DGLEW_STATIC /I$(WINLIBS) \
+             /D_CRT_SECURE_NO_WARNINGS
 # extension of object file
   O=obj
 
 # macroes
   !cxx = |> $(CC) $(CXXFLAGS) /I$(INCLUDE) /c %f |> %B.obj
+  PROOT=$(TUP_CWD)
 
-  !o2shared = |> $(CC) -shared %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+  !o2shared = |> $(LINKER) %f $(GRAPHICS_LIBS) /LIBPATH:$(PROOT)\winlibs /OUT:%o |>
   !o2bin = |> $(CC) %f $(BASE_LDFLAGS) $(LDFLAGS) -o %o |>
+  !postshared = |> REM |>
 endif

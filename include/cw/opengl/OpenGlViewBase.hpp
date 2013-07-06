@@ -41,7 +41,7 @@ namespace cw
         void show() override;
       protected:
         typedef OpenGlViewBase<ModelType> BaseType;
-        OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView );
+        OpenGlViewBase( typename Ref<ModelType>::R model, ProjectionView & projView );
 
         void sendMVP( const glm::mat4 & model );
 
@@ -52,7 +52,7 @@ namespace cw
         auto getNumberOfVertices() -> std::vector<GLfloat>::size_type;
 
 
-        Ref<ModelType> m_model;
+        typename Ref<ModelType>::R m_model;
         GLuint m_programId;
       private:
         // called from show()

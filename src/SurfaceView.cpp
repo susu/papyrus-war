@@ -12,7 +12,7 @@ namespace cw
   namespace opengl
   {
 
-SurfaceView::SurfaceView( Ref< core::Surface> surface, ProjectionView& projView )
+SurfaceView::SurfaceView( Ref< core::Surface>::R surface, ProjectionView& projView )
   : BaseType( surface, projView )
   , m_camera( projView )
   , m_activeScrollDirs(4,false)
@@ -39,7 +39,7 @@ void SurfaceView::registerCallbacks()
   getRegistrars().getInputDistributor().registerScroll(
       std::bind(&SurfaceView::processScrollback, this, std::placeholders::_1) );
   getRegistrars().getTimer().setUpTimer(
-      10_millisec,
+      10 * 0.001, // 10_millisec,
       std::bind(&SurfaceView::tick,this) );
 }
 
@@ -63,7 +63,7 @@ bool SurfaceView::isScrolling() const
 {
   return std::find(m_activeScrollDirs.begin(),
                    m_activeScrollDirs.end(),
-                   true) != m_activeScrollDirs.end();
+                   1 /* true */) != m_activeScrollDirs.end();
 }
 
 void SurfaceView::tick()
@@ -76,7 +76,7 @@ void SurfaceView::tick()
   auto nextPos = m_camera.getPos();
   auto nextLook = m_camera.getLookAt();
 
-  float step = 0.1;
+  float step = 0.1f;
 
   if ( m_activeScrollDirs[ to_underlying(ScrollDir::RIGHT) ] )
   {

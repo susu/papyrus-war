@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
 #include <cw/core/Logger.hpp>
 #include <cw/core/Pos.hpp>
 #include <cw/core/PaperBoat.hpp>
@@ -34,7 +35,7 @@ void PaperBoatView::doShow()
   double y = modelPos.y;
   glm::mat4 modelMatrix = glm::translate( glm::mat4(1.0f), glm::vec3( x,y, -0.1f ) );
 
-  float orientation = (m_model->getCurrentOrientation()) * 180 / core::PI + 90;
+  float orientation = float( (m_model->getCurrentOrientation()) * 180 / core::PI + 90 );
 
   modelMatrix = glm::rotate(modelMatrix, orientation, glm::vec3(0.0f,0.0f,1.0f) );
   sendMVP( modelMatrix );

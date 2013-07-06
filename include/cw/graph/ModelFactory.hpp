@@ -64,9 +64,10 @@ namespace cw
 
         using HasCallbackRegistrar::setCallbackRegistrar;
 
-        ModelFactory(ModelFactory&) = delete;
-        ModelFactory& operator=(ModelFactory) = delete;
       private:
+        ModelFactory(ModelFactory&);
+        ModelFactory& operator=(ModelFactory);
+
         ModelCreatedCallback m_modelCallback;
         ViewCreatedCallback m_viewCallback;
         Factory m_viewFactory;

@@ -35,7 +35,7 @@ glm::vec3 createVec3(Iterator iter)
 /// Methods
 
 template<typename ModelType>
-OpenGlViewBase<ModelType>::OpenGlViewBase( Ref<ModelType> model, ProjectionView & projView )
+OpenGlViewBase<ModelType>::OpenGlViewBase( typename Ref<ModelType>::R model, ProjectionView & projView )
   : m_model( model )
   , m_programId( projView.getProgramId() )
   , m_projView( projView )

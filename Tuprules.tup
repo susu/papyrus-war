@@ -9,6 +9,7 @@ LD_PATH= ../src
 BASE_LDFLAGS=
 
 include linux.tup
-include libs.tup
 include win32.tup
+
+include libs.tup
 

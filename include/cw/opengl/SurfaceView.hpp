@@ -18,7 +18,7 @@ namespace cw
     class SurfaceView : public opengl::OpenGlViewBase< core::Surface >
     {
       public:
-        SurfaceView(Ref< core::Surface >, ProjectionView&);
+        SurfaceView(Ref< core::Surface >::R, ProjectionView&);
       protected:
         virtual void registerCallbacks();
       private:
