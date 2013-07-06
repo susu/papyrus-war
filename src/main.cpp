@@ -9,8 +9,10 @@ using namespace cw::opengl;
 int main()
 {
   // TODO logger initialization!
+  std::cout << "Main started." << std::endl;
   try
   {
+    LOG_DEBUG("Logger started.");
     OpenGlLoop mainloop;
     mainloop.run();
     std::cout << "Thanks for playing!" << std::endl;
