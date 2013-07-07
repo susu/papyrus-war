@@ -10,10 +10,11 @@ ifeq (@(TUP_PLATFORM),win32)
   LIB_EXT=.lib
   BIN_EXT=.exe
   GRAPHICS_LIBS= assimp.lib glfw3dll.lib opengl32.lib
-  CXXFLAGS+= /DGLEW_STATIC /I$(WINLIBS) \
-             /D_CRT_SECURE_NO_WARNINGS \
-             /DCW_DEBUG \
-             /D__PRETTY_FUNCTION__=__FUNCDNAME__ \
+  CXXFLAGS+= \
+/DGLEW_STATIC /I$(WINLIBS) \
+/D_CRT_SECURE_NO_WARNINGS \
+/DCW_DEBUG \
+/D__PRETTY_FUNCTION__=__FUNCTION__ \
 
 # extension of object file
   O=obj
