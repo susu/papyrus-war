@@ -94,6 +94,7 @@ namespace cw
         void endLog();
       private:
         Logger( const std::string & loggerName );
+        Logger(Logger&);
 
         void startLog( LogLevel loglevel, const char * file, int line,
                        const char * pretty);

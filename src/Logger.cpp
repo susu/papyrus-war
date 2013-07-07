@@ -24,7 +24,8 @@ std::string getFormattedDate()
   time(&rawtime);
   timeinfo = safeLocaltime(&rawtime);
 
-  strftime(buffer, 255, "%F %X", &timeinfo);
+  strftime(buffer, 255, "%Y-%m-%d %H:%M:%S", &timeinfo);
+
   return buffer;
 }
 
