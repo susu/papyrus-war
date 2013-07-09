@@ -64,7 +64,7 @@ Describe(AMoving)
                                 .travelSpeed(1.0);
 
     moving.setTarget( Pos(10.0, 0.0) );
-    moving.tick( 10_millisec );
+    moving.tick( 10 * 0.001 );
 
     AssertThat(moving.getCurrentPos(), Equals(Pos(0.01, 0.0)));
   }
@@ -74,7 +74,7 @@ Describe(AMoving)
     Moving moving = MakeMoving().orientation(PI/4.0)
                                 .travelSpeed(1.2);
     moving.setTarget( Pos(5.0,5.0) );
-    moving.tick( 25_millisec );
+    moving.tick( 25 * 0.001 );
 
     AssertThat(moving.getCurrentPos(), Equals(Pos(0.0212132,0.0212132)));
   }
@@ -83,7 +83,7 @@ Describe(AMoving)
   {
     Moving moving = MakeMoving().orientation(0.0).travelSpeed(1.0);
     moving.setTarget( Pos(5.0,5.0) );
-    moving.tick(10_millisec);
+    moving.tick(10 * 0.001);
 
     // position is the same
     AssertThat(moving.getCurrentPos(), Equals( Pos(0.0,0.0) ));

@@ -19,7 +19,10 @@ VIEW_MAPPING(DummyMapping, One, ViewForOne);
 struct DummyPolicy
 {
   template<class T>
-  using Mapping = DummyMapping<T>;
+  struct Mapping
+  {
+    typedef DummyMapping<T> type;
+  };
 };
 
 Describe(the_ViewFactory)

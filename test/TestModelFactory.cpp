@@ -19,7 +19,10 @@ VIEW_MAPPING(FakeMapping, fake::ModelStub, fake::ViewStub);
 struct FakePolicy
 {
   template<class T>
-  using Mapping = FakeMapping<T>;
+  struct Mapping
+  {
+    typedef FakeMapping<T> type;
+  };
 };
 
 typedef cw::graph::ViewFactory<FakePolicy> FakeViewFactory;
