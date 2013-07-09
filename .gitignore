@@ -8,6 +8,7 @@ test_runner
 build-*/src
 *.swo
 *.swp
+src/cw*
 
 # windows related
 *~
