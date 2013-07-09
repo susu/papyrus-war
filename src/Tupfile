@@ -42,7 +42,6 @@ endif
 LDFLAGS=\
   $(GRAPHICS_LIBS) \
   -L$(LD_PATH) \
-  -l$(LIBCW_CORE) \
 
 : foreach $(GRAPH_SRC) |> !cxx |> %B.$(O) {graph_objs}
 : {graph_objs} $(GLEW_O) |> !o2shared |> $(LIBCW_GRAPH_SO)
@@ -52,12 +51,12 @@ ifeq (@(TUP_PLATFORM),win32)
 endif
 
 
-# ifeq (@(TUP_PLATFORM),linux)
-# LDFLAGS= \
-#   -L$(LD_PATH) \
-#   -l$(LIBCW_GRAPH) \
-#   -l$(LIBCW_CORE) \
-# endif
+ifeq (@(TUP_PLATFORM),linux)
+LDFLAGS= \
+  -L$(LD_PATH) \
+  -l$(LIBCW_GRAPH) \
+  -l$(LIBCW_CORE)
+endif
 
 : main.cpp |> !cxx |> main.$(O) {main_object}
 : {main_object} | $(LIBCW_GRAPH_SO) $(LIBCW_CORE_SO) |> !o2bin |> cw$(BIN_EXT)
