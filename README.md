@@ -8,8 +8,10 @@ Download binaries
 -----------------
 
 Not available yet!
- * [windows]()
- * [linux]()
+ * windows
+ * linux:
+     - AUR PKGBUILD
+     - deb packages
 
 Development
 ===========
@@ -73,7 +75,17 @@ If you don't have packer, download from [AUR](aur.archlinux.org)
 
 ### Installing dependencies on Windows
 
-At the moment windows build is not working (compiles, but crashes at various places).
-If you need more info, drop me a mail!
+Development on windows is a bit messy, includes a lot of manual work.
+I've collected the dependencies (as precompiled binaries) into a zip file (see below).
+(I'm not a windows developer, so if you have better idea, let me know!)
+
+ * Install Visual Studio 2013 Express Preview (it contains the newest MSVC)
+ * Clone the repo
+ * download [winlibs.zip]() and extract into the repo
+ * Open a Developer Command Prompt (Start -> All Programs -> Microsoft Visual Studio 2013 -> Visual Studio Tools -> Developer Command Prompt for VS2013 Preview)
+ * navigate to the repo
+ * execute bootstrap.sh
+ * tup init (only for first time)
+ * tup upd
 
 ### Installing dependencies on OSX
