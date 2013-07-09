@@ -81,7 +81,7 @@ I've collected the dependencies (as precompiled binaries) into a zip file (see b
 
  * Install Visual Studio 2013 Express Preview (it contains the newest MSVC)
  * Clone the repo
- * download [winlibs.zip]() and extract into the repo
+ * download [winlibs.zip](https://dl.dropboxusercontent.com/u/4602313/pw/winlibs.zip) and extract into the repo
  * Open a Developer Command Prompt (Start -> All Programs -> Microsoft Visual Studio 2013 -> Visual Studio Tools -> Developer Command Prompt for VS2013 Preview)
  * navigate to the repo
  * execute bootstrap.sh
