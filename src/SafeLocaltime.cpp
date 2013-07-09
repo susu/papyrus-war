@@ -10,7 +10,7 @@ std::tm safeLocaltime(std::time_t * currentTime)
 #if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__))
   localtime_s(&result, currentTime);
 #else
-  localtime_r(currentTime, result);
+  localtime_r(currentTime, &result);
 #endif
   return result;
 }
