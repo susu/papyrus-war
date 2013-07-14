@@ -28,6 +28,7 @@ CORE_SRC= \
   Line.cpp \
   Surface.cpp \
   SafeLocaltime.cpp \
+  CommandDispatcher.cpp \
 
 : foreach $(CORE_SRC) |> !cxx |> %B.$(O) {core_objs}
 : {core_objs} |> !o2shared |> $(LIBCW_CORE_SO)
