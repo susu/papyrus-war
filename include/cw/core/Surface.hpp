@@ -13,7 +13,12 @@ namespace cw
         Surface();
         virtual ~Surface();
 
-        virtual void tick(double diffTime) override;
+        // Surface is a special model, it cannot have a focus
+        void onFocused() override {}
+        void onDeFocused() override {}
+        void onOuterClick(Pos click, Ref<Model>::R clickedModel) override {}
+
+        void tick(double diffTime) override;
     };
 
   }

@@ -15,7 +15,16 @@ namespace cw
         PaperBoat(double x, double y);
         virtual ~PaperBoat();
 
-        virtual void tick(double diffTime) override;
+        void tick(double diffTime) override;
+
+        void onFocused() override
+        {}
+
+        void onDeFocused() override
+        {}
+
+        void onOuterClick(Pos click, Ref<Model>::R clickedModel) override
+        {}
 
         const Pos & getPos() const;
         void setMoveTarget(const Pos & p);

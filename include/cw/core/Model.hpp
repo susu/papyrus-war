@@ -11,6 +11,11 @@ namespace cw
     {
       public:
         virtual void tick(double diffTime) = 0;
+
+        // Command-receiver concept
+        virtual void onFocused() = 0;
+        virtual void onDeFocused() = 0;
+        virtual void onOuterClick(Pos click, Ref<Model>::R clickedModel) = 0;
     };
   }
 }

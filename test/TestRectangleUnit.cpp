@@ -9,8 +9,11 @@ struct RectStub : public cw::core::RectangleUnit
     : cw::core::RectangleUnit(p,size)
   {}
 
-  virtual void tick(double) override
-  {}
+  virtual void tick(double) override {}
+  void onFocused() override {}
+  void onDeFocused() override {}
+  void onOuterClick(cw::core::Pos click, Ref<cw::core::Model>::R clickedModel) override {}
+
 };
 
 using namespace igloo;

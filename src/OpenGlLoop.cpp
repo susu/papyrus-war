@@ -45,8 +45,10 @@ struct TargetMarker : core::Model
     : m_pos(x,y)
   {}
 
-  void tick(double) override
-  {}
+  void tick(double) override {}
+  void onFocused() override {}
+  void onDeFocused() override {}
+  void onOuterClick(core::Pos click, Ref<core::Model>::R clickedModel) override {}
 
   core::Pos m_pos;
 };

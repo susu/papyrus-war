@@ -12,8 +12,18 @@ namespace fake
       ModelStub()
       {}
 
-      virtual void tick(double) override
+      void tick(double) override
       {}
+
+      void onFocused() override
+      {}
+
+      void onDeFocused() override
+      {}
+
+      void onOuterClick(cw::core::Pos click, Ref<cw::core::Model>::R clickedModel) override
+      {}
+
   };
 }
 
