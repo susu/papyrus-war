@@ -17,6 +17,8 @@ namespace cw
 
         void tick(double diffTime) override;
 
+        bool isOver(Pos pos) const override;
+
         void onFocused() override
         {}
 

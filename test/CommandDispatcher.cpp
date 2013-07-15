@@ -3,34 +3,62 @@
 #include <cw/core/CommandDispatcher.hpp>
 #include <cw/core/InputDistributor.hpp>
 
-#include "fake/PickingStub.hpp"
+#include "fake/ModelStub.hpp"
 
 using namespace igloo;
 using namespace cw;
 
-namespace fake
-{
-  class InputDistributorFake : public core::InputDistributor
-  {
-    public:
-      InputDistributorFake(const fake::PickingStub & pickingStub)
-        : core::InputDistributor(pickingStub)
-      {}
-  };
-}
-
 Describe(ACommandDispatcher)
 {
-  fake::PickingStub m_pickingStub;
-  fake::InputDistributorFake m_inputDistributor;
   core::CommandDispatcher::ModelContainer m_models;
-
-  ACommandDispatcher()
-    : m_inputDistributor(m_pickingStub)
-  {}
 
   It(can_be_instantiated)
   {
-    core::CommandDispatcher dispatcher(m_inputDistributor, m_models);
+    core::CommandDispatcher dispatcher(m_models);
+  }
+
+  It(should_set_focus_on_unit_if_clicked)
+  {
+    // Arrange
+    auto model = std::make_shared<fake::ModelStub>();
+    model->over() = true;
+    m_models.add(model);
+    core::CommandDispatcher dispatcher(m_models);
+
+    // Act
+    dispatcher.onClick( core::ClickEvent{ core::Pos(0,0) } );
+
+    // Assert
+    AssertThat( model->hasFocus(), Equals(true) );
+  }
+
+  It(should_not_set_focus_if_position_not_matches)
+  {
+    // Arrange
+    auto model = std::make_shared<fake::ModelStub>();
+    m_models.add(model);
+    core::CommandDispatcher dispatcher(m_models);
+
+    // Act
+    dispatcher.onClick( core::ClickEvent{ core::Pos(0,0) } );
+
+    // Assert
+    AssertThat( model->hasFocus(), Equals(false) );
+  }
+
+  It(should_remove_focus_if_pos_not_match)
+  {
+    // Arrange
+    auto model = std::make_shared<fake::ModelStub>();
+    m_models.add(model);
+    core::CommandDispatcher dispatcher(m_models);
+    model->over() = false;
+    model->setFocus(true);
+
+    // Act
+    dispatcher.onClick( core::ClickEvent{ core::Pos(0,0) } );
+
+    // Assert
+    AssertThat( model->hasFocus(), Equals(false) );
   }
 };

@@ -10,20 +10,36 @@ namespace fake
   {
     public:
       ModelStub()
+        : m_over(false)
       {}
 
+      // @{ stubbed methods
       void tick(double) override
       {}
 
+      bool isOver(cw::core::Pos pos) const override
+      {
+        return m_over;
+      }
+
+      void onOuterClick(cw::core::Pos click, Ref<cw::core::Model>::R clickedModel) override
+      {}
+      // @}
+
+      // @{ helper methods
+      bool & over()
+      { return m_over; }
+      // @}
+
+
+    private:
       void onFocused() override
       {}
 
       void onDeFocused() override
       {}
 
-      void onOuterClick(cw::core::Pos click, Ref<cw::core::Model>::R clickedModel) override
-      {}
-
+      bool m_over;
   };
 }
 

@@ -13,6 +13,10 @@ namespace cw
         Surface();
         virtual ~Surface();
 
+        // technically no position is over the Surface, so it cannot get the focus
+        bool isOver(Pos pos) const override
+        { return false; }
+
         // Surface is a special model, it cannot have a focus
         void onFocused() override {}
         void onDeFocused() override {}

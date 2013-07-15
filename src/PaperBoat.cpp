@@ -23,6 +23,11 @@ void PaperBoat::tick(double diffTime)
   m_moving.tick(diffTime);
 }
 
+bool PaperBoat::isOver(Pos pos) const
+{
+  return false;
+}
+
 
 const Pos & PaperBoat::getPos() const
 {
