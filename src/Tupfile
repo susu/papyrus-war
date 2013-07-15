@@ -23,7 +23,6 @@ CORE_SRC= \
   Logger.cpp \
   Timer.cpp \
   InputDistributor.cpp \
-  RectangleUnit.cpp \
   PaperBoat.cpp \
   Line.cpp \
   Surface.cpp \
