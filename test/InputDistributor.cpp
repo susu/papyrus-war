@@ -90,12 +90,6 @@ Describe(AInputDistributor)
     dist.unregisterClickedOn( id2 );
   }
 
-  // TODO mapping pixel coordinates into WorldCoordinates with ProjectionView...
-  It(should_map_2D_mouse_coordinates_into_3D_WorldCoordinates)
-  {
-    // NOTE assuming surface is at Z=0
-  }
-
   It(can_register_scroll)
   {
     dist.registerScroll([](cw::core::ScrollEvent ev){});
@@ -141,4 +135,32 @@ Describe(AInputDistributor)
     AssertThat(stopEvent.action, Equals(cw::core::ScrollEvent::STOP));
     AssertThat(stopEvent.scrollDir, Equals(ScrollDir::RIGHT));
   }
+
+  Context(if_condition_function_is_given)
+  {
+    typedef cw::core::ClickEvent ClickEvent;
+    void SetUp()
+    {
+      m_called = false;
+      m_callback = [this](ClickEvent)
+      {
+        m_called = true;
+      };
+    }
+
+    It(should_not_call_clicked_callback_if_condition_is_false)
+    {
+      Parent().dist.registerClickedOn(m_callback,
+      [](ClickEvent)
+      {
+        return false;
+      });
+      Parent().dist.clickedAt(100, 100);
+
+      AssertThat(m_called, Equals(false));
+    }
+
+    std::function<void(ClickEvent)> m_callback;
+    bool m_called;
+  };
 };

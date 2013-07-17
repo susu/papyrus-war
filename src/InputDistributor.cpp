@@ -32,10 +32,11 @@ InputDistributor::~InputDistributor()
 {}
 
 InputDistributor::CallbackId InputDistributor::registerClickedOn(
-    std::function< void(ClickEvent) > callback )
+    ClickedOnCallback callback,
+    ClickedOnCondition condition)
 {
   CallbackId max = getNextKey( m_clickedOnCallbacks );
-  m_clickedOnCallbacks[ max ] = callback;
+  m_clickedOnCallbacks[ max ] = {callback, condition};
   return max;
 }
 
@@ -63,7 +64,14 @@ void InputDistributor::clickedAt(int x, int y)
   event.pos.y = y;
   for( auto callback : m_clickedOnCallbacks )
   {
-    callback.second( event );
+    if (!callback.second.second) // no cond. function was set
+    {
+      callback.second.first( event ); // callback
+    }
+    else if ( callback.second.second(event) ) // condition is OK
+    {
+      callback.second.first( event ); // callback
+    }
   }
 }
 

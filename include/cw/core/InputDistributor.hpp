@@ -31,13 +31,16 @@ namespace cw
     {
       public:
         typedef unsigned long long CallbackId;
+
         typedef std::function< void(ClickEvent) > ClickedOnCallback;
+        typedef std::function< bool(ClickEvent) > ClickedOnCondition;
+
         typedef std::function< void(ScrollEvent) > ScrollCallback;
 
         InputDistributor( const PickingInterface & );
         virtual ~InputDistributor();
 
-        CallbackId registerClickedOn( ClickedOnCallback );
+        CallbackId registerClickedOn( ClickedOnCallback, ClickedOnCondition cond = ClickedOnCondition() );
         void unregisterClickedOn( CallbackId );
 
         CallbackId registerScroll( ScrollCallback );
@@ -53,7 +56,7 @@ namespace cw
         InputDistributor(InputDistributor&);
         InputDistributor& operator=(InputDistributor);
 
-        std::map< CallbackId, ClickedOnCallback > m_clickedOnCallbacks;
+        std::map< CallbackId, std::pair<ClickedOnCallback,ClickedOnCondition> > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
         const PickingInterface & m_picking;
     };
