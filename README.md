@@ -48,8 +48,8 @@ Dependencies
 ------------
 
   * [tup](http://gittup.org/tup/)
-  * [GLEW - OpenGL Extension Wrangler Library](glew.sourceforge.net)
-  * [GLFW - OpenGL FrameWork (or Good Luck Finding Willy)](www.glfw.org)
+  * [GLEW - OpenGL Extension Wrangler Library](http://glew.sourceforge.net)
+  * [GLFW - OpenGL FrameWork (or Good Luck Finding Willy)](http://www.glfw.org)
   * [glm - OpenGL Mathematics](http://glm.g-truc.net/)
   * [assimp - Open Asset Import Library](http://assimp.sourceforge.net/)
 
@@ -69,7 +69,7 @@ If you have packer:
 
 ``packer -S tup-git``
 
-If you don't have packer, download from [AUR](aur.archlinux.org)
+If you don't have packer, download tup from [AUR](http://aur.archlinux.org)
 
 ### Installing dependencies on Ubuntu/Debian
 
