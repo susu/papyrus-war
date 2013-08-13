@@ -56,6 +56,7 @@ namespace cw
         InputDistributor(InputDistributor&);
         InputDistributor& operator=(InputDistributor);
 
+        // TODO Pair is compact, but not readable enough. Create separate struct for it!
         std::map< CallbackId, std::pair<ClickedOnCallback,ClickedOnCondition> > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
         const PickingInterface & m_picking;
