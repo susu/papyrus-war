@@ -58,18 +58,17 @@ InputDistributor::CallbackId InputDistributor::registerScroll(
 
 void InputDistributor::clickedAt(int x, int y)
 {
-  ClickEvent event;
-  event.pos.x = x;
-  event.pos.y = y;
-  for( auto callback : m_clickedOnCallbacks )
+  ClickEvent event { Pos(x,y) };
+  for( auto callbackPair : m_clickedOnCallbacks )
   {
-    if (!callback.second.second) // no cond. function was set
+    ClickedOnCallbackInfo & callbackInfo = callbackPair.second;
+    if (!callbackInfo.condition) // no cond. function was set
     {
-      callback.second.first( event ); // callback
+      callbackInfo.callback( event ); // callback
     }
-    else if ( callback.second.second(event) ) // condition is OK
+    else if ( callbackInfo.condition(event) ) // condition is OK
     {
-      callback.second.first( event ); // callback
+      callbackInfo.callback( event ); // callback
     }
   }
 }
