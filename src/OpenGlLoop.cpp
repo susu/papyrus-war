@@ -10,6 +10,7 @@
 #include <cw/core/InputDistributor.hpp>
 #include <cw/core/PaperBoat.hpp>
 #include <cw/core/Surface.hpp>
+#include <cw/core/CommandDispatcher.hpp>
 
 #include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/View.hpp>
@@ -104,6 +105,7 @@ OpenGlLoop::~OpenGlLoop()
 
 void OpenGlLoop::run()
 {
+  using namespace std::placeholders;
   core::Timer timer( glfwGetTime() );
 
   core::EntityContainer<core::Model> models;
@@ -126,10 +128,14 @@ void OpenGlLoop::run()
   ProjectionView projectionView(shaderProgram, m_screenSize);
 
   RayCastPicking picking( projectionView, m_screenSize );
-  core::InputDistributor inputDistributor( picking ); // forwards input to models
+  core::InputDistributor inputDistributor; // forwards input via callbacks
 
   GlfwInputTranslator inputTranslator( inputDistributor ); // process GLFW input
   inputTranslator.registerCallbacks(m_window);
+
+  core::CommandDispatcher cmdDispatcher(models, picking);
+  inputDistributor.registerClickedOn(
+    std::bind(&core::CommandDispatcher::onClick, cmdDispatcher, _1));
 
   auto modelCallback = [&models]( Ref<core::Model>::R model )
   {

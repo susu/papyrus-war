@@ -24,8 +24,7 @@ namespace cw
   namespace core
   {
 
-InputDistributor::InputDistributor(const PickingInterface & picking)
-  : m_picking(picking)
+InputDistributor::InputDistributor()
 {}
 
 InputDistributor::~InputDistributor()

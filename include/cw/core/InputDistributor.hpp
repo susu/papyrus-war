@@ -12,7 +12,6 @@ namespace cw
 {
   namespace core
   {
-    class PickingInterface;
     struct ClickEvent
     {
       Pos pos;
@@ -37,7 +36,7 @@ namespace cw
 
         typedef std::function< void(ScrollEvent) > ScrollCallback;
 
-        InputDistributor( const PickingInterface & );
+        InputDistributor();
         virtual ~InputDistributor();
 
         CallbackId registerClickedOn( ClickedOnCallback, ClickedOnCondition cond = ClickedOnCondition() );
@@ -59,7 +58,6 @@ namespace cw
         // TODO Pair is compact, but not readable enough. Create separate struct for it!
         std::map< CallbackId, std::pair<ClickedOnCallback,ClickedOnCondition> > m_clickedOnCallbacks;
         std::map< CallbackId, ScrollCallback > m_scrollCallbacks;
-        const PickingInterface & m_picking;
     };
   }
 }

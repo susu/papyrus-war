@@ -1,8 +1,6 @@
 #include <igloo/igloo.h>
 #include <igloo/igloo_alt.h>
 
-#include "fake/PickingStub.hpp"
-
 #include <cw/core/InputDistributor.hpp>
 
 using namespace igloo;
@@ -12,17 +10,12 @@ Describe(AInputDistributor)
   typedef cw::core::InputDistributor::CallbackId CallbackId;
   typedef cw::core::ScrollDir ScrollDir;
 
-  fake::PickingStub pickingStub;
   cw::core::InputDistributor dist;
   bool eventOccured;
   cw::core::ClickEvent lastEvent;
 
   int actualNumberOfCalls;
   int expectedNumberOfCalls;
-
-  AInputDistributor()
-    : dist( pickingStub )
-  {}
 
   // It(should_be_registerable)
   void SetUp()

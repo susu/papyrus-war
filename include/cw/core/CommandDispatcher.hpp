@@ -8,11 +8,12 @@ namespace cw
 {
   namespace core
   {
+    class PickingInterface;
     class CommandDispatcher
     {
       public:
         typedef core::EntityContainer< core::Model > ModelContainer;
-        CommandDispatcher(ModelContainer & models);
+        CommandDispatcher(ModelContainer & models, const PickingInterface &);
 
         void onClick(ClickEvent event);
       private:

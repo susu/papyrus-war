@@ -6,7 +6,7 @@ namespace cw
   namespace core
   {
 
-CommandDispatcher::CommandDispatcher(ModelContainer & models)
+CommandDispatcher::CommandDispatcher(ModelContainer & models, const PickingInterface&)
   : m_models(models)
 {}
 
