@@ -12,7 +12,7 @@ int main()
   std::cout << "Main started." << std::endl;
   try
   {
-    LOG_DEBUG("Logger started.");
+    LOG_DEBUG(" ----------- Logger started. ----------- ");
     OpenGlLoop mainloop;
     mainloop.run();
     std::cout << "Thanks for playing!" << std::endl;
@@ -21,5 +21,10 @@ int main()
   {
     LOG_EXCEPTION(ex);
   }
+  catch(const cw::core::BaseException & ex)
+  {
+    LOG_EXCEPTION(ex);
+  }
   // TODO logger teardown?
+  LOG_DEBUG(" ----------- End of logging. ----------- ");
 }
