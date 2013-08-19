@@ -18,6 +18,7 @@ GRAPH_SRC= \
   Gpu.cpp \
   GlfwWindow.cpp \
   Mesh.cpp \
+  FocusMarker.cpp \
 
 CORE_SRC= \
   Logger.cpp \

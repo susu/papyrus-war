@@ -14,6 +14,7 @@
 #include <cw/opengl/ProjectionView.hpp>
 #include <cw/opengl/ShaderResourceLocator.hpp>
 #include <cw/opengl/Plane.hpp>
+#include <cw/opengl/FocusMarker.hpp>
 
 namespace cw
 {
@@ -64,13 +65,14 @@ namespace cw
         GLuint m_vertexBufferId;
         GLuint m_normalBufferId;
         ProjectionView & m_projView;
-        GLint m_colorUniformId;
         std::vector< GLfloat > m_vertexBuffer;
         ShaderResourceLocator m_shaderResourceLocator;
+        std::unique_ptr<FocusMarker> m_focus;
 
         GLint m_attribLocation_position;
         GLint m_attribLocation_normal;
         GLuint m_vaoId;
+        GLint m_colorUniformId;
     };
 
   }

@@ -40,10 +40,11 @@ OpenGlViewBase<ModelType>::OpenGlViewBase( typename Ref<ModelType>::R model, Pro
   , m_programId( projView.getProgramId() )
   , m_projView( projView )
   , m_shaderResourceLocator( projView.getProgramId() )
+  , m_focus( model->getBoundingBox().empty() ? nullptr : new FocusMarker(model->getBoundingBox()) )
   , m_attribLocation_position(m_shaderResourceLocator.getAttrib("inPosition"))
   , m_attribLocation_normal(m_shaderResourceLocator.getAttrib("inNormal"))
+  , m_colorUniformId(m_shaderResourceLocator.getUniform("currentColor"))
 {
-  m_colorUniformId = m_shaderResourceLocator.getUniform( "currentColor" );
   glGenVertexArrays(1, &m_vaoId);
   glBindVertexArray( m_vaoId );
   initializeVBOs();
@@ -60,7 +61,7 @@ template<typename ModelType>
 void OpenGlViewBase<ModelType>::show()
 {
   setUpDraw();
-  
+
   glEnableVertexAttribArray( m_attribLocation_position );
   glEnableVertexAttribArray( m_attribLocation_normal );
 
@@ -73,6 +74,10 @@ void OpenGlViewBase<ModelType>::show()
 template<typename ModelType>
 void OpenGlViewBase<ModelType>::setUpDraw()
 {
+  if (m_model->hasFocus())
+  {
+    m_focus->show();
+  }
   glBindVertexArray( m_vaoId );
 }
 
