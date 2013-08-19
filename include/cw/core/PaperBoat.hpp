@@ -19,6 +19,9 @@ namespace cw
 
         bool isOver(Pos pos) const override;
 
+        Polygon getBoundingBox() override
+        { return {}; }
+
         void onFocused() override
         {}
 

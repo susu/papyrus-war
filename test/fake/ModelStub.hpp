@@ -24,6 +24,9 @@ namespace fake
 
       void onOuterClick(cw::core::Pos click, Ref<cw::core::Model>::R clickedModel) override
       {}
+
+      Polygon getBoundingBox() override
+      { return {}; }
       // @}
 
       // @{ helper methods

@@ -49,6 +49,8 @@ struct TargetMarker : core::Model
   void tick(double) override {}
   bool isOver(core::Pos pos) const override
   { return false; }
+  Polygon getBoundingBox() override
+  { return {}; }
   void onFocused() override {}
   void onDeFocused() override {}
   void onOuterClick(core::Pos click, Ref<core::Model>::R clickedModel) override {}

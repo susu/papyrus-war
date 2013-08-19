@@ -17,6 +17,9 @@ namespace cw
         bool isOver(Pos pos) const override
         { return false; }
 
+        Polygon getBoundingBox() override
+        { return {}; }
+
         // Surface is a special model, it cannot have a focus
         void onFocused() override {}
         void onDeFocused() override {}
