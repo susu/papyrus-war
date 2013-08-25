@@ -6,6 +6,10 @@
 
 namespace cw
 {
+  namespace core
+  {
+    class InputFile;
+  }
   namespace opengl
   {
     class Program
@@ -14,7 +18,7 @@ namespace cw
         Program();
         ~Program();
 
-        void attachShaderFromFile( const std::string & shaderPath, GLuint shaderType );
+        void attachShaderFromFile(core::InputFile && file, GLuint shaderType);
         void link();
         void check() const;
 

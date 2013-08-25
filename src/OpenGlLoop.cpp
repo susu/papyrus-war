@@ -11,6 +11,7 @@
 #include <cw/core/PaperBoat.hpp>
 #include <cw/core/Surface.hpp>
 #include <cw/core/CommandDispatcher.hpp>
+#include <cw/core/IFStreamFile.hpp>
 
 #include <cw/graph/ModelFactory.hpp>
 #include <cw/graph/View.hpp>
@@ -113,13 +114,13 @@ void OpenGlLoop::run()
   core::EntityContainer<core::Model> models;
   core::EntityContainer<graph::View> views;
 
-  Program shaderProgram;
+  Program defaultShader;
 
   try
   {
-    shaderProgram.attachShaderFromFile( "shaders/vertex.glsl", GL_VERTEX_SHADER );
-    shaderProgram.attachShaderFromFile( "shaders/fragment.glsl", GL_FRAGMENT_SHADER );
-    shaderProgram.link();
+    defaultShader.attachShaderFromFile( core::IFStreamFile("shaders/vertex.glsl"), GL_VERTEX_SHADER );
+    defaultShader.attachShaderFromFile( core::IFStreamFile("shaders/fragment.glsl"), GL_FRAGMENT_SHADER );
+    defaultShader.link();
   }
   catch( GlException const & ex )
   {
@@ -127,7 +128,7 @@ void OpenGlLoop::run()
     return;
   }
 
-  ProjectionView projectionView(shaderProgram, m_screenSize);
+  ProjectionView projectionView(defaultShader, m_screenSize);
 
   RayCastPicking picking( projectionView, m_screenSize );
   core::InputDistributor inputDistributor; // forwards input via callbacks
@@ -157,7 +158,7 @@ void OpenGlLoop::run()
   auto boat = modelFactory.create< core::PaperBoat >(0,0);
   modelFactory.create< core::Surface >( );
   auto targetMarker = modelFactory.create< TargetMarker >(0,0);
-  opengl::Sun sun( shaderProgram, core::Pos3d(-10,7.5,-5) );
+  opengl::Sun sun( defaultShader, core::Pos3d(-10,7.5,-5) );
 
   LOG_DEBUG("Set up click-following logic");
   inputDistributor.registerClickedOn(

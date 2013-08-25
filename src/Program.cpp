@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <cw/core/Logger.hpp>
+#include <cw/core/InputFile.hpp>
 
 #include <cw/opengl/GlException.hpp>
 #include <cw/opengl/Shader.hpp>
@@ -22,9 +23,9 @@ Program::Program()
 Program::~Program()
 {}
 
-void Program::attachShaderFromFile(const std::string & filepath, GLuint shaderType)
+void Program::attachShaderFromFile(core::InputFile && file, GLuint shaderType)
 {
-  Shader shader( filepath, shaderType );
+  Shader shader(file, shaderType);
   shader.read();
   shader.compile();
   shader.check();

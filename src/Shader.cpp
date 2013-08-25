@@ -1,10 +1,10 @@
 #include <cw/opengl/Shader.hpp>
 
-#include <fstream>
 #include <sstream>
 #include <vector>
 
 #include <cw/core/Logger.hpp>
+#include <cw/core/InputFile.hpp>
 #include <cw/opengl/GlException.hpp>
 
 namespace cw
@@ -12,8 +12,8 @@ namespace cw
   namespace opengl
   {
 
-Shader::Shader( const std::string & filename, GLenum shaderType )
-  : m_filename(filename)
+Shader::Shader(core::InputFile & file, GLenum shaderType)
+  : m_file(file)
   , m_shaderId( glCreateShader(shaderType) )
 {
   glGetShaderiv(m_shaderId, GL_SHADER_TYPE, &m_shaderType);
@@ -32,22 +32,18 @@ GLuint Shader::getShaderId() const
 void Shader::read()
 {
   m_filecontent = "";
-  std::ifstream ifs( m_filename.c_str(), std::ios::in );
-  if ( !ifs.is_open() )
+  m_file.open();
+  if ( !m_file.isOpen() )
   {
-    THROW( GlException,m_filename + ": cannot be opened!");
+    THROW( GlException, m_file.getName() + ": cannot be opened!");
   }
-  std::string line;
-  while( getline(ifs, line) )
-  {
-    m_filecontent += "\n" + line;
-  }
-  ifs.close();
+
+  m_filecontent = m_file.readAll();
 }
 
 void Shader::compile()
 {
-  LOG_DEBUG(getLogMessageHeader(), "compiling: '", m_filename, "'");
+  LOG_DEBUG(getLogMessageHeader(), "compiling: '", m_file.getName(), "'");
   char const * shaderSrcPtr = m_filecontent.c_str();
   glShaderSource( m_shaderId, 1, &shaderSrcPtr, NULL );
   glCompileShader( m_shaderId );

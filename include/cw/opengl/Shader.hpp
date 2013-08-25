@@ -7,12 +7,16 @@
 
 namespace cw
 {
+  namespace core
+  {
+    class InputFile;
+  }
   namespace opengl
   {
     class Shader
     {
       public:
-        Shader( const std::string & filename, GLenum shaderType );
+        Shader(core::InputFile & file, GLenum shaderType);
 
         ~Shader();
 
@@ -29,10 +33,10 @@ namespace cw
 
         std::string getLogMessageHeader() const;
 
-        const std::string m_filename;
-        std::string       m_filecontent;
-        GLuint            m_shaderId;
-        GLint             m_shaderType;
+        core::InputFile & m_file;
+        std::string  m_filecontent;
+        GLuint       m_shaderId;
+        GLint        m_shaderType;
     };
   }
 }

@@ -2,29 +2,7 @@
 
 #include <cw/core/File.hpp>
 
-class FakeFile : public cw::core::File
-{
-  public:
-    FakeFile(const std::string & name)
-      : cw::core::File(name)
-      , m_doOpenCalled(false)
-      , m_doCloseCalled(false)
-    {}
-
-    bool doOpen() override
-    {
-      m_doOpenCalled = true;
-      return true;
-    }
-
-    void doClose() override
-    {
-      m_doCloseCalled = true;
-    }
-
-    bool m_doOpenCalled;
-    bool m_doCloseCalled;
-};
+#include "fake/FakeFile.hpp"
 
 using namespace igloo;
 
