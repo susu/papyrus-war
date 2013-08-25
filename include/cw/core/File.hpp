@@ -26,6 +26,9 @@ namespace cw
         bool open(); // calls doOpen
         void close(); // calls doClose
       private:
+        File(File&);
+        File& operator=(File&);
+
         virtual bool doOpen() = 0;
         virtual void doClose() = 0;
 
