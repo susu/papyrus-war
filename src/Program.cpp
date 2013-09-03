@@ -23,9 +23,9 @@ Program::Program()
 Program::~Program()
 {}
 
-void Program::attachShaderFromFile(core::InputFile && file, GLuint shaderType)
+void Program::attachShaderFromFile(std::unique_ptr<core::InputFile> file, GLuint shaderType)
 {
-  Shader shader(file, shaderType);
+  Shader shader(*file, shaderType);
   shader.read();
   shader.compile();
   shader.check();

@@ -19,6 +19,7 @@ GRAPH_SRC= \
   GlfwWindow.cpp \
   Mesh.cpp \
   FocusMarker.cpp \
+  ProgramRepository.cpp \
 
 CORE_SRC= \
   Logger.cpp \

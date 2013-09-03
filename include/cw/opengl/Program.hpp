@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <string>
+#include <memory>
 
 namespace cw
 {
@@ -18,7 +19,10 @@ namespace cw
         Program();
         ~Program();
 
-        void attachShaderFromFile(core::InputFile && file, GLuint shaderType);
+        Program(Program&&) = default;
+        Program& operator=(Program&&) = default;
+
+        void attachShaderFromFile(std::unique_ptr<core::InputFile> file, GLuint shaderType);
         void link();
         void check() const;
 
@@ -26,6 +30,9 @@ namespace cw
         { return m_programId; }
 
       private:
+        Program(Program&);
+        Program& operator=(Program&);
+
         GLuint m_programId;
     };
   }
