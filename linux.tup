@@ -3,7 +3,7 @@
 ifeq (@(TUP_PLATFORM),linux)
   CC=clang++
 
-  CXXFLAGS+= -Wall -Werror -std=c++11 -pthread -DCW_DEBUG
+  CXXFLAGS+= -Wall -Werror -std=c++11 -pthread -DCW_DEBUG -g
 
   LIB_EXT=.so
   BIN_EXT=
