@@ -13,6 +13,7 @@ namespace cw
   }
   namespace opengl
   {
+    const char* shaderTypeToStr( GLint shaderType );
     class Shader
     {
       public:

@@ -49,13 +49,16 @@ void Shader::compile()
   glCompileShader( m_shaderId );
 }
 
-std::string shaderTypeToStr( GLint shaderType )
+const char* shaderTypeToStr( GLint shaderType )
 {
   switch(shaderType)
   {
     case GL_VERTEX_SHADER:   return "VERTEX_SHADER";
     case GL_FRAGMENT_SHADER: return "FRAGMENT_SHADER";
     case GL_GEOMETRY_SHADER: return "GEOMETRY_SHADER";
+    case GL_COMPUTE_SHADER:  return "GL_COMPUTE_SHADER";
+    case GL_TESS_CONTROL_SHADER: return "GL_TESS_CONTROL_SHADER";
+    case GL_TESS_EVALUATION_SHADER: return "GL_TESS_EVALUATION_SHADER";
     default: return "INVALID SHADER TYPE!";
   }
 }
