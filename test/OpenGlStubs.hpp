@@ -82,6 +82,11 @@ extern "C"
     glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, matrixPtr);
   }
 
+  inline void STUB_APIENTRY stub_AttachShader(GLuint programId, GLuint shaderId)
+  {
+    LOG_DEBUG();
+  }
+
   inline GLenum glewInit()
   {
     __glewCreateProgram = &stub_CreateProgram;
@@ -93,6 +98,7 @@ extern "C"
     __glewGetShaderInfoLog = &stub_GetShaderInfoLog;
     __glewGetUniformLocation = &stub_GetUniformLocation;
     __glewUseProgram = &stub_UseProgram;
+    __glewAttachShader = &stub_AttachShader;
     __glewUniformMatrix4fv = &stub_UniformMatrix4fv;
     return 0;
   }
