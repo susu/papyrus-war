@@ -26,23 +26,12 @@ Source code is under GPLv3
 Build
 -----
 
-There are several configs/targets:
-
-  * build-debug (no optimization, enables every loglevel, very verbose)
-  * build-release (with optimization, less loglevel)
-  * build-clang (same as debug, but compiled with clang)
-
-If you don't have clang, you can delete the build-clang directory,
-it will not harm the others.
+Tup configs deleted.
+Project supports only clang (linux) and MSVC (windows).
 
 ``tup init`` (only first time)
 
 ``tup upd`` (builds every config)
-
-You can compile only one config:
-
-E.g.: If you want build release only:
-``tup upd build-release``
 
 Dependencies
 ------------
