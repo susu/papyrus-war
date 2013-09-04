@@ -118,8 +118,8 @@ void OpenGlLoop::run()
 
   try
   {
-    defaultShader.attachShaderFromFile( core::IFStreamFile("shaders/vertex.glsl"), GL_VERTEX_SHADER );
-    defaultShader.attachShaderFromFile( core::IFStreamFile("shaders/fragment.glsl"), GL_FRAGMENT_SHADER );
+    defaultShader.attachShaderFromFile( std::make_unique<core::IFStreamFile>("shaders/vertex.glsl"), GL_VERTEX_SHADER );
+    defaultShader.attachShaderFromFile( std::make_unique<core::IFStreamFile>("shaders/fragment.glsl"), GL_FRAGMENT_SHADER );
     defaultShader.link();
   }
   catch( GlException const & ex )
