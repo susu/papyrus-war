@@ -20,6 +20,7 @@ GRAPH_SRC= \
   Mesh.cpp \
   FocusMarker.cpp \
   ProgramRepository.cpp \
+  ProgramContext.cpp \
 
 CORE_SRC= \
   Logger.cpp \
