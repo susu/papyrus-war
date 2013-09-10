@@ -1,8 +1,10 @@
 #ifndef GLSTUB_PROGRAM_REPO_HPP_INC
 #define GLSTUB_PROGRAM_REPO_HPP_INC
 
+#include "GL/glew.h"
 #include <glm/glm.hpp>
-
+#include <map>
+#include <set>
 #include <cw/core/Logger.hpp>
 
 class ProgramRepo
@@ -15,15 +17,25 @@ class ProgramRepo
           : m_id(id)
         {}
 
-        void uniformMatrix( GLuint matrixId, const float * matrixPtr )
+        void addAttribute(const std::string & name)
+        {
+          m_attributeNames.insert(name);
+        }
+
+        bool hasAttribute(const std::string & name)
+        {
+          auto it = m_attributeNames.find(name);
+          return it != m_attributeNames.end();
+        }
+
+        void uniformMatrix( GLuint matrixId, int matrixSize, const float * matrixPtr )
         {
           LOG_DEBUG();
-          const int MATRIX_SIZE = 4;
-          for ( int i = 0; i < MATRIX_SIZE; ++i )
+          for ( int i = 0; i < matrixSize; ++i )
           {
-            for ( int j = 0; j < MATRIX_SIZE; ++j )
+            for ( int j = 0; j < matrixSize; ++j )
             {
-              m_unifMat[i][j] = matrixPtr[ j + i * MATRIX_SIZE ];
+              m_unifMat[i][j] = matrixPtr[ j + i * matrixSize ];
             }
           }
         }
@@ -34,6 +46,7 @@ class ProgramRepo
         }
       private:
         GLuint m_id;
+        std::set<std::string> m_attributeNames;
         glm::mat4 m_unifMat;
     };
 

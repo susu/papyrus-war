@@ -79,12 +79,22 @@ extern "C"
 
   inline void STUB_APIENTRY stub_UniformMatrix4fv(int matrixId, int,unsigned char,const float* matrixPtr)
   {
-    glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, matrixPtr);
+    LOG_DEBUG("id=", matrixId);
+    glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, 4, matrixPtr);
   }
 
   inline void STUB_APIENTRY stub_AttachShader(GLuint programId, GLuint shaderId)
   {
     LOG_DEBUG();
+  }
+
+  inline GLint STUB_APIENTRY stub_GetAttribLocation(GLuint programId, const char * attrName)
+  {
+    if (glstub::programRepo.getProgram(programId).hasAttribute(attrName))
+    {
+      return 0;
+    }
+    return -1;
   }
 
   inline GLenum glewInit()
@@ -100,6 +110,7 @@ extern "C"
     __glewUseProgram = &stub_UseProgram;
     __glewAttachShader = &stub_AttachShader;
     __glewUniformMatrix4fv = &stub_UniformMatrix4fv;
+    __glewGetAttribLocation = &stub_GetAttribLocation;
     return 0;
   }
 }
