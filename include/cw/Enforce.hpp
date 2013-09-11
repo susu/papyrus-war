@@ -5,7 +5,7 @@
 
 #define ENFORCE(cond,msg)\
   cw::enforce<cw::core::BaseException>((cond),__FILE__,__LINE__,\
-      cw::core::MakeString()<<"ENFORCE FAILED! "<<(msg));
+      cw::core::MakeString()<<"ENFORCE FAILED! "<< msg);
 
 namespace cw
 {

@@ -14,25 +14,32 @@ namespace cw
 {
   namespace core
   {
-    class BaseException
+    class BaseException : public std::exception
     {
       public:
         BaseException(const char * file, int line, const std::string & msg)
-          : m_file(file)
-          , m_line(line)
-          , m_msg(msg)
+          : m_whatMessage(constructWhatMessage(file, line, msg))
         {}
 
-        std::string getMessage() const noexcept
+        const std::string & getMessage() const noexcept
         {
-          return MakeString() << "thrown at " <<
-                 m_file << ":" << m_line << " message: '" <<
-                 m_msg << "'";
+          return m_whatMessage;
+        }
+
+        const char* what() const noexcept override
+        {
+          return m_whatMessage.c_str();
         }
       private:
-        const char * m_file;
-        int m_line;
-        std::string m_msg;
+        static std::string constructWhatMessage(const char * file,
+                                                int line,
+                                                const std::string & msg) noexcept
+        {
+          return MakeString() << "thrown at " <<
+                 file << ":" << line << " message: '" <<
+                 msg << "'";
+        }
+        std::string m_whatMessage;
     };
   }
 }
