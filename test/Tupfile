@@ -4,11 +4,12 @@ ifeq (@(TUP_PLATFORM),linux)
 CXXFLAGS+= -Iigloo/
 
 : foreach *.cpp |> !cxx |> %B.o | $(GCNO_OUT) {test_objs}
+: foreach openglstub/*.cpp |> !cxx |> %B.o | $(GCNO_OUT) {glstub_objs}
 
 LDFLAGS+= -l$(LIBCW_GRAPH) -l$(LIBCW_CORE) -L$(LD_PATH) $(GRAPHICS_LIBS)
 
 TEST_RUNNER=test_runner$(BIN_EXT)
-: {test_objs} | $(LD_PATH)/$(LIBCW_GRAPH_SO) $(LD_PATH)/$(LIBCW_CORE_SO) |> !o2bin |> $(TEST_RUNNER)
+: {glstub_objs} {test_objs} | $(LD_PATH)/$(LIBCW_GRAPH_SO) $(LD_PATH)/$(LIBCW_CORE_SO) |> !o2bin |> $(TEST_RUNNER)
 
 ifeq (@(VALGRIND),y)
   #VALGRIND=valgrind --leak-check=yes --error-exitcode=255
