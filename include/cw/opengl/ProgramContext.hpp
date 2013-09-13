@@ -14,6 +14,7 @@ namespace cw
       public:
         ProgramContext(GLuint programId);
 
+        // pre-requirement: glUseProgram
         void setUniform(const std::string & name, const glm::mat4 & mat);
       private:
         GLint getProgramId() const

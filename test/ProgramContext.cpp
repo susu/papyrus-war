@@ -11,18 +11,26 @@ using namespace igloo;
 
 Describe(AProgramContext)
 {
-  Spec(view_unform_matrix_can_be_sent)
+  Spec(uniform_matrix_can_be_sent)
   {
+    // Arrange
     GLuint id = glCreateProgram();
-    glstub::programRepo.getProgram(id).addAttribute("uniform_42");
+    auto & programStub = glstub::programRepo.getProgram(id);
+    programStub.addUniform("uniform_42");
+    auto uniformId = programStub.getUniformIndex("uniform_42");
     cw::opengl::ProgramContext ctx(id);
     std::vector<float> vec = { 1,2,3,4,
                                5,6,7,8,
                                9,0,1,2,
                                3,4,5,6 };
     glm::mat4 matrix = glm::make_mat4(&vec[0]);
+
+    // Act
+    glUseProgram(id);
     ctx.setUniform("uniform_42", matrix);
 
-    AssertThat(glstub::programRepo.getProgram(id).getUnifMat(), Equals(matrix));
+    // Assert
+    programStub.dump();
+    AssertThat(programStub.getUniformMatrix4fv(uniformId), Equals(matrix));
   }
 };

@@ -9,6 +9,8 @@
 
 #include <cw/graph/ScreenSize.hpp>
 
+#include "OpenGlStubs.hpp"
+
 using namespace igloo;
 
 namespace
@@ -25,6 +27,7 @@ Describe(ARayCastPicking)
   void SetUp()
   {
     prog.reset( new cw::opengl::Program );
+    glstub::programRepo.getProgram(prog->getId()).addUniform(cw::opengl::ProjectionView::MVP_MATRIX_NAME);
     projView.reset( new cw::opengl::ProjectionView(*prog,g_screenSize) );
     picking.reset( new cw::opengl::RayCastPicking(
         *projView, g_screenSize) );

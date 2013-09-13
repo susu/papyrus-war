@@ -22,6 +22,7 @@ namespace cw
     class ProjectionView
     {
       public:
+        const static std::string MVP_MATRIX_NAME;
         ProjectionView( const Program & p, const graph::ScreenSize & screenSize );
 
         GLuint getProgramId() const

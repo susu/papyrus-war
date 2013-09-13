@@ -12,13 +12,13 @@ namespace cw
 {
   namespace opengl
   {
-const std::string MVP_MATRIX_NAME = "MVP";
+const std::string ProjectionView::MVP_MATRIX_NAME = "MVP";
 
 ProjectionView::ProjectionView( const Program & program,
                                 const graph::ScreenSize & screenSize )
   : m_screenSize(screenSize)
 {
-  int mvpId = glGetUniformLocation(program.getId(), MVP_MATRIX_NAME.c_str() );
+  auto mvpId = glGetUniformLocation(program.getId(), MVP_MATRIX_NAME.c_str() );
   if ( -1 == mvpId )
   {
     THROW( GlException, "Uniform location '" + MVP_MATRIX_NAME +

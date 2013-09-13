@@ -67,19 +67,25 @@ extern "C"
   inline void STUB_APIENTRY stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
   {}
 
-  inline GLint STUB_APIENTRY stub_GetUniformLocation(GLuint, const GLchar*)
+  inline GLint STUB_APIENTRY stub_GetUniformLocation(GLuint programId, const GLchar* unifName)
   {
-    return 1;
+    LOG_DEBUG("program-id=",programId, " uniform-name='", unifName, "'");
+    if (glstub::programRepo.getProgram(programId).hasUniform(unifName))
+    {
+      return glstub::programRepo.getProgram(programId).getUniformIndex(unifName);
+    }
+    return -1;
   }
 
   inline void STUB_APIENTRY stub_UseProgram( GLuint programId )
   {
+    LOG_DEBUG("glUseProgram: ", programId);
     glstub::lastProgram = programId;
   }
 
   inline void STUB_APIENTRY stub_UniformMatrix4fv(int matrixId, int,unsigned char,const float* matrixPtr)
   {
-    LOG_DEBUG("id=", matrixId);
+    LOG_DEBUG("uniform-id=", matrixId, " program-id=", glstub::lastProgram);
     glstub::programRepo.getProgram( glstub::lastProgram ).uniformMatrix(matrixId, 4, matrixPtr);
   }
 
@@ -90,10 +96,6 @@ extern "C"
 
   inline GLint STUB_APIENTRY stub_GetAttribLocation(GLuint programId, const char * attrName)
   {
-    if (glstub::programRepo.getProgram(programId).hasAttribute(attrName))
-    {
-      return 0;
-    }
     return -1;
   }
 
