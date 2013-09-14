@@ -21,7 +21,6 @@
 
 namespace glstub
 {
-  extern ShadersRepo shaderRepo;
   extern ProgramRepo programRepo;
   extern GLuint lastProgram;
 }
@@ -37,7 +36,7 @@ extern "C"
 
   inline GLuint STUB_APIENTRY stub_CreateShader(GLenum type)
   {
-    GLuint shaderId = glstub::shaderRepo.createShader(type);
+    GLuint shaderId = ShaderRepo::instance().createShader(type);
     LOG_DEBUG("shaderId=", shaderId);
     return shaderId;
   }
@@ -45,7 +44,7 @@ extern "C"
   inline void STUB_APIENTRY stub_GetShaderiv(GLuint index,GLenum infoType,GLint* out)
   {
     LOG_DEBUG();
-    *out = glstub::shaderRepo.getShaderiv(index, infoType);
+    *out = ShaderRepo::instance().getShaderiv(index, infoType);
   }
 
   inline void STUB_APIENTRY stub_DeleteShader(GLuint)
@@ -61,7 +60,7 @@ extern "C"
   inline void STUB_APIENTRY stub_CompileShader(GLuint id)
   {
     LOG_DEBUG();
-    glstub::shaderRepo.compileShader(id);
+    ShaderRepo::instance().compileShader(id);
   }
 
   inline void STUB_APIENTRY stub_GetShaderInfoLog(GLuint id, GLsizei bufSize, GLsizei*, GLchar* infoLog)
