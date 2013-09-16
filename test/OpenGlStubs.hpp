@@ -18,6 +18,7 @@
 
 #include "openglstub/ShaderRepo.hpp"
 #include "openglstub/ProgramRepo.hpp"
+#include "openglstub/OpenGlMemoryStub.hpp"
 
 namespace glstub
 {
@@ -98,6 +99,26 @@ extern "C"
     return -1;
   }
 
+  inline void STUB_APIENTRY stub_BufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage)
+  {
+    auto & vbo = OpenGlMemoryStub::instance().getBoundVBO();
+    vbo.type = target;
+    vbo.size = size;
+    vbo.usage = usage;
+  }
+
+  inline void STUB_APIENTRY stub_GenBuffers(GLsizei n, GLuint * buffers)
+  {
+    for (int i = 0; i < n; ++i)
+    {
+      buffers[i] = OpenGlMemoryStub::instance().generateVBO();
+    }
+  }
+  inline void STUB_APIENTRY stub_BindBuffer(GLenum target, GLuint buffer)
+  {
+    OpenGlMemoryStub::instance().boundVBO(buffer);
+  }
+
   inline GLenum glewInit()
   {
     __glewCreateProgram = &stub_CreateProgram;
@@ -112,6 +133,9 @@ extern "C"
     __glewAttachShader = &stub_AttachShader;
     __glewUniformMatrix4fv = &stub_UniformMatrix4fv;
     __glewGetAttribLocation = &stub_GetAttribLocation;
+    __glewBufferData = &stub_BufferData;
+    __glewGenBuffers = &stub_GenBuffers;
+    __glewBindBuffer = &stub_BindBuffer;
     return 0;
   }
 }

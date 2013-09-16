@@ -21,6 +21,7 @@ GRAPH_SRC= \
   FocusMarker.cpp \
   ProgramRepository.cpp \
   ProgramContext.cpp \
+  VertexBuffer.cpp \
 
 CORE_SRC= \
   Logger.cpp \
