@@ -23,6 +23,8 @@ namespace cw
         // returns the alloc'd size of VBO
         ByteType getFullSize() const;
 
+        void requestMemory(ByteType size);
+
       private:
         VertexBuffer(VertexBuffer&);
         VertexBuffer& operator=(VertexBuffer&);

@@ -26,5 +26,8 @@ ByteType VertexBuffer::getFullSize() const
   return m_fullVboSize;
 }
 
+void VertexBuffer::requestMemory(ByteType)
+{}
+
   }
 }

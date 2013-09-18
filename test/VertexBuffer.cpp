@@ -19,4 +19,11 @@ Describe(AVertexBuffer)
     AssertThat(OpenGlMemoryStub::instance().getVBO(index).size, Equals(cw::MegaByte(10)));
   }
 
+  It(can_be_requested_for_memory)
+  {
+    cw::opengl::VertexBuffer buffer(cw::MegaByte(1));
+
+    buffer.requestMemory(cw::KiloByte(100));
+  }
+
 };
