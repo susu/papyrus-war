@@ -10,12 +10,12 @@ using namespace igloo;
 
 Describe(AVertexBuffer)
 {
-  It(can_be_instantiated_with_data_amount_to_be_allocated)
+  It(can_be_instantiated_with_initial_size)
   {
     cw::opengl::VertexBuffer buffer(cw::MegaByte(10));
     auto index = buffer.getIndex();
 
-    AssertThat(buffer.getAllocatedSize(), Equals(cw::MegaByte(10)));
+    AssertThat(buffer.getFullSize(), Equals(cw::MegaByte(10)));
     AssertThat(OpenGlMemoryStub::instance().getVBO(index).size, Equals(cw::MegaByte(10)));
   }
 

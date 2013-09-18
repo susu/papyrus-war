@@ -21,13 +21,13 @@ namespace cw
         GLint getIndex() const;
 
         // returns the alloc'd size of VBO
-        ByteType getAllocatedSize() const;
+        ByteType getFullSize() const;
 
       private:
         VertexBuffer(VertexBuffer&);
         VertexBuffer& operator=(VertexBuffer&);
 
-        const ByteType m_allocatedVboSize;
+        const ByteType m_fullVboSize;
         GLuint m_bufferIndex;
     };
   }

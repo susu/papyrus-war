@@ -6,7 +6,7 @@ namespace cw
   {
 
 VertexBuffer::VertexBuffer(ByteType size)
-  : m_allocatedVboSize(size)
+  : m_fullVboSize(size)
 {
   glGenBuffers(1, &m_bufferIndex);
   glBindBuffer(GL_ARRAY_BUFFER, m_bufferIndex);
@@ -21,9 +21,9 @@ GLint VertexBuffer::getIndex() const
   return m_bufferIndex;
 }
 
-ByteType VertexBuffer::getAllocatedSize() const
+ByteType VertexBuffer::getFullSize() const
 {
-  return m_allocatedVboSize;
+  return m_fullVboSize;
 }
 
   }
